@@ -1,0 +1,11 @@
+# robots.txt for AmmoBrowser
+User-agent: *
+Allow: /
+
+Disallow: /login
+Disallow: /otp-verification
+Disallow: /profile
+
+Crawl-delay: 1
+
+Sitemap: https://www.ammobrowser.com/sitemap.xml
