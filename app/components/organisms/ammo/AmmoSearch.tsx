@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
 import { setCancelPreviousRequest, resetSuccess } from "~/redux/features/productSlice";
 import { axiosPublic } from "~/lib/axios/axios.config";
 
+import { caliberToSlug } from "~/utils";
+
 interface Caliber {
   id: string;
   caliber: string;
@@ -14,9 +16,10 @@ interface Caliber {
 interface AmmoSearchProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isEdit?: boolean;
+  onSelectCaliber?: (caliber: Caliber) => void;
 }
 
-const AmmoSearch = ({ handleChange, isEdit }: AmmoSearchProps) => {
+const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) => {
   const dispatch = useAppDispatch();
   const { productFilterData } = useAppSelector((state) => state.productSlice);
   const { register, setValue, watch } = useForm();
@@ -48,13 +51,12 @@ const AmmoSearch = ({ handleChange, isEdit }: AmmoSearchProps) => {
   }, [isEdit, productFilterData?.search, setValue]);
 
   const handleCaliberClick = (caliber: Caliber) => {
-    setValue("searchValue", caliber.caliber);
-    const syntheticEvent = {
-      target: { value: caliber.caliber },
-    } as React.ChangeEvent<HTMLInputElement>;
-    dispatch(setCancelPreviousRequest(false));
-    dispatch(resetSuccess());
-    handleChange(syntheticEvent);
+    if (onSelectCaliber) {
+      onSelectCaliber(caliber);
+    } else {
+      const slug = caliberToSlug(caliber.caliber);
+      window.open(`/ammo/${slug}`, "_blank");
+    }
     setIsShow(false);
   };
 

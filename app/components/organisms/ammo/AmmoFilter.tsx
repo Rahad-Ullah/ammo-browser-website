@@ -216,6 +216,22 @@ const AmmoFilter = ({ setProductQueryData, apiLoad }: AmmoFilterProps) => {
     }
   }, [caliberData, searchInput]);
 
+  useEffect(() => {
+    if (productFilterData?.key_feature_id && caliberData) {
+      const kfId =
+        typeof productFilterData.key_feature_id === "object" &&
+        productFilterData.key_feature_id !== null
+          ? productFilterData.key_feature_id.id
+          : productFilterData.key_feature_id;
+      const found = caliberData.find((c) => c.id === kfId);
+      if (found) {
+        setSelectedCaliber(found);
+      }
+    } else if (!productFilterData?.key_feature_id) {
+      setSelectedCaliber("Select caliber");
+    }
+  }, [productFilterData?.key_feature_id, caliberData]);
+
   const handleCategorySelected = (option: Category | string) => {
     if (typeof option === "object") {
       // Clear caliber when changing category

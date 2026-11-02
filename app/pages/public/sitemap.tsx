@@ -13,6 +13,8 @@
 // would be served first and shadow this route.
 
 import { blogService } from "~/services/httpServices/blogService";
+import { axiosPublic } from "~/lib/axios/axios.config";
+import { caliberToSlug, type CaliberItem } from "~/utils";
 import type { ApiBlogListItem } from "~/types";
 
 const SITE_URL = (
@@ -66,6 +68,17 @@ async function fetchAllBlogPosts(): Promise<ApiBlogListItem[]> {
   return posts;
 }
 
+// Fetch all active calibers for SEO landing pages
+async function fetchAllCalibers(): Promise<CaliberItem[]> {
+  try {
+    const res = await axiosPublic.get("/calibers");
+    return Array.isArray(res?.data?.data) ? res.data.data : [];
+  } catch (err) {
+    console.error("[sitemap] failed to load calibers:", err);
+    return [];
+  }
+}
+
 function urlEntry(
   loc: string,
   lastmod: string,
@@ -82,13 +95,33 @@ function urlEntry(
   );
 }
 
-function buildSitemap(posts: ApiBlogListItem[], today: string): string {
+function buildSitemap(
+  posts: ApiBlogListItem[],
+  calibers: CaliberItem[],
+  today: string
+): string {
   const entries: string[] = [];
 
   for (const r of STATIC_ROUTES) {
     entries.push(urlEntry(`${SITE_URL}${r.path}`, today, r.changefreq, r.priority));
   }
 
+  // Dynamic caliber landing pages (/ammo/:caliber)
+  for (const caliber of calibers) {
+    if (!caliber?.caliber) continue;
+    const slug = caliberToSlug(caliber.caliber);
+    if (!slug) continue;
+    entries.push(
+      urlEntry(
+        `${SITE_URL}/ammo/${xmlEscape(slug)}`,
+        today,
+        "daily",
+        "0.9"
+      )
+    );
+  }
+
+  // Dynamic blog posts (/blog/:slug)
   for (const post of posts) {
     if (!post?.slug) continue;
     const lastmod = (post.created_at || today).slice(0, 10);
@@ -129,15 +162,19 @@ export async function loader() {
   const today = new Date().toISOString().slice(0, 10);
 
   let posts: ApiBlogListItem[] = [];
+  let calibers: CaliberItem[] = [];
   try {
-    posts = await fetchAllBlogPosts();
+    const [fetchedPosts, fetchedCalibers] = await Promise.all([
+      fetchAllBlogPosts(),
+      fetchAllCalibers(),
+    ]);
+    posts = fetchedPosts;
+    calibers = fetchedCalibers;
   } catch (err) {
-    // If the blog API is unreachable, still return a valid sitemap with the
-    // static routes instead of failing the whole request.
-    console.error("[sitemap] failed to load blog posts:", err);
+    console.error("[sitemap] failed to load dynamic routes:", err);
   }
 
-  const xml = buildSitemap(posts, today);
+  const xml = buildSitemap(posts, calibers, today);
   cache = { xml, expires: now + CACHE_TTL_MS };
   return sitemapResponse(xml);
 }

@@ -20,6 +20,11 @@ type Pages = {
   "/ammo": {
     params: {};
   };
+  "/ammo/:caliber": {
+    params: {
+      "caliber": string;
+    };
+  };
   "/blog": {
     params: {};
   };
@@ -70,7 +75,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/sitemap.xml" | "/ammo" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
+    page: "/" | "/sitemap.xml" | "/ammo" | "/ammo/:caliber" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
   };
   "pages/public/sitemap.tsx": {
     id: "pages/public/sitemap";
@@ -78,7 +83,7 @@ type RouteFiles = {
   };
   "pages/public/layout.tsx": {
     id: "pages/public/layout";
-    page: "/" | "/ammo" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*";
+    page: "/" | "/ammo" | "/ammo/:caliber" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*";
   };
   "pages/public/home.tsx": {
     id: "pages/public/home";
@@ -87,6 +92,10 @@ type RouteFiles = {
   "pages/public/ammo.tsx": {
     id: "pages/public/ammo";
     page: "/ammo";
+  };
+  "pages/public/ammo-caliber.tsx": {
+    id: "pages/public/ammo-caliber";
+    page: "/ammo/:caliber";
   };
   "pages/public/blog.tsx": {
     id: "pages/public/blog";
@@ -156,6 +165,7 @@ type RouteModules = {
   "pages/public/layout": typeof import("./app/pages/public/layout.tsx");
   "pages/public/home": typeof import("./app/pages/public/home.tsx");
   "pages/public/ammo": typeof import("./app/pages/public/ammo.tsx");
+  "pages/public/ammo-caliber": typeof import("./app/pages/public/ammo-caliber.tsx");
   "pages/public/blog": typeof import("./app/pages/public/blog.tsx");
   "pages/public/blog-details": typeof import("./app/pages/public/blog-details.tsx");
   "pages/public/contact": typeof import("./app/pages/public/contact.tsx");

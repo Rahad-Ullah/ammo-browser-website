@@ -3,6 +3,7 @@ import { index, route } from "@react-router/dev/routes";
 export const publicRoutes = [
   index("pages/public/home.tsx"),
   route("ammo", "pages/public/ammo.tsx"),
+  route("ammo/:caliber", "pages/public/ammo-caliber.tsx"),
   route("blog", "pages/public/blog.tsx"),
   route("blog/:slug", "pages/public/blog-details.tsx"),
   route("contact", "pages/public/contact.tsx"),
