@@ -18,6 +18,15 @@ type Matches = [{
 }, {
   id: "pages/public/product-details";
   module: typeof import("../product-details.js");
+}] | [{
+  id: "root";
+  module: typeof import("../../../root.js");
+}, {
+  id: "pages/public/layout";
+  module: typeof import("../layout.js");
+}, {
+  id: "legacy-product-details";
+  module: typeof import("../product-details.js");
 }];
 
 type Annotations = GetAnnotations<Info & { module: Module, matches: Matches }>;

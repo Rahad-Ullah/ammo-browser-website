@@ -7,6 +7,8 @@ import mask from "~/assets/Ellipse 11.png";
 import bullet from "~/assets/Bullet.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
+import { getProductUrl } from "~/utils";
+
 interface KeyFeatures {
   image_url?: string;
   system_image_url?: string;
@@ -18,6 +20,9 @@ interface Retailer {
 
 interface ProductItem {
   id: string;
+  name?: string;
+  title?: string;
+  brand?: string;
   caliber?: string;
   cost_per_round?: number;
   num_of_rounds?: string;
@@ -113,7 +118,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
           </div>
           <div className="absolute right-0 bottom-0 px-[12px] 2xl:px-[20px] pb-[20px] w-full grid grid-cols-2 gap-[14px] 2xl:gap-[22px]">
             <Link
-              to={`/product-details/${item.id}?page=${currentPage}`}
+              to={getProductUrl(item, `page=${currentPage}`)}
               className="block"
             >
               <Button

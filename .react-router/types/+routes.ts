@@ -25,6 +25,12 @@ type Pages = {
       "caliber": string;
     };
   };
+  "/ammo/:caliber/:productSlug": {
+    params: {
+      "caliber": string;
+      "productSlug": string;
+    };
+  };
   "/blog": {
     params: {};
   };
@@ -75,7 +81,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/sitemap.xml" | "/ammo" | "/ammo/:caliber" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
+    page: "/" | "/sitemap.xml" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
   };
   "pages/public/sitemap.tsx": {
     id: "pages/public/sitemap";
@@ -83,7 +89,7 @@ type RouteFiles = {
   };
   "pages/public/layout.tsx": {
     id: "pages/public/layout";
-    page: "/" | "/ammo" | "/ammo/:caliber" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*";
+    page: "/" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*";
   };
   "pages/public/home.tsx": {
     id: "pages/public/home";
@@ -96,6 +102,13 @@ type RouteFiles = {
   "pages/public/ammo-caliber.tsx": {
     id: "pages/public/ammo-caliber";
     page: "/ammo/:caliber";
+  };
+  "pages/public/product-details.tsx": {
+    id: "pages/public/product-details";
+    page: "/ammo/:caliber/:productSlug";
+  } | {
+    id: "legacy-product-details";
+    page: "/product-details/:id";
   };
   "pages/public/blog.tsx": {
     id: "pages/public/blog";
@@ -124,10 +137,6 @@ type RouteFiles = {
   "pages/public/terms.tsx": {
     id: "pages/public/terms";
     page: "/terms-and-condition";
-  };
-  "pages/public/product-details.tsx": {
-    id: "pages/public/product-details";
-    page: "/product-details/:id";
   };
   "pages/public/error.tsx": {
     id: "pages/public/error";
@@ -166,6 +175,7 @@ type RouteModules = {
   "pages/public/home": typeof import("./app/pages/public/home.tsx");
   "pages/public/ammo": typeof import("./app/pages/public/ammo.tsx");
   "pages/public/ammo-caliber": typeof import("./app/pages/public/ammo-caliber.tsx");
+  "pages/public/product-details": typeof import("./app/pages/public/product-details.tsx");
   "pages/public/blog": typeof import("./app/pages/public/blog.tsx");
   "pages/public/blog-details": typeof import("./app/pages/public/blog-details.tsx");
   "pages/public/contact": typeof import("./app/pages/public/contact.tsx");
@@ -173,7 +183,7 @@ type RouteModules = {
   "pages/public/privacy": typeof import("./app/pages/public/privacy.tsx");
   "pages/public/cookies": typeof import("./app/pages/public/cookies.tsx");
   "pages/public/terms": typeof import("./app/pages/public/terms.tsx");
-  "pages/public/product-details": typeof import("./app/pages/public/product-details.tsx");
+  "legacy-product-details": typeof import("./app/pages/public/product-details.tsx");
   "pages/public/error": typeof import("./app/pages/public/error.tsx");
   "pages/auth/layout": typeof import("./app/pages/auth/layout.tsx");
   "pages/auth/login": typeof import("./app/pages/auth/login.tsx");

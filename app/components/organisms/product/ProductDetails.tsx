@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { AnimatePresence } from "motion/react";
@@ -15,6 +15,7 @@ import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 import type { PriceAlertData, ProgressBar } from "~/types";
 import { errorToast } from "~/utils/toast";
 import { getLocalStorage } from "~/utils/localStorage";
+import { extractProductIdFromSlug, caliberToSlug } from "~/utils";
 import Button from "~/components/atoms/Button";
 import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
@@ -85,7 +86,10 @@ const ProductDetails = () => {
   const [destinationZip, setDestinationZip] = useState("");
   const token = getLocalStorage<string>("berg-user-response");
 
-  const { id } = useParams();
+  const params = useParams();
+  const id = extractProductIdFromSlug(
+    (params as Record<string, string | undefined>).productSlug || params.id
+  );
 
   useEffect(() => {
     const stored = localStorage.getItem("destination_zip") ?? "";
@@ -266,6 +270,35 @@ const ProductDetails = () => {
                 className="absolute top-0 right-0 z-10"
               />
               <img src={elips1} alt="" className="absolute bottom-0 left-0" />
+
+              {/* Breadcrumb Navigation */}
+              <nav
+                aria-label="Breadcrumb"
+                className="flex items-center gap-2 text-xs md:text-sm text-[#817D81] font-Poppins pb-4 relative z-10"
+              >
+                <Link to="/" className="hover:text-primaryWhite transition-colors">
+                  Home
+                </Link>
+                <span>/</span>
+                <Link to="/ammo" className="hover:text-primaryWhite transition-colors">
+                  Ammo
+                </Link>
+                {detailsData?.caliber && (
+                  <>
+                    <span>/</span>
+                    <Link
+                      to={`/ammo/${caliberToSlug(detailsData.caliber)}`}
+                      className="hover:text-primaryWhite transition-colors capitalize"
+                    >
+                      {detailsData.caliber}
+                    </Link>
+                  </>
+                )}
+                <span>/</span>
+                <span className="text-primaryWhite font-medium truncate max-w-[150px] sm:max-w-xs md:max-w-md">
+                  {detailsData?.title || "Product Details"}
+                </span>
+              </nav>
 
               <h4 className="text-lg xl:text-3xl text-primaryWhite font-medium relative z-10">
                 {detailsData?.caliber || "N/A"}

@@ -4,7 +4,7 @@ import { resetProductApiCall } from "~/redux/features/productSlice";
 import { ProductDetails } from "~/components/organisms/product";
 import type { Route } from "./+types/product-details";
 import { axiosPublic } from "~/lib/axios/axios.config";
-import { generateMeta } from "~/utils";
+import { generateMeta, extractProductIdFromSlug } from "~/utils";
 
 interface ProductData {
   id: string;
@@ -25,7 +25,9 @@ interface ProductData {
 
 export async function loader({ params, request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  const { id } = params;
+  const routeParams = params as Record<string, string | undefined>;
+  const rawId = routeParams.productSlug || routeParams.id;
+  const id = extractProductIdFromSlug(rawId);
 
   if (!id) {
     return { productData: null, url: url.toString() };

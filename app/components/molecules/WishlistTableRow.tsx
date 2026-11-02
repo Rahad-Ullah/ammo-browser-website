@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { getProductUrl } from "~/utils";
 import type { WishlistProduct } from "~/types";
 
 interface WishlistTableRowProps {
@@ -60,7 +61,11 @@ export default function WishlistTableRow({
           </button>
 
           <Link
-            to={`/product-details/${product.product_id}`}
+            to={getProductUrl({
+              id: product.product_id,
+              title: product.title,
+              caliber: product.caliber,
+            })}
             className="flex-1 min-w-0"
           >
             <p className="font-poppins font-light text-[13px] sm:text-[14px] 2xl:text-[16px] leading-[22px] 2xl:leading-[24px] text-[#FFFFFF] tracking-normal line-clamp-1 hover:underline cursor-pointer">

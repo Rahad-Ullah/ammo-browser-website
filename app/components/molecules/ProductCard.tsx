@@ -7,6 +7,8 @@ import mask from "~/assets/Mask group.png";
 import bullet from "~/assets/Bullet.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
+import { getProductUrl } from "~/utils";
+
 interface KeyFeatures {
   image_url?: string;
   system_image_url?: string;
@@ -18,6 +20,9 @@ interface Retailer {
 
 interface ProductItem {
   id: string;
+  name?: string;
+  title?: string;
+  brand?: string;
   caliber?: string;
   cost_per_round?: number;
   num_of_rounds?: string;
@@ -120,7 +125,7 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
             </div>
 
             <div className="absolute right-0 bottom-0 px-[20px] 2xl:px-[40px] pb-[20px] 2xl:pb-[40px] w-full grid grid-cols-2 gap-[14px] 2xl:gap-[22px]">
-              <Link to={`/product-details/${id}`} className="block">
+              <Link to={getProductUrl(item)} className="block">
                 <Button
                   className="
                   w-full text-center font-normal !sm:px-5 !px-3 xl:px-9 text-[10px] lg:px-6 !sm:text-xs lg:!text-xs xl:!text-sm xl:py-3 py-[10px] !text-nowrap bg-orange capitalize active:scale-95 rounded-none transition-all inline-block text-primaryWhite font-Poppins text-sm hover:bg-[#CC4910] after:display-none"
