@@ -141,10 +141,14 @@ export default function AmmoCaliberPage() {
     300
   );
 
-  // When a user selects a caliber from the search dropdown on this page, navigate to that caliber's page
-  const handleSelectCaliber = (selected: CaliberItem) => {
-    const nextSlug = caliberToSlug(selected.caliber);
-    navigate(`/ammo/${nextSlug}`);
+  // When a user selects a caliber from the search dropdown or sidebar filter on this page, navigate to that caliber's page
+  const handleSelectCaliber = (selected: CaliberItem | "default") => {
+    if (selected === "default") {
+      navigate("/ammo");
+    } else {
+      const nextSlug = caliberToSlug(selected.caliber);
+      navigate(`/ammo/${nextSlug}`);
+    }
   };
 
   return (
@@ -200,7 +204,11 @@ export default function AmmoCaliberPage() {
             />
           </div>
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2 relative">
-            <AmmoFilter setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+            <AmmoFilter
+              setProductQueryData={setProductQueryData}
+              apiLoad={apiLoad}
+              onSelectCaliber={handleSelectCaliber}
+            />
           </div>
           <div className="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-9 xl:col-span-10">
             <AmmoProducts setProductQueryData={setProductQueryData} apiLoad={apiLoad} />

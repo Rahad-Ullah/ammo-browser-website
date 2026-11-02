@@ -27,9 +27,12 @@ import RoundSvg from "../../svg/RoundSvg";
 import ShippingSvg from "../../svg/ShippingSvg";
 import PriceSvg from "../../svg/PriceSvg";
 
+import { caliberToSlug } from "~/utils";
+
 interface AmmoFilterProps {
   setProductQueryData: React.Dispatch<React.SetStateAction<ProductFilterData>>;
   apiLoad: MutableRefObject<boolean>;
+  onSelectCaliber?: (caliber: Caliber | "default") => void;
 }
 
 interface Category {
@@ -42,7 +45,11 @@ interface Caliber {
   caliber: string;
 }
 
-const AmmoFilter = ({ setProductQueryData, apiLoad }: AmmoFilterProps) => {
+const AmmoFilter = ({
+  setProductQueryData,
+  apiLoad,
+  onSelectCaliber,
+}: AmmoFilterProps) => {
   const dispatch = useAppDispatch();
   const { productFilterData } = useAppSelector((state) => state.productSlice);
 
@@ -290,33 +297,34 @@ const AmmoFilter = ({ setProductQueryData, apiLoad }: AmmoFilterProps) => {
   };
 
   const handleCaliberSelect = (option: Caliber | string) => {
-    dispatch(setIsProductApiCall());
-    setSelectedCaliber(option);
-    if (typeof option === "object") {
-      dispatch(
-        addProductFilterData({
-          ...productFilterData,
-          key_feature_id: option,
-        } as ProductFilterData),
-      );
-      setProductQueryData((prev) => ({
-        ...prev,
-        key_feature_id: option.id,
-      }));
-    } else {
-      dispatch(
-        addProductFilterData({
-          ...productFilterData,
-          key_feature_id: null,
-        } as ProductFilterData),
-      );
-      setProductQueryData((prev) => {
-        const { key_feature_id, ...rest } = prev;
-        return rest;
-      });
-    }
     setIsOpen2(false);
-    apiLoad.current = true;
+
+    if (typeof option === "object") {
+      if (onSelectCaliber) {
+        onSelectCaliber(option);
+      } else {
+        const slug = caliberToSlug(option.caliber);
+        window.open(`/ammo/${slug}`, "_blank");
+      }
+    } else {
+      if (onSelectCaliber) {
+        onSelectCaliber("default");
+      } else {
+        dispatch(setIsProductApiCall());
+        setSelectedCaliber("Select caliber");
+        dispatch(
+          addProductFilterData({
+            ...productFilterData,
+            key_feature_id: null,
+          } as ProductFilterData),
+        );
+        setProductQueryData((prev) => {
+          const { key_feature_id, ...rest } = prev;
+          return rest;
+        });
+        apiLoad.current = true;
+      }
+    }
   };
 
   const handleFilterChange = (name: string, value: string) => {
