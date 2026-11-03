@@ -45,6 +45,14 @@ export interface PaginatedRetailersResponse {
   total?: number;
 }
 
+export interface RetailerQueryParams {
+  page?: number;
+  search?: string;
+  title?: string;
+  free_shipping?: boolean;
+  google_rating?: number | string;
+}
+
 export interface KeyFeatures {
   image_url?: string;
 }

@@ -4,6 +4,7 @@ import { extractRetailerIdFromSlug, createRetailerSlug } from "~/utils/retailerH
 import type {
   RetailerItem,
   PaginatedRetailersResponse,
+  RetailerQueryParams,
   Product,
   NestedPaginatedResponse,
 } from "~/types";
@@ -15,17 +16,47 @@ const RETAILER_ENDPOINTS = {
 
 export const retailerService = {
   /**
-   * Fetches paginated retailers from backend endpoint: GET /api/retailers?page={page}
-   * Backend returns: { success: true, data: { current_page: 1, data: RetailerItem[], ... } }
+   * Fetches paginated retailers from backend endpoint: GET /api/retailers
+   * Supports 3 query parameters + page:
+   *   - search="abc"
+   *   - free_shipping=true
+   *   - google_rating=4.8
+   *   - page={number}
    */
   async getPaginatedRetailers(
-    page: number = 1
+    params?: RetailerQueryParams | number
   ): Promise<PaginatedRetailersResponse | null> {
+    const queryParams: RetailerQueryParams =
+      typeof params === "number" ? { page: params } : params || {};
+
+    const urlParams = new URLSearchParams();
+    if (queryParams.page) urlParams.set("page", String(queryParams.page));
+    const searchTerm = queryParams.search || queryParams.title;
+    if (searchTerm && searchTerm.trim()) {
+      urlParams.set("search", searchTerm.trim());
+    }
+    if (
+      queryParams.free_shipping === true ||
+      (queryParams.free_shipping as unknown) === "true"
+    ) {
+      urlParams.set("free_shipping", "true");
+    }
+    if (
+      queryParams.google_rating !== undefined &&
+      queryParams.google_rating !== null &&
+      queryParams.google_rating !== ""
+    ) {
+      urlParams.set("google_rating", String(queryParams.google_rating));
+    }
+
+    const queryString = urlParams.toString();
+    const endpoint = `${RETAILER_ENDPOINTS.LIST}${queryString ? `?${queryString}` : ""}`;
+
     try {
       const response = await httpService.get<{
         success: boolean;
         data: PaginatedRetailersResponse;
-      }>(`${RETAILER_ENDPOINTS.LIST}?page=${page}`);
+      }>(endpoint);
       const res = handleApiResponse(response);
 
       if (res?.data && Array.isArray(res.data.data)) {
@@ -42,9 +73,11 @@ export const retailerService = {
    * Fetches the list of all retailers from the backend.
    * Extracts data array directly from API response: response.data.data.data
    */
-  async getAllRetailers(page: number = 1): Promise<RetailerItem[]> {
+  async getAllRetailers(
+    params?: RetailerQueryParams | number
+  ): Promise<RetailerItem[]> {
     try {
-      const paginated = await this.getPaginatedRetailers(page);
+      const paginated = await this.getPaginatedRetailers(params);
       if (paginated?.data && Array.isArray(paginated.data)) {
         return paginated.data;
       }

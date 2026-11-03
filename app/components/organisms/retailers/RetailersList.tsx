@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoSearchOutline, IoCloseCircleOutline } from "react-icons/io5";
 import { FaStore, FaShippingFast, FaStar } from "react-icons/fa";
+import { useDebouncedCallback } from "use-debounce";
 import type { RetailerItem } from "~/types";
 import RetailerCard from "./RetailerCard";
 import Pagination from "~/components/molecules/Pagination";
@@ -8,47 +9,62 @@ import Pagination from "~/components/molecules/Pagination";
 interface RetailersListProps {
   retailers: RetailerItem[];
   isLoading?: boolean;
+  searchQuery?: string;
+  searchTitle?: string;
+  isFreeShipping?: boolean;
+  googleRating?: string;
   currentPage?: number;
   lastPage?: number;
   total?: number;
+  onSearchChange?: (search: string) => void;
+  onToggleFreeShipping?: () => void;
+  onToggleTopRated?: () => void;
+  onResetFilters?: () => void;
   onPageChange?: (page: number) => void;
 }
-
-type FilterTab = "all" | "free-shipping" | "top-rated";
 
 export default function RetailersList({
   retailers,
   isLoading = false,
+  searchQuery,
+  searchTitle = "",
+  isFreeShipping = false,
+  googleRating = "",
   currentPage = 1,
   lastPage = 1,
   total,
+  onSearchChange,
+  onToggleFreeShipping,
+  onToggleTopRated,
+  onResetFilters,
   onPageChange,
 }: RetailersListProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState<FilterTab>("all");
+  const currentSearch = searchQuery !== undefined ? searchQuery : searchTitle;
+  const [searchValue, setSearchValue] = useState(currentSearch);
 
-  const filteredRetailers = useMemo(() => {
-    return retailers.filter((retailer) => {
-      const name = (retailer.title || "").toLowerCase();
-      const search = searchTerm.toLowerCase().trim();
+  // Sync internal search input if search updates externally (e.g. back navigation or reset)
+  useEffect(() => {
+    setSearchValue(currentSearch);
+  }, [currentSearch]);
 
-      const matchesSearch = !search || name.includes(search);
-      if (!matchesSearch) return false;
+  const debouncedSearch = useDebouncedCallback((val: string) => {
+    onSearchChange?.(val);
+  }, 400);
 
-      if (activeTab === "free-shipping") {
-        return retailer.free_shipping === true;
-      }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSearchValue(val);
+    debouncedSearch(val);
+  };
 
-      if (activeTab === "top-rated") {
-        const rating = retailer.google_rating
-          ? parseFloat(retailer.google_rating)
-          : 0;
-        return !isNaN(rating) && rating >= 4.8;
-      }
+  const handleClearSearch = () => {
+    setSearchValue("");
+    debouncedSearch.cancel();
+    onSearchChange?.("");
+  };
 
-      return true;
-    });
-  }, [retailers, searchTerm, activeTab]);
+  const isAllActive = !isFreeShipping && !googleRating;
+  const isTopRatedActive = googleRating === "4.8" || Number(googleRating) >= 4.8;
 
   return (
     <div className="w-full">
@@ -59,14 +75,15 @@ export default function RetailersList({
           <IoSearchOutline className="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondaryColor text-lg pointer-events-none" />
           <input
             type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchValue}
+            onChange={handleInputChange}
             placeholder="Search retailers by name..."
             className="w-full bg-[#1A181C] border border-[#332F36] focus:border-orange text-primaryWhite placeholder-secondaryColor pl-10 pr-10 py-2.5 text-sm font-Inter outline-none transition-colors"
           />
-          {searchTerm && (
+          {searchValue && (
             <button
-              onClick={() => setSearchTerm("")}
+              type="button"
+              onClick={handleClearSearch}
               aria-label="Clear search"
               className="absolute right-3 top-1/2 -translate-y-1/2 text-secondaryColor hover:text-primaryWhite"
             >
@@ -75,24 +92,32 @@ export default function RetailersList({
           )}
         </div>
 
-        {/* Filter Tabs */}
+        {/* Filter Buttons */}
         <div className="flex flex-wrap items-center gap-2">
+          {/* All Retailers */}
           <button
-            onClick={() => setActiveTab("all")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border ${
-              activeTab === "all"
+            type="button"
+            onClick={() => {
+              if (!isAllActive) {
+                onResetFilters?.();
+              }
+            }}
+            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border cursor-pointer ${
+              isAllActive
                 ? "bg-orange text-primaryWhite border-orange"
                 : "bg-[#1A181C] text-secondaryColor border-[#332F36] hover:text-primaryWhite"
             }`}
           >
             <FaStore className="text-xs" />
-            <span>All on page ({retailers.length})</span>
+            <span>All Retailers</span>
           </button>
 
+          {/* Free Shipping Deals */}
           <button
-            onClick={() => setActiveTab("free-shipping")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border ${
-              activeTab === "free-shipping"
+            type="button"
+            onClick={() => onToggleFreeShipping?.()}
+            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border cursor-pointer ${
+              isFreeShipping
                 ? "bg-orange text-primaryWhite border-orange"
                 : "bg-[#1A181C] text-secondaryColor border-[#332F36] hover:text-primaryWhite"
             }`}
@@ -101,15 +126,21 @@ export default function RetailersList({
             <span>Free Shipping Deals</span>
           </button>
 
+          {/* Top Rated (4.8+) */}
           <button
-            onClick={() => setActiveTab("top-rated")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border ${
-              activeTab === "top-rated"
+            type="button"
+            onClick={() => onToggleTopRated?.()}
+            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-Inter transition-colors border cursor-pointer ${
+              isTopRatedActive
                 ? "bg-orange text-primaryWhite border-orange"
                 : "bg-[#1A181C] text-secondaryColor border-[#332F36] hover:text-primaryWhite"
             }`}
           >
-            <FaStar className="text-xs text-starColor" />
+            <FaStar
+              className={`text-xs ${
+                isTopRatedActive ? "text-primaryWhite" : "text-starColor"
+              }`}
+            />
             <span>Top Rated (4.8+)</span>
           </button>
         </div>
@@ -118,30 +149,50 @@ export default function RetailersList({
       {/* Results Count Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6 text-xs md:text-sm text-secondaryColor font-Inter">
         <p>
-          Showing <span className="text-primaryWhite font-semibold">{filteredRetailers.length}</span>{" "}
-          verified ammunition {filteredRetailers.length === 1 ? "retailer" : "retailers"}
+          Showing{" "}
+          <span className="text-primaryWhite font-semibold">
+            {retailers.length}
+          </span>{" "}
+          verified ammunition {retailers.length === 1 ? "retailer" : "retailers"}
           {total !== undefined ? (
             <span>
-              {" "}of <span className="text-primaryWhite font-semibold">{total}</span> total
+              {" "}
+              of <span className="text-primaryWhite font-semibold">{total}</span>{" "}
+              total
             </span>
           ) : null}
-          {searchTerm && (
+          {currentSearch && (
             <span>
               {" "}
-              matching &quot;<span className="text-orange">{searchTerm}</span>&quot;
+              matching &quot;
+              <span className="text-orange">{currentSearch}</span>
+              &quot;
+            </span>
+          )}
+          {isFreeShipping && (
+            <span className="text-primaryWhite font-medium">
+              {" "}
+              • Free Shipping
+            </span>
+          )}
+          {isTopRatedActive && (
+            <span className="text-primaryWhite font-medium">
+              {" "}
+              • Rated 4.8+
             </span>
           )}
         </p>
 
         {lastPage > 1 && (
           <p className="text-xs text-[#817D81]">
-            Page <span className="text-primaryWhite font-medium">{currentPage}</span> of{" "}
+            Page{" "}
+            <span className="text-primaryWhite font-medium">{currentPage}</span> of{" "}
             <span className="text-primaryWhite font-medium">{lastPage}</span>
           </p>
         )}
       </div>
 
-      {/* Retailers Grid */}
+      {/* Retailers Grid / Skeletons */}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -161,10 +212,10 @@ export default function RetailersList({
             </div>
           ))}
         </div>
-      ) : filteredRetailers.length > 0 ? (
+      ) : retailers.length > 0 ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {filteredRetailers.map((retailer) => (
+            {retailers.map((retailer) => (
               <RetailerCard key={retailer.id} retailer={retailer} />
             ))}
           </div>
@@ -192,11 +243,12 @@ export default function RetailersList({
             Try clearing your filters or searching with different terms.
           </p>
           <button
+            type="button"
             onClick={() => {
-              setSearchTerm("");
-              setActiveTab("all");
+              handleClearSearch();
+              onResetFilters?.();
             }}
-            className="bg-orange hover:bg-[#CC4910] text-primaryWhite px-6 py-2.5 text-xs font-Poppins uppercase tracking-wider font-semibold transition-colors active:scale-95"
+            className="bg-orange hover:bg-[#CC4910] text-primaryWhite px-6 py-2.5 text-xs font-Poppins uppercase tracking-wider font-semibold transition-colors active:scale-95 cursor-pointer"
           >
             Reset Filters
           </button>
