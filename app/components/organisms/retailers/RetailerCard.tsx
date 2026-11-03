@@ -4,7 +4,6 @@ import { MdLocalShipping } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import type { RetailerItem } from "~/types";
 import { getRetailerUrl } from "~/utils/retailerHelpers";
-import Button from "~/components/atoms/Button";
 
 interface RetailerCardProps {
   retailer: RetailerItem;
@@ -96,22 +95,32 @@ export default function RetailerCard({ retailer }: RetailerCardProps) {
       </div>
 
       {/* Action Footer */}
-      <div className="pt-5 mt-4 border-t border-[#242125] flex items-center gap-2.5">
-        <Link to={detailUrl} className="flex-1">
-          <Button
-            btnTitle="View Details"
-            className="w-full bg-orange hover:bg-[#CC4910] text-primaryWhite font-Poppins text-xs sm:text-sm py-2.5 px-4 rounded-none transition-all active:scale-95 font-medium !text-center flex items-center justify-center"
-          />
-        </Link>
-        {retailer.retailer_website && (
-          <a
-            href={retailer.retailer_website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3.5 py-2 border border-[#3B383D] hover:border-orange text-secondaryColor hover:text-primaryWhite text-xs font-Inter transition-colors flex items-center gap-1.5"
+      <div className="pt-4 mt-4 border-t border-[#242125]">
+        {retailer.retailer_website ? (
+          <div className="grid grid-cols-2 gap-2.5 w-full">
+            <Link
+              to={detailUrl}
+              className="h-[34px] xl:h-[36px] w-full bg-orange hover:bg-[#CC4910] text-primaryWhite font-Poppins text-xs font-medium border border-orange transition-all active:scale-95 flex items-center justify-center text-center text-nowrap rounded-none shadow-sm"
+            >
+              View Details
+            </Link>
+            <a
+              href={retailer.retailer_website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-[34px] xl:h-[36px] w-full bg-[#1A181C] hover:bg-[#221F25] border border-[#332F36] hover:border-orange text-secondaryColor hover:text-primaryWhite font-Poppins text-xs font-medium transition-all active:scale-95 flex items-center justify-center gap-1.5 text-center text-nowrap rounded-none"
+            >
+              <span>Visit Store</span>
+              <FaExternalLinkAlt className="text-[10px]" />
+            </a>
+          </div>
+        ) : (
+          <Link
+            to={detailUrl}
+            className="h-[34px] xl:h-[36px] w-full bg-orange hover:bg-[#CC4910] text-primaryWhite font-Poppins text-xs font-medium border border-orange transition-all active:scale-95 flex items-center justify-center text-center text-nowrap rounded-none shadow-sm"
           >
-            Store <FaExternalLinkAlt className="text-[10px]" />
-          </a>
+            View Details
+          </Link>
         )}
       </div>
     </div>
