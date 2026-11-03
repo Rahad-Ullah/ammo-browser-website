@@ -7,7 +7,7 @@ import mask from "~/assets/Ellipse 11.png";
 import bullet from "~/assets/Bullet.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { getProductUrl } from "~/utils";
+import { getProductUrl, getRetailerUrl } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -83,7 +83,19 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
       </h5>
 
       <h2 className="font-semibold text-base xl:text-xl block heading-gradient-mini">
-        {item?.retailer?.title || "N/A"}
+        {item?.retailer?.title ? (
+          <Link
+            to={getRetailerUrl({
+              name: item.retailer.title,
+              id: (item.retailer as any)?.id,
+            })}
+            className="hover:underline hover:text-orange transition-colors"
+          >
+            {item.retailer.title}
+          </Link>
+        ) : (
+          "N/A"
+        )}
       </h2>
       <div className="pt-2 flex items-center xl:items-end gap-2 justify-between pb-[48px] sm:pb-[44px] lg:pb-[38px] 2xl:pb-[58px]">
         {/* left */}

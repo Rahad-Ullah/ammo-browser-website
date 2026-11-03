@@ -12,6 +12,8 @@ export const publicRoutes = [
   route("privacy", "pages/public/privacy.tsx"),
   route("cookies", "pages/public/cookies.tsx"),
   route("terms-and-condition", "pages/public/terms.tsx"),
+  route("retailers", "pages/public/retailers.tsx"),
+  route("retailers/:slug", "pages/public/retailer-details.tsx"),
   route("product-details/:id", "pages/public/product-details.tsx", {
     id: "legacy-product-details",
   }),

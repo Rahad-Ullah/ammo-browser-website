@@ -50,6 +50,7 @@ const Footer = () => {
   };
 
   const menu = [
+    { name: "Retailers Directory", path: "/retailers" },
     { name: "For Retailers", path: "/contact" },
     { name: "Privacy Policy", path: "/privacy" },
     { name: "Terms and condition", path: "/terms-and-condition" },

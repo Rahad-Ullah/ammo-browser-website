@@ -54,6 +54,14 @@ type Pages = {
   "/terms-and-condition": {
     params: {};
   };
+  "/retailers": {
+    params: {};
+  };
+  "/retailers/:slug": {
+    params: {
+      "slug": string;
+    };
+  };
   "/product-details/:id": {
     params: {
       "id": string;
@@ -81,7 +89,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/sitemap.xml" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
+    page: "/" | "/sitemap.xml" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/retailers" | "/retailers/:slug" | "/product-details/:id" | "/*" | "/login" | "/otp-verification" | "/profile" | "/wishlist";
   };
   "pages/public/sitemap.tsx": {
     id: "pages/public/sitemap";
@@ -89,7 +97,7 @@ type RouteFiles = {
   };
   "pages/public/layout.tsx": {
     id: "pages/public/layout";
-    page: "/" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/product-details/:id" | "/*";
+    page: "/" | "/ammo" | "/ammo/:caliber" | "/ammo/:caliber/:productSlug" | "/blog" | "/blog/:slug" | "/contact" | "/faq" | "/privacy" | "/cookies" | "/terms-and-condition" | "/retailers" | "/retailers/:slug" | "/product-details/:id" | "/*";
   };
   "pages/public/home.tsx": {
     id: "pages/public/home";
@@ -138,6 +146,14 @@ type RouteFiles = {
     id: "pages/public/terms";
     page: "/terms-and-condition";
   };
+  "pages/public/retailers.tsx": {
+    id: "pages/public/retailers";
+    page: "/retailers";
+  };
+  "pages/public/retailer-details.tsx": {
+    id: "pages/public/retailer-details";
+    page: "/retailers/:slug";
+  };
   "pages/public/error.tsx": {
     id: "pages/public/error";
     page: "/*";
@@ -183,6 +199,8 @@ type RouteModules = {
   "pages/public/privacy": typeof import("./app/pages/public/privacy.tsx");
   "pages/public/cookies": typeof import("./app/pages/public/cookies.tsx");
   "pages/public/terms": typeof import("./app/pages/public/terms.tsx");
+  "pages/public/retailers": typeof import("./app/pages/public/retailers.tsx");
+  "pages/public/retailer-details": typeof import("./app/pages/public/retailer-details.tsx");
   "legacy-product-details": typeof import("./app/pages/public/product-details.tsx");
   "pages/public/error": typeof import("./app/pages/public/error.tsx");
   "pages/auth/layout": typeof import("./app/pages/auth/layout.tsx");

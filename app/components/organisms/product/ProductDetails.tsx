@@ -15,7 +15,7 @@ import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 import type { PriceAlertData, ProgressBar } from "~/types";
 import { errorToast } from "~/utils/toast";
 import { getLocalStorage } from "~/utils/localStorage";
-import { extractProductIdFromSlug, caliberToSlug } from "~/utils";
+import { extractProductIdFromSlug, caliberToSlug, getRetailerUrl } from "~/utils";
 import Button from "~/components/atoms/Button";
 import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
@@ -389,7 +389,19 @@ const ProductDetails = () => {
                           </td>
                           <td className="py-2 pl-1 xl:px-4 text-base xl:text-xl capitalize text-thirdColor font-normal vertical">
                             <span className="pr-5">:</span>
-                            {item.value}
+                            {item.label === "Retailer" && detailsData?.retailer?.title ? (
+                              <Link
+                                to={getRetailerUrl({
+                                  name: detailsData.retailer.title,
+                                  id: (detailsData.retailer as any)?.id,
+                                })}
+                                className="hover:underline hover:text-orange text-primaryWhite transition-colors"
+                              >
+                                {item.value}
+                              </Link>
+                            ) : (
+                              item.value
+                            )}
                           </td>
                         </tr>
                       ))}

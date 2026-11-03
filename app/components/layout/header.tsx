@@ -34,6 +34,7 @@ const Header = () => {
   const navlist: NavItem[] = [
     { path: "/", name: "home" },
     { path: "/ammo", name: "ammo" },
+    { path: "/retailers", name: "retailers" },
     { path: "/blog", name: "blog" },
     { path: "/contact", name: "contact" },
     { path: "/faq", name: "FAQ" },

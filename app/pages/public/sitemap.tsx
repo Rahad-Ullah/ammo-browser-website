@@ -13,9 +13,10 @@
 // would be served first and shadow this route.
 
 import { blogService } from "~/services/httpServices/blogService";
+import { retailerService } from "~/services/httpServices/retailerService";
 import { axiosPublic } from "~/lib/axios/axios.config";
-import { caliberToSlug, type CaliberItem } from "~/utils";
-import type { ApiBlogListItem } from "~/types";
+import { caliberToSlug, createRetailerSlug, type CaliberItem } from "~/utils";
+import type { ApiBlogListItem, RetailerItem } from "~/types";
 
 const SITE_URL = (
   import.meta.env.VITE_SITE_URL || "https://www.ammobrowser.com"
@@ -28,6 +29,7 @@ const STATIC_ROUTES: StaticRoute[] = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/home", changefreq: "daily", priority: "1.0" },
   { path: "/ammo", changefreq: "daily", priority: "0.9" },
+  { path: "/retailers", changefreq: "daily", priority: "0.8" },
   { path: "/blog", changefreq: "daily", priority: "0.9" },
   { path: "/contact", changefreq: "monthly", priority: "0.7" },
   { path: "/faq", changefreq: "monthly", priority: "0.6" },
@@ -98,6 +100,7 @@ function urlEntry(
 function buildSitemap(
   posts: ApiBlogListItem[],
   calibers: CaliberItem[],
+  retailers: RetailerItem[],
   today: string
 ): string {
   const entries: string[] = [];
@@ -117,6 +120,21 @@ function buildSitemap(
         today,
         "daily",
         "0.9"
+      )
+    );
+  }
+
+  // Dynamic retailer profile pages (/retailers/:slug)
+  for (const retailer of retailers) {
+    if (!retailer?.title) continue;
+    const slug = createRetailerSlug(retailer.title, retailer.id);
+    if (!slug) continue;
+    entries.push(
+      urlEntry(
+        `${SITE_URL}/retailers/${xmlEscape(slug)}`,
+        today,
+        "daily",
+        "0.8"
       )
     );
   }
@@ -163,18 +181,21 @@ export async function loader() {
 
   let posts: ApiBlogListItem[] = [];
   let calibers: CaliberItem[] = [];
+  let retailers: RetailerItem[] = [];
   try {
-    const [fetchedPosts, fetchedCalibers] = await Promise.all([
+    const [fetchedPosts, fetchedCalibers, fetchedRetailers] = await Promise.all([
       fetchAllBlogPosts(),
       fetchAllCalibers(),
+      retailerService.getAllRetailers(),
     ]);
     posts = fetchedPosts;
     calibers = fetchedCalibers;
+    retailers = fetchedRetailers;
   } catch (err) {
     console.error("[sitemap] failed to load dynamic routes:", err);
   }
 
-  const xml = buildSitemap(posts, calibers, today);
+  const xml = buildSitemap(posts, calibers, retailers, today);
   cache = { xml, expires: now + CACHE_TTL_MS };
   return sitemapResponse(xml);
 }
