@@ -109,7 +109,6 @@ export default function Blog() {
 
   const popularTags = [
     { name: "All", slug: "" },
-    ,
     ...tags.map((t) => ({ name: t.name, slug: t.slug })),
   ];
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ListSvg = ({ className }) => {
+const ListSvg = ({ className }: { className: string }) => {
   return (
     <svg
       className={className}

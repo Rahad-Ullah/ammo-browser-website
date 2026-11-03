@@ -177,7 +177,6 @@ export default function WishlistContent() {
                     : `Additional discount`;
 
                 const remainingForFreeShipping = pricing.remaining_for_discount;
-                // const free_shipping_message = free_shipping_message
                 const shippingDisplay =
                   retailer.free_shipping > 0 && pricing.shipping === 0
                     ? "Free"

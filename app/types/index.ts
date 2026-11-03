@@ -398,6 +398,7 @@ export interface WishlistRetailerGroup {
   retailer: WishlistRetailer;
   products: WishlistProduct[];
   pricing: WishlistPricing;
+  free_shipping_message?: string | null;
 }
 
 // Blog API Types
