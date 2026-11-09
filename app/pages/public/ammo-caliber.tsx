@@ -196,7 +196,7 @@ export default function AmmoCaliberPage() {
 
         {/* Main Ammo Filter & Products Grid */}
         <div className="bg-secondaryBg p-3 xl:p-[30px] grid grid-cols-12 gap-4 xl:gap-[30px]">
-          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000]">
+          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000] bg-secondaryBg pb-3 pt-1">
             <AmmoSearch
               handleChange={handleChange}
               isEdit={true}

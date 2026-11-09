@@ -94,11 +94,11 @@ export default function Ammo() {
     <div className="pt-32 md:pt-40 xl:pt-[210px]">
       <div className="container">
         <div className="bg-secondaryBg p-3 xl:p-[30px] grid grid-cols-12 gap-4 xl:gap-[30px]">
-          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000] flex flex-col gap-2">
+          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000] flex flex-col gap-2.5 bg-secondaryBg pb-3 pt-1">
             <AmmoSearch handleChange={handleChange} isEdit={true} />
             {caliberData && caliberData.length > 0 && (
-              <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-thin">
-                <span className="text-[11px] sm:text-xs uppercase tracking-wider text-[#817D81] font-Poppins shrink-0">
+              <div className="flex items-center gap-2 overflow-x-auto py-2 px-3 bg-[#141414] border border-[#2b2b2b] rounded-md scrollbar-thin">
+                <span className="text-[11px] sm:text-xs uppercase tracking-wider text-[#817D81] font-Poppins shrink-0 font-medium">
                   Calibers:
                 </span>
                 {caliberData.slice(0, 12).map((c) => (
