@@ -135,13 +135,18 @@ const Header = () => {
             : "bg-[#0c0b0b83] backdrop-blur-lg border-b-[1.5px] border-b-[#27272a]"
         }`}
       >
-        <div className="container pt-4 lg:pt-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8 lg:gap-24">
-              <Link to="/">
-                <img src={data?.logo || logo} alt="logo" className="lg:w-20 w-16" />
+        <div className="w-full max-w-[1920px] mx-auto px-3 sm:px-5 md:px-4 lg:px-10 xl:px-16 pt-3 md:pt-4 lg:pt-6">
+          <div className="flex items-center justify-between gap-2 md:gap-3 lg:gap-4">
+            <div className="flex items-center gap-3 md:gap-4 lg:gap-8 xl:gap-14 min-w-0">
+              <Link to="/" className="shrink-0">
+                <img
+                  src={data?.logo || logo}
+                  onError={(e) => ((e.target as HTMLImageElement).src = logo)}
+                  alt="logo"
+                  className="w-12 sm:w-14 md:w-14 lg:w-20 shrink-0 object-contain"
+                />
               </Link>
-              <ul className="md:flex hidden items-center gap-9 font-Poppins font-medium text-lg text-[#d3d3d3] capitalize">
+              <ul className="md:flex hidden items-center gap-2 md:gap-3.5 lg:gap-6 xl:gap-9 font-Poppins font-medium text-xs md:text-sm lg:text-base xl:text-lg text-[#d3d3d3] capitalize whitespace-nowrap">
                 {navlist.map((list, index) => (
                   <NavLink
                     to={list.path}
@@ -157,12 +162,12 @@ const Header = () => {
                 ))}
               </ul>
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2 md:gap-2.5 lg:gap-4 shrink-0">
               {user ? (
                 <div ref={profileRef} className="relative">
                   <div
                     onClick={() => setUserPopUp(!userPopUp)}
-                    className="size-8 lg:size-14 overflow-hidden rounded-full cursor-pointer border-[1.5px] border-primaryWhite"
+                    className="size-8 md:size-9 lg:size-14 overflow-hidden rounded-full cursor-pointer border-[1.5px] border-primaryWhite"
                   >
                     <img
                       src={profile?.image || avatar}
@@ -201,16 +206,16 @@ const Header = () => {
                 <>
                   <Link
                     to="/login"
-                    className={`hidden sm:inline-flex wishlist-button group py-2 lg:py-[10px] px-4 lg:px-[34px] font-Poppins font-medium gap-[10px] cursor-pointer text-white transition border-[1.5px] border-orange lg:text-lg text-sm relative bg-[#00000066] items-center justify-center hover:text-primaryWhite active:scale-95 ${
+                    className={`hidden sm:inline-flex wishlist-button group py-1.5 md:py-2 lg:py-2.5 px-2.5 md:px-3.5 lg:px-6 xl:px-8 font-Poppins font-medium gap-1.5 md:gap-2 lg:gap-2.5 cursor-pointer text-white transition border-[1.5px] border-orange text-xs md:text-sm lg:text-base xl:text-lg relative bg-[#00000066] items-center justify-center hover:text-primaryWhite active:scale-95 whitespace-nowrap shrink-0 ${
                       location.pathname === "/wishlist" ? "wishlist-button-active" : ""
                     }`}
                   >
-                    <img src={BadgeImage} alt="badge" className="min-w-[20px] max-w-[20px] h-[20px] lg:min-w-[32px] lg:max-w-[32px] lg:h-[32px]" />
+                    <img src={BadgeImage} alt="badge" className="w-3.5 h-3.5 md:w-4 md:h-4 lg:w-6 lg:h-6 shrink-0" />
                     Wishlist
                   </Link>
 
-                  <Link to="/login">
-                    <Button className="hidden sm:block">
+                  <Link to="/login" className="shrink-0">
+                    <Button className="hidden sm:inline-flex items-center justify-center !py-1.5 md:!py-2 lg:!py-2.5 !px-3 md:!px-4 lg:!px-8 xl:!px-10 !text-xs md:!text-sm lg:!text-base xl:!text-lg whitespace-nowrap">
                       Log In
                     </Button>
                   </Link>

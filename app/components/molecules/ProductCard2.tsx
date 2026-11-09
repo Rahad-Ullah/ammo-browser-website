@@ -97,7 +97,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
           "N/A"
         )}
       </h2>
-      <div className="pt-2 flex items-center xl:items-end gap-2 justify-between pb-[48px] sm:pb-[44px] lg:pb-[38px] 2xl:pb-[58px]">
+      <div className="pt-2 flex items-center gap-2 justify-between pb-[56px] xl:pb-[62px]">
         {/* left */}
         <div>
           <div className="flex flex-col gap-y-1">
@@ -161,7 +161,10 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
           </div>
         </div>
         {/* right */}
-        <div className="w-[110px] xl:w-[160px] shrink-0 xl:h-[150px]">
+        <div
+          className="w-[110px] sm:w-[125px] xl:w-[145px] shrink-0 flex items-center justify-center overflow-hidden rounded"
+          style={{ height: "105px", maxHeight: "105px" }}
+        >
           <img
             src={
               key_features?.image_url ||
@@ -185,7 +188,14 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
               img.onerror = null;
               img.src = bullet;
             }}
-            className="w-full h-full object-contain"
+            className="object-contain block"
+            style={{
+              maxHeight: "105px",
+              maxWidth: "100%",
+              width: "auto",
+              height: "auto",
+              objectFit: "contain",
+            }}
           />
         </div>
       </div>

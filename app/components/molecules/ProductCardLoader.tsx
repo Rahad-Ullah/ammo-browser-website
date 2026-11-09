@@ -20,7 +20,7 @@ const ProductCardLoader = ({ className }: ProductCardLoaderProps) => {
       <div className="h-5 xl:h-6 w-[150px] bg-gray-700 rounded-sm" />
 
       {/* Content area: stats left + image right */}
-      <div className="pt-2 flex items-start gap-2 justify-between pb-[48px] sm:pb-[44px] lg:pb-[38px] 2xl:pb-[58px]">
+      <div className="pt-2 flex items-center gap-2 justify-between pb-[56px] xl:pb-[62px]">
         {/* Left - Stats */}
         <div>
           {/* Cost per round */}
@@ -43,7 +43,10 @@ const ProductCardLoader = ({ className }: ProductCardLoaderProps) => {
         </div>
 
         {/* Right - Product image placeholder */}
-        <div className="w-[110px] xl:w-[160px] h-[100px] xl:h-[150px] shrink-0 bg-gray-700 rounded-sm" />
+        <div
+          className="w-[110px] sm:w-[125px] xl:w-[145px] shrink-0 bg-gray-700 rounded"
+          style={{ height: "105px", maxHeight: "105px" }}
+        />
       </div>
 
       {/* Buttons row */}

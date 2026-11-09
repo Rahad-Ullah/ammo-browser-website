@@ -167,7 +167,7 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
             </div>
           </div>
           <div
-            className={`xl:w-[213px] w-[130px] h-[154px] xxs:h-[127px] sm:!h-[170px] md:!h-[176px] lg:!h-[165px] xl:!h-[275px] ${imgClass}`}
+            className={`xl:w-[213px] w-[130px] h-[154px] xxs:h-[127px] sm:!h-[170px] md:!h-[176px] lg:!h-[165px] xl:!h-[275px] shrink-0 flex items-center justify-center overflow-hidden rounded ${imgClass}`}
           >
             <img
               src={
@@ -192,7 +192,14 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
                 img.onerror = null;
                 img.src = bullet;
               }}
-              className="w-full h-full object-contain"
+              className="object-contain block"
+              style={{
+                maxHeight: "100%",
+                maxWidth: "100%",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+              }}
             />
           </div>
         </div>

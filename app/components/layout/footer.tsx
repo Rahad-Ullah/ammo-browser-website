@@ -100,7 +100,12 @@ const Footer = () => {
         <div className="flex flex-col xl:gap-0 gap-5 lg:flex-row justify-between items-start">
           <div className="inline-flex flex-col">
             <Link to="/" className="mb-5">
-              <img src={data?.footer_logo || logo} alt="logo" className="xl:w-20 w-11" />
+              <img
+                src={data?.footer_logo || logo}
+                onError={(e) => ((e.target as HTMLImageElement).src = logo)}
+                alt="logo"
+                className="xl:w-20 w-11"
+              />
             </Link>
             <h4 className="xl:text-[50px] text-2xl heading-gradient">Join Our Newsletter</h4>
             <p className="font-Poppins text-sm xl:text-lg font-normal text-secondaryColor pt-2">
