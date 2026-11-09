@@ -26,48 +26,55 @@ const Ads = ({ placeholder = 4, className = "" }: AdsProps) => {
   // fall back to the "No Ads Available" state instead of a broken image.
   const [failedAds, setFailedAds] = useState<Record<number, boolean>>({});
 
-  const ads = data && data.length > 0 ? data : Array.from({ length: placeholder });
+  // Filter for ads that have a valid image and haven't failed to load
+  const hasValidAds = (data || []).some(
+    (item, index) =>
+      Boolean(item?.image_url || item?.system_image_url) && !failedAds[index]
+  );
+
+  if (!data || data.length === 0 || !hasValidAds) {
+    return null;
+  }
 
   return (
     <div className={`py-24 xl:py-36 ${className}`}>
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ads?.map((item, index) => (
-            <div key={index} className="relative">
-              <a
-                href={(item as Ad)?.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-secondaryBg w-full h-[180px] xl:h-[450px] flex items-center justify-center text-base md:text-xl text-primaryWhite"
-              >
-                {((item as Ad)?.image_url || (item as Ad)?.system_image_url) &&
-                !failedAds[index] ? (
+          {data.map((item, index) => {
+            const imageSrc = item?.image_url || item?.system_image_url;
+            if (!imageSrc || failedAds[index]) return null;
+
+            return (
+              <div key={index} className="relative">
+                <a
+                  href={item?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-secondaryBg w-full h-[180px] xl:h-[450px] flex items-center justify-center text-base md:text-xl text-primaryWhite overflow-hidden"
+                >
                   <img
-                    src={(item as Ad).image_url || (item as Ad).system_image_url}
+                    src={imageSrc}
                     alt={`Ad ${index + 1}`}
                     onError={(e) => {
-                      // Fallback chain: image_url -> system_image_url -> "No Ads Available".
+                      // Fallback chain: image_url -> system_image_url -> hide ad
                       const img = e.currentTarget;
-                      const ad = item as Ad;
                       if (
-                        ad.image_url &&
-                        ad.system_image_url &&
+                        item.image_url &&
+                        item.system_image_url &&
                         img.dataset.fallback !== "system"
                       ) {
                         img.dataset.fallback = "system";
-                        img.src = ad.system_image_url;
+                        img.src = item.system_image_url;
                         return;
                       }
                       setFailedAds((prev) => ({ ...prev, [index]: true }));
                     }}
                     className="w-full h-full object-cover"
                   />
-                ) : (
-                  "No Ads Available"
-                )}
-              </a>
-            </div>
-          ))}
+                </a>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
