@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import ReadArticleSvg from "~/components/svg/ReadArticleSvg";
+import { formatBlogImageUrl, blogHero } from "~/utils";
 import type { BlogCardProps } from "~/types";
 
 const BlogCard = ({
@@ -20,10 +21,22 @@ const BlogCard = ({
   return (
     <div className="bg-cynicalBlack hover:scale-[1.02] transition-transform duration-300 rounded-sm overflow-hidden">
       <Link to={blogLink}>
-        <div className="relative overflow-hidden group">
+        <div className="relative overflow-hidden group bg-[#161616]">
           <img
-            src={image}
+            src={formatBlogImageUrl(image)}
             alt={title}
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (img.src.includes("test.ammobrowser.com/uploads/blogs/")) {
+                img.src = img.src.replace(
+                  "test.ammobrowser.com/uploads/blogs/",
+                  "admin.ammobrowser.com/uploads/blogs/"
+                );
+                return;
+              }
+              img.onerror = null;
+              img.src = blogHero;
+            }}
             className="w-full h-[200px] sm:h-[240px] lg:h-[294px] object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>

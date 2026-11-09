@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { ApiBlogDetail } from "~/types";
 import LatestBlogSlider from "./LatestBlogSlider";
+import { formatBlogImageUrl, blogHero } from "~/utils";
 
 interface BlogDetailsContentProps {
   blog: ApiBlogDetail | null;
@@ -156,10 +157,22 @@ const BlogDetailsContent = ({ blog, isLoading }: BlogDetailsContentProps) => {
         </div>
 
         {/* Hero Image */}
-        <div className="mt-8 md:mt-9 lg:mt-10 xl:mt-[46px]">
+        <div className="mt-8 md:mt-9 lg:mt-10 xl:mt-[46px] bg-[#161616] rounded-xl md:rounded-2xl xl:rounded-[20px] overflow-hidden">
           <img
-            src={blog.image}
+            src={formatBlogImageUrl(blog.image)}
             alt={blog.title}
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (img.src.includes("test.ammobrowser.com/uploads/blogs/")) {
+                img.src = img.src.replace(
+                  "test.ammobrowser.com/uploads/blogs/",
+                  "admin.ammobrowser.com/uploads/blogs/"
+                );
+                return;
+              }
+              img.onerror = null;
+              img.src = blogHero;
+            }}
             className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[800px] object-cover rounded-xl md:rounded-2xl xl:rounded-[20px]"
           />
         </div>

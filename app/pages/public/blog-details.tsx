@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { BlogDetailsContent } from "~/components/organisms/blog";
 import { blogService } from "~/services/httpServices/blogService";
-import { generateMeta } from "~/utils";
+import { generateMeta, formatBlogImageUrl } from "~/utils";
 import type { Route } from "./+types/blog-details";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
@@ -35,6 +35,7 @@ export function meta({
     description: blog.meta_description || blog.sub_title,
     ogUrl: url,
     ogType: "article",
+    ogImage: formatBlogImageUrl(blog.image),
   });
 }
 

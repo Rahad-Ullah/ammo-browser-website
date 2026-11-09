@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import BlogCard from "~/components/molecules/BlogCard";
 import logoImage from "~/assets/logo.png";
 import { blogService } from "~/services/httpServices/blogService";
+import { formatBlogImageUrl } from "~/utils";
 import type { ApiBlogListItem, BlogCardProps } from "~/types";
 
 interface LatestBlogSliderProps {
@@ -29,7 +30,7 @@ function mapBlogToCardProps(item: ApiBlogListItem): BlogCardProps {
     description: item.sub_title,
     category: item.category.name,
     tags: item.tags,
-    image: item.image,
+    image: formatBlogImageUrl(item.image),
     author: {
       name: item.author,
       avatar: logoImage,

@@ -10,7 +10,7 @@ import { BlogPagination, BlogPaginationInfo } from "~/components/molecules";
 import logoImage from "~/assets/logo.png";
 import { blogService } from "~/services/httpServices/blogService";
 import { seoService } from "~/services/httpServices/seoService";
-import { generateMeta, seoDataToMetaConfig } from "~/utils";
+import { generateMeta, seoDataToMetaConfig, formatBlogImageUrl } from "~/utils";
 import type { Route } from "./+types/blog";
 import type { ApiBlogListItem, BlogCardProps } from "~/types";
 
@@ -55,7 +55,7 @@ function mapBlogToCardProps(item: ApiBlogListItem): BlogCardProps {
     description: item.sub_title,
     category: item.category.name,
     tags: item.tags,
-    image: item.image,
+    image: formatBlogImageUrl(item.image),
     author: {
       name: item.author,
       avatar: logoImage,
@@ -68,15 +68,8 @@ function mapBlogToCardProps(item: ApiBlogListItem): BlogCardProps {
 export default function Blog() {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
   const [activeTag, setActiveTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
-  const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
-    queryKey: ["blogCategories"],
-    queryFn: () => blogService.getCategories(),
-    staleTime: 5 * 60 * 1000,
-  });
 
   const { data: tags = [], isLoading: isTagsLoading } = useQuery({
     queryKey: ["blogTags"],
@@ -87,25 +80,18 @@ export default function Blog() {
   const { data: blogListData, isLoading } = useQuery({
     queryKey: [
       "blogList",
-      activeCategory,
       activeTag,
       debouncedSearch,
       currentPage,
     ],
     queryFn: () =>
       blogService.getBlogList({
-        category: activeCategory || undefined,
         tag: activeTag || undefined,
         search: debouncedSearch || undefined,
         page: currentPage,
       }),
     staleTime: 5 * 1000,
   });
-
-  const categoryItems = [
-    { name: "All", slug: "" },
-    ...categories.map((c) => ({ name: c.name, slug: c.slug })),
-  ];
 
   const popularTags = [
     { name: "All", slug: "" },
@@ -129,20 +115,9 @@ export default function Blog() {
     applyDebouncedSearch(value);
   };
 
-  const handleCategoryChange = (slug: string) => {
-    setActiveCategory(slug);
-    // setActiveTag("");
-    setCurrentPage(1);
-    // setSearchValue("");
-    setDebouncedSearch("");
-    applyDebouncedSearch.cancel();
-  };
-
   const handleTagClick = (tag: string) => {
-    setActiveTag(tag);
-    // setActiveCategory("");
+    setActiveTag((prev) => (prev === tag ? "" : tag));
     setCurrentPage(1);
-    // setSearchValue("");
     setDebouncedSearch("");
     applyDebouncedSearch.cancel();
   };
@@ -153,26 +128,22 @@ export default function Blog() {
   };
 
   return (
-    <div className="bg-[#0C0B0B]">
+    <div className="bg-[#0C0B0B] min-h-screen">
       <BlogBanner title="Insights, guides & updates" />
 
       <div className="container">
-        <div className="mt-[60px] xl:mt-[36px]">
+        <div className="mt-8 md:mt-10 xl:mt-[36px]">
           <BlogSearchBar
             searchValue={searchValue}
             onSearchChange={handleSearchChange}
-            categories={categoryItems}
             popularTags={popularTags}
             onTagClick={handleTagClick}
-            activeCategory={activeCategory}
             activeTag={activeTag}
-            handleCategoryChange={handleCategoryChange}
-            isCategoriesLoading={isCategoriesLoading}
             isTagsLoading={isTagsLoading}
           />
         </div>
 
-        <div className="mt-4 lg:mt-6 xl:mt-[43px]">
+        <div className="mt-6 md:mt-8 lg:mt-10 xl:mt-[43px]">
           <BlogGrid blogs={blogs} isLoading={isLoading} />
         </div>
 
