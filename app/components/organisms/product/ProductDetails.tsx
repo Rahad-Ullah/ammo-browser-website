@@ -21,7 +21,7 @@ import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
 import ProductReview from "./ProductReview";
 import PriceAlert from "./PriceAlert";
-import bullet from "~/assets/Bullet(2).png";
+import bullet from "~/assets/Bullet.png";
 import elips1 from "~/assets/Ellipse 12.png";
 import elips2 from "~/assets/Ellipse 13.png";
 import elips3 from "~/assets/Ellipse15.png";
