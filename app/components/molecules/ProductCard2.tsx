@@ -110,9 +110,23 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
         </div>
 
         {/* Retailer Section */}
-        <h5 className="text-[10px] xl:text-xs font-normal font-Inter text-secondaryColor pt-3 xl:pt-5 pb-0.5">
-          Retailer
-        </h5>
+        <div className="flex items-center justify-between gap-2 pt-3 xl:pt-5 pb-1.5">
+          <h5 className="text-[10px] xl:text-xs font-normal font-Inter text-secondaryColor">
+            Retailer
+          </h5>
+          {sponsored === 1 && (
+            <div className="sponsore-tag font-Inter text-[10px] xl:text-xs px-2 py-0.5 shrink-0">
+              <span className="spark__container">
+                <span className="spark" />
+              </span>
+              <span className="backdrop" />
+              <span className="text-primaryWhite z-40 flex items-center gap-1">
+                <MdStars className="text-yellow-600" />
+                Sponsored
+              </span>
+            </div>
+          )}
+        </div>
 
         <h2
           className="font-semibold text-base xl:text-xl block heading-gradient-mini truncate"
@@ -237,19 +251,6 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
         </button>
       </div>
 
-      {/* Sponsored tag */}
-      {sponsored === 1 && (
-        <div className="sponsore-tag font-Inter backdrop-blur-md text-xs px-2 py-1 absolute top-3 right-3">
-          <span className="spark__container">
-            <span className="spark" />
-          </span>
-          <span className="backdrop" />
-          <span className="text-primaryWhite z-40 flex items-center gap-1">
-            <MdStars className="text-yellow-600" />
-            Sponsored
-          </span>
-        </div>
-      )}
     </div>
   );
 };
