@@ -15,13 +15,14 @@ import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 import type { PriceAlertData, ProgressBar } from "~/types";
 import { errorToast } from "~/utils/toast";
 import { getLocalStorage } from "~/utils/localStorage";
-import { extractProductIdFromSlug, caliberToSlug, getRetailerUrl } from "~/utils";
+import { extractProductIdFromSlug, caliberToSlug, getRetailerUrl, isHandgunCaliber } from "~/utils";
 import Button from "~/components/atoms/Button";
 import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
 import ProductReview from "./ProductReview";
 import PriceAlert from "./PriceAlert";
 import bullet from "~/assets/Bullet.png";
+import bulletHandgun from "~/assets/bullet2.png";
 import elips1 from "~/assets/Ellipse 12.png";
 import elips2 from "~/assets/Ellipse 13.png";
 import elips3 from "~/assets/Ellipse15.png";
@@ -306,31 +307,42 @@ const ProductDetails = () => {
               <div className="xl:pt-20 lg:pt-10 pt-6 flex flex-col sm:flex-row-reverse md:flex-row gap-4 md:gap-0 justify-between">
                 {/* left - image */}
                 <div className="xl:w-[567px] lg:w-[368px] w-[180px] sm:w-[340px] sm:h-[230px] h-[200px] lg:h-[390px] xl:h-[686px]">
-                  <img
-                    src={
-                      detailsData?.key_features?.image_url ||
-                      detailsData?.key_features?.system_image_url ||
-                      bullet
-                    }
-                    alt="bullet"
-                    onError={(e) => {
-                      // Fallback chain: image_url -> system_image_url -> placeholder.
-                      const img = e.currentTarget;
-                      const system = detailsData?.key_features?.system_image_url;
-                      if (
-                        detailsData?.key_features?.image_url &&
-                        system &&
-                        img.dataset.fallback !== "system"
-                      ) {
-                        img.dataset.fallback = "system";
-                        img.src = system;
-                        return;
-                      }
-                      img.onerror = null;
-                      img.src = bullet;
-                    }}
-                    className="w-full h-full object-contain"
-                  />
+                  {(() => {
+                    const defaultBullet = isHandgunCaliber(
+                      detailsData?.caliber,
+                      detailsData?.key_features?.category?.name
+                    )
+                      ? bulletHandgun
+                      : bullet;
+                    return (
+                      <img
+                        src={
+                          detailsData?.key_features?.image_url ||
+                          detailsData?.key_features?.system_image_url ||
+                          (detailsData as any)?.image ||
+                          defaultBullet
+                        }
+                        alt="bullet"
+                        onError={(e) => {
+                          // Fallback chain: image_url -> system_image_url -> placeholder.
+                          const img = e.currentTarget;
+                          const system = detailsData?.key_features?.system_image_url;
+                          if (
+                            detailsData?.key_features?.image_url &&
+                            system &&
+                            img.dataset.fallback !== "system"
+                          ) {
+                            img.dataset.fallback = "system";
+                            img.src = system;
+                            return;
+                          }
+                          img.onerror = null;
+                          img.src = defaultBullet;
+                        }}
+                        className="w-full h-full object-contain"
+                      />
+                    );
+                  })()}
                 </div>
                 {/* right - details */}
                 <div className="relative z-20 text-primaryWhite w-full lg:w-[400px] xl:min-w-[580px]">

@@ -99,6 +99,7 @@ const Feature = () => {
         >
           <Swiper
             slidesPerView={1}
+            spaceBetween={16}
             loop={true}
             autoplay={{
               delay: 6000,
@@ -110,35 +111,47 @@ const Feature = () => {
             }}
             modules={[Navigation, Autoplay]}
             breakpoints={{
-              500: {
+              480: {
+                slidesPerView: 1.5,
+                spaceBetween: 16,
+              },
+              640: {
                 slidesPerView: 2,
-                spaceBetween: 15,
+                spaceBetween: 20,
               },
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2.5,
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 4.5,
-                spaceBetween: 20,
+                slidesPerView: 3,
+                spaceBetween: 24,
+              },
+              1280: {
+                slidesPerView: 4,
+                spaceBetween: 24,
+              },
+              1536: {
+                slidesPerView: 4,
+                spaceBetween: 28,
               },
             }}
-            className="mySwiper"
+            className="mySwiper !pb-2"
           >
             {(data?.length ?? 0) < 1 || isError
               ? new Array(8).fill(null).map((_, index) => (
-                  <SwiperSlide key={index}>
-                    <ProductCardLoader className={"border-[1px]"} />
+                  <SwiperSlide key={index} className="!h-auto flex">
+                    <ProductCardLoader className={"border-[1px] border-transparent h-full"} />
                   </SwiperSlide>
                 ))
               : isLoading
                 ? new Array(8).fill(null).map((_, index) => (
-                    <SwiperSlide key={index}>
-                      <ProductCardLoader className={"border-[1px]"} />
+                    <SwiperSlide key={index} className="!h-auto flex">
+                      <ProductCardLoader className={"border-[1px] border-transparent h-full"} />
                     </SwiperSlide>
                   ))
                 : data?.map((item, index) => (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={index} className="!h-auto flex">
                       <ProductCard2 item={item} onToggleModal={onToggleModal} isInWishlist={isInWishlist(item?.url)} />
                     </SwiperSlide>
                   ))}

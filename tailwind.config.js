@@ -11,6 +11,16 @@ export default withMT({
       Urbanist: "var(--Urbanist)",
       Roboto: "var(--Roboto)",
     },
+    screens: {
+      xs: "370px",
+      xxs: "500px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+      "3xl": "1680px",
+    },
     extend: {
       keyframes: {
         rotateBorder: {
@@ -38,7 +48,6 @@ export default withMT({
         additionalColor: "var(--additionalColor)",
         errorColor: "var(--errorColor)",
         cynicalBlack: "var(--cynicalBlack)",
-        gravelFint: "var(--gravelFint)",
         borderColor: "var(--borderColor)",
       },
       container: {
@@ -51,16 +60,6 @@ export default withMT({
           xl: "2.5rem",
           "2xl": "3rem",
         },
-      },
-      screens: {
-        xs: "370px",
-        xxs: "500px",
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1536px",
-        "3xl": "1680px",
       },
     },
   },

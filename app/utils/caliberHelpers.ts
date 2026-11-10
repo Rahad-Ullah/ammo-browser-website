@@ -176,3 +176,69 @@ export const getProductUrl = (
     : "";
   return `/ammo/${caliberSlug}/${productSlug}${query}`;
 };
+
+/**
+ * Determines whether a caliber/product belongs to handgun/pistol ammunition.
+ * Used to select the appropriate default bullet artwork (e.g. handgun round vs rifle cartridge).
+ */
+export const isHandgunCaliber = (
+  caliber?: string,
+  categoryName?: string
+): boolean => {
+  if (categoryName) {
+    const cat = categoryName.toLowerCase();
+    if (cat.includes("handgun") || cat.includes("pistol")) return true;
+    if (cat.includes("rifle") || cat.includes("shotgun")) return false;
+  }
+  if (!caliber) return false;
+  const cal = caliber.toLowerCase().trim();
+
+  // Explicit rifle / shotgun calibers that might have numbers matching pistol calibers
+  if (
+    cal.includes("5.7x28") ||
+    cal.includes("45-70") ||
+    cal.includes("45/70") ||
+    cal.includes("450 bush") ||
+    cal.includes("458 socom") ||
+    cal.includes("30-30") ||
+    cal.includes("win mag") ||
+    cal.includes("rem mag") ||
+    cal.includes("lapua") ||
+    cal.includes("prc") ||
+    cal.includes("creedmoor") ||
+    cal.includes("nato") ||
+    cal.includes("gauge") ||
+    /\b\d+\s*ga\b/.test(cal)
+  ) {
+    return false;
+  }
+
+  // Handgun caliber terms / abbreviations
+  if (
+    cal.includes("auto") ||
+    cal.includes("acp") ||
+    cal.includes("luger") ||
+    cal.includes("parabellum") ||
+    cal.includes("makarov") ||
+    cal.includes("tokarev") ||
+    cal.includes("s&w") ||
+    cal.includes("smith") ||
+    cal.includes("sig") ||
+    cal.includes("casull") ||
+    cal.includes("action express") ||
+    cal.includes("special")
+  ) {
+    return true;
+  }
+
+  // Standard handgun caliber prefixes / numbers (9mm, 10mm, .45, .40, .380, .38, .357, .44, .32, .25, .50 ae)
+  if (
+    /^(\.?10\s*mm|\.?9\s*mm|\.?45\b|\.?40\b|\.?380\b|\.?38\b|\.?357\b|\.?44\b|\.?32\b|\.?25\b|\.?50\s*ae)/i.test(
+      cal
+    )
+  ) {
+    return true;
+  }
+
+  return false;
+};

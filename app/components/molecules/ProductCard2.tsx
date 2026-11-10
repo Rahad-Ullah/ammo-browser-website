@@ -5,16 +5,21 @@ import { MdStars } from "react-icons/md";
 import Button from "~/components/atoms/Button";
 import mask from "~/assets/Ellipse 11.png";
 import bullet from "~/assets/Bullet.png";
+import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { getProductUrl, getRetailerUrl } from "~/utils";
+import { getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
   system_image_url?: string;
+  category?: {
+    name?: string;
+  };
 }
 
 interface Retailer {
+  id?: string | number;
   title?: string;
 }
 
@@ -33,6 +38,7 @@ interface ProductItem {
   sponsored?: number;
   url?: string;
   quantity?: number | null;
+  image?: string;
 }
 
 interface ProductCard2Props {
@@ -56,6 +62,17 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page") || "1";
 
+  // Select the appropriate bullet silhouette based on caliber / category
+  const defaultBullet = isHandgunCaliber(caliber, key_features?.category?.name)
+    ? bulletHandgun
+    : bullet;
+
+  const initialImage =
+    key_features?.image_url ||
+    key_features?.system_image_url ||
+    item.image ||
+    defaultBullet;
+
   const handleWishlistClick = async () => {
     setWishlistLoading(true);
     try {
@@ -66,114 +83,98 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
   };
 
   return (
-    <div className="w-full p-3 xl:p-5 font-Poppins bg-mainBG relative z-10 overflow-hidden">
-      <img src={mask} alt="mask" className="absolute bottom-0 right-0 -z-10" />
-      <div className="flex items-start justify-between">
-        <h5 className="text-primaryWhite text-sm xl:text-lg font-normal w-[200px] text-nowrap overflow-hidden text-ellipsis">
-          {caliber || "N/A"}
-          <br />
-        </h5>
-        <span className="font-normal text-base xl:text-lg text-primaryWhite flex items-center gap-[4px]">
-          <FaStar className="text-starColor text-base xl:text-xl" />
-          <span className="mt-[3px]">{retailer_avg_rating || "0.0"}</span>
-        </span>
-      </div>
-      <h5 className="text-[10px] xl:text-sm font-normal font-Inter text-secondaryColor pt-4 xl:pt-7 pb-1">
-        Retailer
-      </h5>
+    <div className="w-full h-full p-3.5 sm:p-4 xl:p-5 font-Poppins bg-mainBG relative z-10 overflow-hidden flex flex-col justify-between border border-transparent hover:border-orange/30 transition-colors">
+      <img
+        src={mask}
+        alt="mask"
+        className="absolute bottom-0 right-0 -z-10 pointer-events-none select-none"
+      />
 
-      <h2 className="font-semibold text-base xl:text-xl block heading-gradient-mini">
-        {item?.retailer?.title ? (
-          <Link
-            to={getRetailerUrl({
-              name: item.retailer.title,
-              id: (item.retailer as any)?.id,
-            })}
-            className="hover:underline hover:text-orange transition-colors"
+      {/* Top Header: Caliber & Rating */}
+      <div>
+        <div className="flex items-start justify-between gap-2">
+          <h5
+            className="text-primaryWhite text-sm sm:text-base xl:text-lg font-normal truncate min-w-0 flex-1"
+            title={caliber || "N/A"}
           >
-            {item.retailer.title}
-          </Link>
-        ) : (
-          "N/A"
-        )}
-      </h2>
-      <div className="pt-2 flex items-center gap-2 justify-between pb-[56px] xl:pb-[62px]">
-        {/* left */}
-        <div>
-          <div className="flex flex-col gap-y-1">
-            <h5 className="text-[10px] xl:text-sm font-Inter font-normal text-secondaryColor">
+            {caliber || "N/A"}
+          </h5>
+          <span className="font-normal text-sm sm:text-base xl:text-lg text-primaryWhite flex items-center gap-[4px] shrink-0">
+            <FaStar className="text-starColor text-sm sm:text-base xl:text-xl" />
+            <span className="mt-[2px]">
+              {retailer_avg_rating !== undefined && retailer_avg_rating !== null
+                ? Number(retailer_avg_rating).toFixed(1)
+                : "0.0"}
+            </span>
+          </span>
+        </div>
+
+        {/* Retailer Section */}
+        <h5 className="text-[10px] xl:text-xs font-normal font-Inter text-secondaryColor pt-3 xl:pt-5 pb-0.5">
+          Retailer
+        </h5>
+
+        <h2
+          className="font-semibold text-base xl:text-xl block heading-gradient-mini truncate"
+          title={item?.retailer?.title || "N/A"}
+        >
+          {item?.retailer?.title ? (
+            <Link
+              to={getRetailerUrl({
+                name: item.retailer.title,
+                id: item.retailer.id,
+              })}
+              className="hover:underline hover:text-orange transition-colors"
+            >
+              {item.retailer.title}
+            </Link>
+          ) : (
+            "N/A"
+          )}
+        </h2>
+      </div>
+
+      {/* Middle Content: Stats (Left) + Bullet Artwork (Right) */}
+      <div className="pt-2 sm:pt-3 flex items-center justify-between gap-2 my-auto">
+        {/* Left Stats */}
+        <div className="min-w-0 flex-1 space-y-1.5 xl:space-y-2">
+          <div>
+            <h5 className="text-[10px] xl:text-xs font-Inter font-normal text-secondaryColor leading-tight">
               Cost per round
             </h5>
-            <p className="text-base xl:text-xl font-semibold text-primaryWhite">
-              ${cost_per_round?.toFixed(2) || "N/A"}
+            <p className="text-sm sm:text-base xl:text-xl font-semibold text-primaryWhite leading-tight">
+              ${cost_per_round !== undefined && cost_per_round !== null ? cost_per_round.toFixed(2) : "N/A"}
             </p>
           </div>
-          <div className="flex flex-col pt-2">
-            <h5 className="text-[10px] xl:text-sm text-nowrap font-normal text-secondaryColor">
+          <div>
+            <h5 className="text-[10px] xl:text-xs font-normal text-secondaryColor leading-tight whitespace-nowrap">
               Number of Rounds
             </h5>
-            <p className="text-base xl:text-xl font-semibold text-primaryWhite">
+            <p className="text-sm sm:text-base xl:text-xl font-semibold text-primaryWhite leading-tight">
               {num_of_rounds || "N/A"}
             </p>
           </div>
-          <div className="flex flex-col pt-2">
-            <h5 className="text-[10px] xl:text-sm font-Inter font-normal text-secondaryColor">
+          <div>
+            <h5 className="text-[10px] xl:text-xs font-Inter font-normal text-secondaryColor leading-tight">
               Condition
             </h5>
-            <p className="text-base xl:text-lg font-semibold capitalize text-primaryWhite">
+            <p className="text-xs sm:text-sm xl:text-base font-semibold capitalize text-primaryWhite truncate leading-tight">
               {condition
-                ? condition.length > 10
-                  ? condition.slice(0, 10) + ".."
-                  : condition.slice(0, 10)
+                ? condition.length > 14
+                  ? condition.slice(0, 14) + ".."
+                  : condition
                 : "N/A"}
             </p>
           </div>
-          <div className="absolute right-0 bottom-0 px-[12px] 2xl:px-[20px] pb-[20px] w-full grid grid-cols-2 gap-[14px] 2xl:gap-[22px]">
-            <Link
-              to={getProductUrl(item, `page=${currentPage}`)}
-              className="block"
-            >
-              <Button
-                className="align-middle font-normal xs:py-2 px-3 xxs:px-3 !sm:px-5 !text-[11px] lg:!text-[11px] w-full xl:!text-[12px] h-[30px] xl:h-[34px] text-center sm:px-5 xl:px-9 lg:px-6 sm:!text-xs xl:!text-sm xl:py-3 py-[10px] !text-nowrap bg-orange capitalize active:scale-95 rounded-none transition-all text-primaryWhite font-Poppins !text-sm hover:bg-[#CC4910] after:display-none !leading-[13px] 2xl:!leading-[17px] !after:display-none"
-                btnTitle="View Details"
-              />
-            </Link>
-
-            <button
-              onClick={handleWishlistClick}
-              type="button"
-              disabled={wishlistLoading}
-              className={`font-normal 2xl:py-[7px] px-3 xs:px-3 !sm:px-5 text-[11px] py-[4.5px] xl:px-12 !text-nowrap border-[1px] capitalize active:scale-95 rounded-none transition-all inline-flex text-primaryWhite font-Poppins xl:text-[12px] justify-center gap-[11.5px] items-center ${isInWishlist ? "bg-orange border-orange" : "bg-transparent wishlist-button"} ${wishlistLoading ? "opacity-70 pointer-events-none" : ""}`}
-            >
-              {wishlistLoading ? (
-                <span className="inline-block w-4 h-4 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#fff' }} />
-              ) : (
-                <>
-                  <img
-                    src={BadgeImage}
-                    alt="badge-image"
-                    className="hidden 2xl:block min-w-[18px] max-w-[18px] h-[18px]"
-                  />
-                  {isInWishlist ? "In List" : "Add to List"}
-                </>
-              )}
-            </button>
-          </div>
         </div>
-        {/* right */}
-        <div
-          className="w-[110px] sm:w-[125px] xl:w-[145px] shrink-0 flex items-center justify-center overflow-hidden rounded"
-          style={{ height: "105px", maxHeight: "105px" }}
-        >
+
+        {/* Right Bullet Image Container */}
+        <div className="w-[100px] sm:w-[115px] xl:w-[135px] h-[95px] sm:h-[105px] xl:h-[115px] shrink-0 flex items-center justify-center p-1">
           <img
-            src={
-              key_features?.image_url ||
-              key_features?.system_image_url ||
-              bullet
-            }
-            alt="bullet"
+            src={initialImage}
+            alt={caliber || "bullet"}
             onError={(e) => {
-              // Fallback chain: image_url -> system_image_url -> placeholder.
+              // Fallback chain: image_url -> system_image_url -> default caliber bullet
               const img = e.currentTarget;
               const system = key_features?.system_image_url;
               if (
@@ -186,22 +187,59 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
                 return;
               }
               img.onerror = null;
-              img.src = bullet;
+              img.src = defaultBullet;
             }}
-            className="object-contain block"
-            style={{
-              maxHeight: "105px",
-              maxWidth: "100%",
-              width: "auto",
-              height: "auto",
-              objectFit: "contain",
-            }}
+            className="max-h-full max-w-full w-auto h-auto object-contain block drop-shadow-md select-none"
           />
         </div>
       </div>
+
+      {/* Bottom Action Buttons (in document flow to prevent bottom cut-off) */}
+      <div className="pt-3 xl:pt-4 mt-auto w-full grid grid-cols-2 gap-2 sm:gap-2.5 xl:gap-3.5">
+        <Link
+          to={getProductUrl(item, `page=${currentPage}`)}
+          className="block w-full"
+        >
+          <Button
+            className="w-full h-[32px] sm:h-[34px] xl:h-[38px] !py-0 !px-1.5 sm:!px-3 !text-[11px] sm:!text-xs xl:!text-sm text-center font-normal whitespace-nowrap bg-orange capitalize active:scale-95 rounded-none transition-all text-primaryWhite font-Poppins hover:bg-[#CC4910] flex items-center justify-center !leading-none"
+            btnTitle="View Details"
+          />
+        </Link>
+
+        <button
+          onClick={handleWishlistClick}
+          type="button"
+          disabled={wishlistLoading}
+          className={`w-full h-[32px] sm:h-[34px] xl:h-[38px] px-1.5 sm:px-3 text-[11px] sm:text-xs xl:text-sm font-normal whitespace-nowrap border capitalize active:scale-95 rounded-none transition-all inline-flex text-primaryWhite font-Poppins justify-center items-center gap-1.5 ${
+            isInWishlist
+              ? "bg-orange border-orange"
+              : "bg-transparent border-white/20 hover:border-orange wishlist-button"
+          } ${wishlistLoading ? "opacity-70 pointer-events-none" : ""}`}
+        >
+          {wishlistLoading ? (
+            <span
+              className="inline-block w-4 h-4 border-2 rounded-full animate-spin"
+              style={{
+                borderColor: "rgba(255,255,255,0.3)",
+                borderTopColor: "#fff",
+              }}
+            />
+          ) : (
+            <>
+              <img
+                src={BadgeImage}
+                alt="badge-image"
+                className="hidden 2xl:block w-4 h-4 shrink-0"
+              />
+              <span>{isInWishlist ? "In List" : "Add to List"}</span>
+            </>
+          )}
+        </button>
+      </div>
+
       {/* Sponsored tag */}
       {sponsored === 1 && (
-        <div className="sponsore-tag font-Inter backdrop-blur-md text-xs px-2 py-1 absolute md:top-16 top-14 right-3">
+        <div className="sponsore-tag font-Inter backdrop-blur-md text-xs px-2 py-1 absolute top-3 right-3">
           <span className="spark__container">
             <span className="spark" />
           </span>
@@ -217,3 +255,4 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
 };
 
 export default ProductCard2;
+

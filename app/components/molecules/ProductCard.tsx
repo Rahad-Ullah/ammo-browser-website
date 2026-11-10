@@ -5,9 +5,10 @@ import { MdStars } from "react-icons/md";
 import Button from "~/components/atoms/Button";
 import mask from "~/assets/Mask group.png";
 import bullet from "~/assets/Bullet.png";
+import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { getProductUrl, getRetailerUrl } from "~/utils";
+import { getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -52,6 +53,10 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
     retailer_avg_rating,
     key_features,
   } = item;
+
+  const defaultBullet = isHandgunCaliber(caliber, (key_features as any)?.category?.name)
+    ? bulletHandgun
+    : bullet;
 
   const handleWishlistClick = async () => {
     setWishlistLoading(true);
@@ -173,7 +178,8 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
               src={
                 key_features?.image_url ||
                 key_features?.system_image_url ||
-                bullet
+                (item as any)?.image ||
+                defaultBullet
               }
               alt="bullet"
               onError={(e) => {
@@ -190,7 +196,7 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
                   return;
                 }
                 img.onerror = null;
-                img.src = bullet;
+                img.src = defaultBullet;
               }}
               className="object-contain block"
               style={{
