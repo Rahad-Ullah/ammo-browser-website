@@ -26,7 +26,7 @@ interface IconProps {
 
 const Icon = ({ id, open, className }: IconProps) => {
   return (
-    <span className={`text-xl xl:text-[28px] ${className}`}>
+    <span className={`text-lg xl:text-2xl shrink-0 ml-4 ${className}`}>
       {id === open ? <TfiMinus /> : <PiPlusBold />}
     </span>
   );
@@ -59,16 +59,16 @@ const AccordionComponent = ({
         }
       >
         <AccordionHeader
-          className={`hover:text-primaryWhite px-4 xl:px-7 py-4 xl:py-8 font-Poppins bg-footerBG text-thirdColor hover:bg-orange transition border-b-0 text-base xl:text-2xl font-normal text-left ${
-            openIndex === index && "bg-orange !text-primaryWhite"
+          className={`hover:text-primaryWhite px-4 sm:px-6 xl:px-7 py-3.5 sm:py-4 xl:py-5 font-Poppins bg-footerBG text-thirdColor hover:bg-orange transition border-b-0 text-base sm:text-lg xl:text-xl font-normal text-left ${
+            openIndex === index ? "bg-orange !text-primaryWhite" : ""
           }`}
           onClick={() => handleOpen(index)}
         >
-          {title}
+          <span>{title}</span>
         </AccordionHeader>
         {/* openIndex === index &&  */}
         <AccordionBody
-          className={`${ "bg-orange text-primaryWhite py-0"} xl:text-xl text-xs font-light text-primaryWhite font-Poppins`}
+          className="bg-orange text-primaryWhite py-0 text-sm sm:text-base xl:text-base font-light font-Poppins leading-relaxed"
         >
           {description}
         </AccordionBody>
