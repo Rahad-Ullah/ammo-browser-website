@@ -50,10 +50,10 @@ const Description = ({ item, openDescription }: DescriptionProps) => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td className="py-2 pr-0 xl:pr-7 font-normal text-sm xl:text-xl text-primaryWhite md:text-gravelFint">
+              <td className="py-2 pr-0 xl:pr-7 font-normal text-sm xl:text-xl text-primaryWhite">
                 {item.label}
               </td>
-              <td className="py-2 pl-3 xl:px-4 flex items-center text-sm xl:text-xl text-gravelFint font-normal">
+              <td className="py-2 pl-3 xl:px-4 flex items-center text-sm xl:text-xl text-secondaryColor font-normal">
                 <span className="hidden md:block md:pr-5">:</span>
                 {item.value}
               </td>

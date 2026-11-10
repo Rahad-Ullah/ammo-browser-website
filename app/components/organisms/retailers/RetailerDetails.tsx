@@ -3,6 +3,7 @@ import { FaStar, FaExternalLinkAlt, FaBoxes } from "react-icons/fa";
 import { MdLocalShipping, MdStorefront } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import type { RetailerItem, Product } from "~/types";
+import { formatReviewCount } from "~/utils/retailerHelpers";
 import Button from "~/components/atoms/Button";
 import ProductCard2 from "~/components/molecules/ProductCard2";
 import elips1 from "~/assets/Ellipse 12.png";
@@ -90,6 +91,7 @@ export default function RetailerDetails({
                       <FaStar className="text-sm" />
                       <span className="font-semibold text-primaryWhite">
                         {ratingValue.toFixed(1)}
+                        {formatReviewCount(retailer.google_reviews_count)}
                       </span>
                       <span className="text-[#817D81]">(Google Rating)</span>
                     </div>
@@ -166,7 +168,7 @@ export default function RetailerDetails({
               </div>
               <p className="font-Poppins font-semibold text-base sm:text-lg text-primaryWhite">
                 {ratingValue !== null && !isNaN(ratingValue)
-                  ? `${ratingValue.toFixed(1)} / 5.0`
+                  ? `${ratingValue.toFixed(1)} / 5.0${formatReviewCount(retailer.google_reviews_count)}`
                   : "N/A"}
               </p>
             </div>

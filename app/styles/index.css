@@ -553,3 +553,9 @@
     padding-left: 16px;
   }
 }
+
+/* Tailwind does not emit this utility from the running build, so body copy
+   that uses it falls back to black on the black page. */
+.text-gravelFint {
+  color: var(--gravelFint);
+}

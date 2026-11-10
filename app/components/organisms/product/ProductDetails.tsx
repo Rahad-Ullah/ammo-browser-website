@@ -15,7 +15,7 @@ import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 import type { PriceAlertData, ProgressBar } from "~/types";
 import { errorToast } from "~/utils/toast";
 import { getLocalStorage } from "~/utils/localStorage";
-import { extractProductIdFromSlug, caliberToSlug, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { extractProductIdFromSlug, caliberToSlug, formatReviewCount, getRetailerUrl, isHandgunCaliber } from "~/utils";
 import Button from "~/components/atoms/Button";
 import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
@@ -43,6 +43,7 @@ interface KeyFeatures {
 
 interface Retailer {
   title?: string;
+  google_reviews_count?: number | string | null;
 }
 
 interface ProductData {
@@ -53,6 +54,7 @@ interface ProductData {
   num_of_rounds?: string;
   condition?: string;
   retailer_avg_rating?: number;
+  total_ratings_count?: number | string | null;
   key_features?: KeyFeatures;
   retailer?: Retailer;
   brand?: string;
@@ -239,7 +241,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="py-28 lg:py-36 xl:py-48 font-Poppins">
+    <div className="pt-28 pb-16 md:pt-32 2xl:py-48 font-Poppins">
       {/* toast */}
       <div
         className={`bg-[#1f0c01] py-2 lg:py-3 px-3 lg:px-4 text-xs lg:text-sm text-primaryWhite gap-2 flex items-center border-[1.5px] border-borderColor fixed duration-300 top-8 left-1/2 -translate-x-1/2 ${
@@ -263,7 +265,7 @@ const ProductDetails = () => {
           </div>
         ) : (
           <div>
-            <div className="p-7 xl:p-14 w-full h-full bg-cynicalBlack relative overflow-hidden">
+            <div className="p-5 lg:p-6 2xl:p-14 w-full bg-cynicalBlack relative overflow-hidden">
               <img src={elips2} alt="" className="absolute top-0 left-0 z-20" />
               <img
                 src={elips3}
@@ -296,17 +298,17 @@ const ProductDetails = () => {
                   </>
                 )}
                 <span>/</span>
-                <span className="text-primaryWhite font-medium truncate max-w-[150px] sm:max-w-xs md:max-w-md">
+                <span className="text-primaryWhite font-Poppins font-normal truncate max-w-[150px] sm:max-w-xs md:max-w-md">
                   {detailsData?.title || "Product Details"}
                 </span>
               </nav>
 
-              <h4 className="text-lg xl:text-3xl text-primaryWhite font-medium relative z-10">
+              <h4 className="text-lg xl:text-2xl 2xl:text-3xl text-primaryWhite font-medium relative z-10">
                 {detailsData?.caliber || "N/A"}
               </h4>
-              <div className="xl:pt-20 lg:pt-10 pt-6 flex flex-col sm:flex-row-reverse md:flex-row gap-4 md:gap-0 justify-between">
+              <div className="pt-4 lg:pt-5 2xl:pt-20 flex flex-col md:flex-row items-start gap-5 lg:gap-6 2xl:gap-10">
                 {/* left - image */}
-                <div className="xl:w-[567px] lg:w-[368px] w-[180px] sm:w-[340px] sm:h-[230px] h-[200px] lg:h-[390px] xl:h-[686px]">
+                <div className="w-full max-w-[280px] h-[180px] md:w-[200px] md:max-w-none md:h-[210px] md:shrink-0 md:mt-2 lg:w-[260px] lg:h-[240px] xl:w-[300px] xl:h-[260px] 2xl:w-[567px] 2xl:h-[640px]">
                   {(() => {
                     const defaultBullet = isHandgunCaliber(
                       detailsData?.caliber,
@@ -345,25 +347,25 @@ const ProductDetails = () => {
                   })()}
                 </div>
                 {/* right - details */}
-                <div className="relative z-20 text-primaryWhite w-full lg:w-[400px] xl:min-w-[580px]">
-                  <h5 className="font-light text-base xl:text-xl">
+                <div className="relative z-20 text-primaryWhite w-full min-w-0 flex-1">
+                  <h5 className="font-light text-base 2xl:text-xl">
                     Cost per round
                   </h5>
-                  <h3 className="text-2xl xl:text-6xl font-medium py-1 xl:py-3 mb-[10px] sm:mb-[16px] xl:mb-[22px]">
+                  <h3 className="text-2xl xl:text-4xl 2xl:text-6xl font-medium py-1 2xl:py-3 mb-2 lg:mb-3 2xl:mb-[22px]">
                     ${detailsData?.cost_per_round?.toFixed(2) || "N/A"}
                   </h3>
 
-                  <h5 className="text-base xl:text-xl font-light">
+                  <h5 className="text-base 2xl:text-xl font-light">
                     Total Cost
                   </h5>
-                  <h3 className="text-lg xl:text-3xl font-medium pt-1 xl:pt-2 mb-[10px] sm:mb-[16px] xl:mb-[22px]">
+                  <h3 className="text-lg xl:text-2xl 2xl:text-3xl font-medium pt-1 2xl:pt-2 mb-2 lg:mb-3 2xl:mb-[22px]">
                     ${detailsData?.price?.toFixed(2) || "0.0"}
                   </h3>
 
-                  <h5 className="text-base xl:text-xl font-light">
+                  <h5 className="text-base 2xl:text-xl font-light">
                     Estimated Shipping
                   </h5>
-                  <h3 className="text-lg xl:text-3xl font-medium pt-1 xl:pt-2">
+                  <h3 className="text-lg xl:text-2xl 2xl:text-3xl font-medium pt-1 2xl:pt-2">
                     ${detailsData?.shipping_cost?.toFixed(2) || "0.0"}
                     {detailsData?.shipping_cost_type
                       ? ` (${detailsData?.shipping_cost_type})`
@@ -372,34 +374,40 @@ const ProductDetails = () => {
 
                   {
                     !destinationZip && (
-                      <p className="text-sm xl:text-lg font-light mt-1 xl:mt-2">
+                      <p className="text-sm 2xl:text-lg font-light mt-1 2xl:mt-2">
                         Please enter your ZIP Code in the Filters section on the Ammo page to view estimated shipping costs.
                       </p>
                     )
                   }
 
                   {/* rating star */}
-                  <div className="pt-7 xl:pt-12 flex items-center gap-2">
-                    <div className="text-starColor flex items-center gap-[2px] text-lg xl:text-2xl">
+                  <div className="pt-4 lg:pt-5 2xl:pt-12 flex items-center gap-2">
+                    <div className="text-starColor flex items-center gap-[2px] text-lg 2xl:text-2xl">
                       <MdOutlineStarPurple500 />
                       <MdOutlineStarPurple500 />
                       <MdOutlineStarPurple500 />
                       <MdOutlineStarPurple500 />
                       <MdOutlineStarPurple500 />
                     </div>
-                    <div className="font-normal text-sm xl:text-lg text-starColor">
-                      <span>{detailsData?.retailer_avg_rating || "0.0"}/5</span>
+                    <div className="font-normal text-sm 2xl:text-lg text-starColor">
+                      <span>
+                        {detailsData?.retailer_avg_rating || "0.0"}/5
+                        {formatReviewCount(
+                          detailsData?.total_ratings_count ??
+                            detailsData?.retailer?.google_reviews_count
+                        )}
+                      </span>
                     </div>
                   </div>
                   {/* other details table */}
-                  <table className="w-full mt-1 sm:mt-0 mb-10">
+                  <table className="w-full mt-1 sm:mt-0 mb-4 lg:mb-5 2xl:mb-10">
                     <tbody>
                       {tableData.map((item, index) => (
                         <tr key={index}>
-                          <td className="py-2 pr-2 xl:pr-7 font-normal text-base xl:text-xl text-primaryWhite vertical">
+                          <td className="py-1.5 2xl:py-2 pr-2 2xl:pr-7 font-normal text-base 2xl:text-xl text-primaryWhite vertical">
                             {item.label}
                           </td>
-                          <td className="py-2 pl-1 xl:px-4 text-base xl:text-xl capitalize text-thirdColor font-normal vertical">
+                          <td className="py-1.5 2xl:py-2 pl-1 2xl:px-4 text-base 2xl:text-xl capitalize text-thirdColor font-normal vertical">
                             <span className="pr-5">:</span>
                             {item.label === "Retailer" && detailsData?.retailer?.title ? (
                               <Link
@@ -420,17 +428,17 @@ const ProductDetails = () => {
                     </tbody>
                   </table>
 
-                  <div className="grid grid-cols-2 gap-[18px] sm:gap-[24px]">
+                  <div className="grid grid-cols-2 gap-3 lg:gap-4 xl:gap-6">
                     <Button
                       onClick={handleRetailerUrl}
                       btnTitle="Visit Retailer"
-                      className="xl:py-3 py-[10px] px-8 xl:px-12 !text-nowrap bg-orange capitalize active:scale-95 rounded-none transition-all text-primaryWhite font-Poppins font-medium xl:!text-base hover:bg-[#CC4910] w-full text-xs md:!text-sm after:!w-0 !text-center flex items-center justify-center"
+                      className="2xl:py-3 py-[10px] !px-3 md:!px-4 2xl:!px-12 !text-nowrap bg-orange capitalize active:scale-95 rounded-none transition-all text-primaryWhite font-Poppins font-medium 2xl:!text-base hover:bg-[#CC4910] w-full text-xs md:!text-sm after:!w-0 !text-center flex items-center justify-center"
                     />
                     <button
                       type="button"
                       onClick={handleAddToWishlist}
                       disabled={wishlistLoading}
-                      className={`gap-[10px] items-center justify-center w-full text-xs md:text-sm xl:py-3 py-[10px] px-8 xl:px-12 !text-nowrap capitalize active:scale-95 rounded-none transition-all inline-flex text-primaryWhite font-Poppins font-medium xl:text-base border-[1px] ${isInWishlist(detailsData?.url) ? "bg-orange border-orange" : "bg-transparent wishlist-button"} ${wishlistLoading ? "opacity-70 pointer-events-none" : ""}`}
+                      className={`gap-2 items-center justify-center w-full text-xs md:text-sm 2xl:py-3 py-[10px] px-3 md:px-4 2xl:px-12 text-nowrap capitalize active:scale-95 rounded-none transition-all inline-flex text-primaryWhite font-Poppins font-medium 2xl:text-base border-[1px] ${isInWishlist(detailsData?.url) ? "bg-orange border-orange" : "bg-transparent wishlist-button"} ${wishlistLoading ? "opacity-70 pointer-events-none" : ""}`}
                     >
                       {wishlistLoading ? (
                         <span className="inline-block w-5 h-5 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#fff' }} />
@@ -439,7 +447,7 @@ const ProductDetails = () => {
                           <img
                             src={BadgeImage}
                             alt="badge-image"
-                            className="min-w-[20px] max-w-[20px] h-[20px] lg:min-w-[32px] lg:max-w-[32px] lg:h-[32px]"
+                            className="min-w-[20px] max-w-[20px] h-[20px] shrink-0 2xl:min-w-[32px] 2xl:max-w-[32px] 2xl:h-[32px]"
                           />
                           {isInWishlist(detailsData?.url)
                             ? "In List"

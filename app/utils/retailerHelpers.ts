@@ -70,6 +70,13 @@ export const extractRetailerIdFromSlug = (slugOrId?: string): string => {
  * Constructs the canonical SEO retailer detail URL:
  * /retailers/:retailer-slug
  */
+/** Google review count beside a rating, e.g. " (248)". Empty when the count is missing. */
+export const formatReviewCount = (count?: number | string | null): string => {
+  const value = Number(count);
+  if (!Number.isFinite(value) || value <= 0) return "";
+  return ` (${Math.round(value)})`;
+};
+
 export const getRetailerUrl = (retailer: {
   id?: string | number;
   name?: string;

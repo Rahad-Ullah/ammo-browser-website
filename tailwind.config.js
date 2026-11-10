@@ -49,6 +49,7 @@ export default withMT({
         errorColor: "var(--errorColor)",
         cynicalBlack: "var(--cynicalBlack)",
         borderColor: "var(--borderColor)",
+        gravelFint: "var(--gravelFint)",
       },
       container: {
         center: true,

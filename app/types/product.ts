@@ -34,6 +34,7 @@ export interface Product {
   cost_per_round?: number;
   condition?: string;
   retailer_avg_rating?: number;
+  total_ratings_count?: number | string | null;
   key_features?: KeyFeatures;
   sponsored?: number;
   url?: string;

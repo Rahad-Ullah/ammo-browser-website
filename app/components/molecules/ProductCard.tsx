@@ -8,7 +8,7 @@ import bullet from "~/assets/Bullet.png";
 import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { formatReviewCount, getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -17,6 +17,7 @@ interface KeyFeatures {
 
 interface Retailer {
   title?: string;
+  google_reviews_count?: number | string | null;
 }
 
 interface ProductItem {
@@ -29,6 +30,7 @@ interface ProductItem {
   num_of_rounds?: string;
   condition?: string;
   retailer_avg_rating?: number;
+  total_ratings_count?: number | string | null;
   key_features?: KeyFeatures;
   retailer?: Retailer;
   url?: string;
@@ -81,12 +83,27 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
             <FaStar className="text-starColor text-sm lg:text-base xl:text-[22px]" />
             <span className="mt-1">
               {retailer_avg_rating ? retailer_avg_rating : "0.0"}
+              {formatReviewCount(
+                item.total_ratings_count ?? item.retailer?.google_reviews_count
+              )}
             </span>
           </span>
         </div>
-        <h5 className="text-xs lg:text-sm xl:text-lg font-normal text-secondaryColor pt-4 xl:pt-7 lg:pb-1">
-          Retailer
-        </h5>
+        <div className="flex items-center justify-between gap-3 pt-4 xl:pt-7 lg:pb-1">
+          <h5 className="text-xs lg:text-sm xl:text-lg font-normal text-secondaryColor">
+            Retailer
+          </h5>
+          <div className="sponsore-tag font-Inter text-xs px-2 py-1 shrink-0">
+            <span className="spark__container">
+              <span className="spark" />
+            </span>
+            <span className="backdrop" />
+            <span className="text-primaryWhite relative z-10 flex items-center gap-1">
+              <MdStars className="text-yellow-600" />
+              Sponsored
+            </span>
+          </div>
+        </div>
         <h2 className="font-semibold text-xl lg:text-2xl xl:text-[40px] block heading-gradient-mini">
           {item?.retailer?.title ? (
             <Link
@@ -211,16 +228,6 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
         </div>
       </div>
 
-      <div className="sponsore-tag font-Inter backdrop-blur-md text-xs px-2 py-1 absolute md:top-24 top-14 right-3">
-        <span className="spark__container">
-          <span className="spark" />
-        </span>
-        <span className="backdrop" />
-        <span className="text-primaryWhite z-40 flex items-center gap-1">
-          <MdStars className="text-yellow-600" />
-          Sponsored
-        </span>
-      </div>
     </div>
   );
 };

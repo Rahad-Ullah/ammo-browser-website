@@ -3,7 +3,7 @@ import { FaStar, FaExternalLinkAlt, FaBoxes } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import type { RetailerItem } from "~/types";
-import { getRetailerUrl } from "~/utils/retailerHelpers";
+import { formatReviewCount, getRetailerUrl } from "~/utils/retailerHelpers";
 
 interface RetailerCardProps {
   retailer: RetailerItem;
@@ -58,7 +58,10 @@ export default function RetailerCard({ retailer }: RetailerCardProps) {
           {ratingValue !== null && !isNaN(ratingValue) && (
             <div className="flex items-center gap-1 bg-[#1A181C] px-2.5 py-1 rounded text-xs text-starColor font-Inter">
               <FaStar className="text-[11px]" />
-              <span className="font-semibold">{ratingValue.toFixed(1)}</span>
+              <span className="font-semibold">
+                {ratingValue.toFixed(1)}
+                {formatReviewCount(retailer.google_reviews_count)}
+              </span>
               <span className="text-[#817D81]">Google Rating</span>
             </div>
           )}

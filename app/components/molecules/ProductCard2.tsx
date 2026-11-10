@@ -8,7 +8,7 @@ import bullet from "~/assets/Bullet.png";
 import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { formatReviewCount, getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -21,6 +21,7 @@ interface KeyFeatures {
 interface Retailer {
   id?: string | number;
   title?: string;
+  google_reviews_count?: number | string | null;
 }
 
 interface ProductItem {
@@ -33,6 +34,7 @@ interface ProductItem {
   num_of_rounds?: string;
   condition?: string;
   retailer_avg_rating?: number;
+  total_ratings_count?: number | string | null;
   key_features?: KeyFeatures;
   retailer?: Retailer;
   sponsored?: number;
@@ -105,6 +107,9 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
               {retailer_avg_rating !== undefined && retailer_avg_rating !== null
                 ? Number(retailer_avg_rating).toFixed(1)
                 : "0.0"}
+              {formatReviewCount(
+                item.total_ratings_count ?? item.retailer?.google_reviews_count
+              )}
             </span>
           </span>
         </div>

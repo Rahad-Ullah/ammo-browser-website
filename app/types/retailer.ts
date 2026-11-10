@@ -10,6 +10,7 @@ export interface RetailerItem {
   title: string;
   retailer_website: string | null;
   google_rating: string | null;
+  google_reviews_count?: number | string | null;
   free_shipping: boolean;
   discount_type: string | null;
   discount_value: string | number | null;
