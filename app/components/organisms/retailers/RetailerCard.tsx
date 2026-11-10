@@ -15,19 +15,19 @@ export default function RetailerCard({ retailer }: RetailerCardProps) {
   const initial = (retailer.title || "R").charAt(0).toUpperCase();
 
   return (
-    <div className="group relative bg-[#131114] border border-[#2D2A2E] hover:border-orange transition-all duration-300 flex flex-col justify-between p-5 md:p-6 shadow-lg hover:shadow-orange/10">
+    <div className="group relative h-full bg-[#131114] border border-[#2D2A2E] hover:border-orange transition-all duration-300 flex flex-col justify-between p-5 md:p-6 shadow-lg hover:shadow-orange/10">
       {/* Top Header: Initial Avatar + Title + Outbound Website Link */}
       <div>
         <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#242125]">
-          <Link to={detailUrl} className="flex items-center gap-3">
+          <Link to={detailUrl} className="flex items-center gap-3 min-w-0 flex-1">
             <div className="w-14 h-14 rounded-lg bg-[#1E1B20] border border-[#332F36] flex items-center justify-center shrink-0 group-hover:border-orange/60 transition-colors">
               <span className="font-SairaStencil text-2xl text-orange font-bold">
                 {initial}
               </span>
             </div>
 
-            <div>
-              <h3 className="font-Poppins font-semibold text-lg text-primaryWhite group-hover:text-orange transition-colors line-clamp-1">
+            <div className="min-w-0">
+              <h3 className="font-Poppins font-semibold text-lg leading-snug text-primaryWhite group-hover:text-orange transition-colors line-clamp-2 break-words">
                 {retailer.title}
               </h3>
               {retailer.products_count > 0 && (
@@ -45,7 +45,7 @@ export default function RetailerCard({ retailer }: RetailerCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Visit ${retailer.title}`}
-              className="text-secondaryColor hover:text-orange p-1.5 transition-colors"
+              className="text-secondaryColor hover:text-orange p-1.5 transition-colors shrink-0"
               title="Visit official store"
             >
               <FaExternalLinkAlt className="text-xs" />
