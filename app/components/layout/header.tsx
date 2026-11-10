@@ -135,7 +135,7 @@ const Header = () => {
             : "bg-[#0c0b0b83] backdrop-blur-lg border-b-[1.5px] border-b-[#27272a]"
         }`}
       >
-        <div className="w-full max-w-[1920px] mx-auto px-3 sm:px-5 md:px-4 lg:px-10 xl:px-16 pt-3 md:pt-4 lg:pt-6">
+        <div className="container pt-3 md:pt-4 lg:pt-6">
           <div className="flex items-center justify-between gap-2 md:gap-3 lg:gap-4">
             <div className="flex items-center gap-3 md:gap-4 lg:gap-8 xl:gap-14 min-w-0">
               <Link to="/" className="shrink-0">

@@ -19,7 +19,7 @@ export default function CookiePolicy() {
 
           {/* all policy content */}
 
-          <div className="font-Poppins pb-28">
+          <div className="font-Poppins pb-28 max-w-5xl mx-auto">
             {/*================================== TERMS AND CONDITIONS ==============================*/}
             <div>
               <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">

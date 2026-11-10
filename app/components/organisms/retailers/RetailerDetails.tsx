@@ -24,7 +24,7 @@ export default function RetailerDetails({
 
   return (
     <div className="py-24 sm:py-28 lg:py-36 font-Poppins">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container">
         {/* Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"

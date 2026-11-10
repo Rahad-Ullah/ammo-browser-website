@@ -179,7 +179,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="py-24 sm:py-28 lg:py-36 font-Poppins">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container">
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl heading-gradient font-bold pb-4">
