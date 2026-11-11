@@ -6,8 +6,19 @@ import { getAllProductThunk } from "~/services/httpServices/productService";
 import { resetSuccess } from "~/redux/features/productSlice";
 import { AmmoSearch, AmmoProducts, AmmoFilter, Ads } from "~/components/organisms/ammo";
 import { axiosPublic } from "~/lib/axios/axios.config";
-import { caliberToSlug, type CaliberItem } from "~/utils";
+import { caliberToSlug, generateMeta, type CaliberItem } from "~/utils";
+import type { Route } from "./+types/ammo";
 import type { ProductFilterData } from "~/types";
+
+export function meta(): ReturnType<Route.MetaFunction> {
+  return generateMeta({
+    title: "Browse In-Stock Ammunition | AmmoBrowser",
+    description:
+      "Browse in-stock ammunition from trusted retailers. Compare cost per round, calibers, and bulk ammo deals.",
+    ogUrl: "https://www.ammobrowser.com/ammo",
+    keywords: "ammunition, in-stock ammo, ammo prices, cost per round, bulk ammo, calibers",
+  });
+}
 
 export default function Ammo() {
   const dispatch = useAppDispatch();

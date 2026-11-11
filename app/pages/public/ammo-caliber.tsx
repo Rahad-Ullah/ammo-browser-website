@@ -160,7 +160,7 @@ export default function AmmoCaliberPage() {
 
           <Link
             to="/ammo"
-            className="inline-flex items-center gap-1.5 text-xs md:text-sm text-secondaryColor hover:text-primaryWhite border border-[#444444] hover:border-[#666666] px-3 py-1.5 transition-colors font-Poppins"
+            className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs md:text-sm text-secondaryColor hover:text-primaryWhite border border-[#444444] hover:border-[#666666] px-3 py-1.5 transition-colors font-Poppins"
           >
             <IoArrowBackOutline className="text-sm" /> All Calibers
           </Link>

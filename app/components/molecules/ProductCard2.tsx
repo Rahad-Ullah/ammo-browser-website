@@ -6,7 +6,7 @@ import Button from "~/components/atoms/Button";
 import mask from "~/assets/Ellipse 11.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
+import { formatRatingScore, formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -58,6 +58,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
     key_features,
     sponsored,
   } = item;
+  const ratingLabel = formatRatingScore(retailer_avg_rating);
 
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page") || "1";
@@ -97,17 +98,17 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
           >
             {caliber || "N/A"}
           </h5>
-          <span className="font-normal text-sm sm:text-base xl:text-lg text-primaryWhite flex items-center gap-[4px] shrink-0">
-            <FaStar className="text-starColor text-sm sm:text-base xl:text-xl" />
-            <span className="mt-[2px]">
-              {retailer_avg_rating !== undefined && retailer_avg_rating !== null
-                ? Number(retailer_avg_rating).toFixed(1)
-                : "0.0"}
-              {formatReviewCount(
-                item.total_ratings_count ?? item.retailer?.google_reviews_count
-              )}
+          {ratingLabel && (
+            <span className="font-normal text-sm sm:text-base xl:text-lg text-primaryWhite flex items-center gap-[4px] shrink-0">
+              <FaStar className="text-starColor text-sm sm:text-base xl:text-xl" />
+              <span className="mt-[2px]">
+                {ratingLabel}
+                {formatReviewCount(
+                  item.total_ratings_count ?? item.retailer?.google_reviews_count
+                )}
+              </span>
             </span>
-          </span>
+          )}
         </div>
 
         {/* Retailer Section */}

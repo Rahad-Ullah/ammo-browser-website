@@ -6,7 +6,7 @@ import Button from "~/components/atoms/Button";
 import mask from "~/assets/Mask group.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
+import { formatRatingScore, formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -53,6 +53,7 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
     retailer_avg_rating,
     key_features,
   } = item;
+  const ratingLabel = formatRatingScore(retailer_avg_rating);
 
   const defaultBullet = getPlaceholderImage(
     caliber,
@@ -78,15 +79,17 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
           <h5 className="text-primaryWhite text-base lg:text-lg xl:text-2xl font-normal w-[250px] sm:w-[350px] text-nowrap overflow-hidden text-ellipsis">
             {caliber ? caliber : "N/A"}
           </h5>
-          <span className="font-normal text-sm lg:text-base xl:text-xl text-primaryWhite flex items-center gap-[6px]">
-            <FaStar className="text-starColor text-sm lg:text-base xl:text-[22px]" />
-            <span className="mt-1">
-              {retailer_avg_rating ? retailer_avg_rating : "0.0"}
-              {formatReviewCount(
-                item.total_ratings_count ?? item.retailer?.google_reviews_count
-              )}
+          {ratingLabel && (
+            <span className="font-normal text-sm lg:text-base xl:text-xl text-primaryWhite flex items-center gap-[6px]">
+              <FaStar className="text-starColor text-sm lg:text-base xl:text-[22px]" />
+              <span className="mt-1">
+                {ratingLabel}
+                {formatReviewCount(
+                  item.total_ratings_count ?? item.retailer?.google_reviews_count
+                )}
+              </span>
             </span>
-          </span>
+          )}
         </div>
         <div className="flex items-center justify-between gap-3 pt-4 xl:pt-7 lg:pb-1">
           <h5 className="text-xs lg:text-sm xl:text-lg font-normal text-secondaryColor">

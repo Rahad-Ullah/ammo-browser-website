@@ -22,9 +22,11 @@ interface AmmoProductsProps {
 const AmmoProducts = ({ setProductQueryData, apiLoad }: AmmoProductsProps) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { allProduct, productFilterData, loading } = useAppSelector(
+  const { allProduct, productFilterData, loading, error } = useAppSelector(
     (state) => state.productSlice
   );
+  const products = allProduct?.data?.data ?? [];
+  const isWaitingForProducts = loading || (allProduct == null && !error);
   const { authToken, addToWishlist } = useAuth();
   const { isInWishlist } = useWishlistUrls();
   const [wishlistModal, setWishlistModal] = useState<{ open: boolean; mode: WishlistModalMode; discountMessage?: string }>({ open: false, mode: "success" });
@@ -79,22 +81,22 @@ const AmmoProducts = ({ setProductQueryData, apiLoad }: AmmoProductsProps) => {
 
   return (
     <>
-      {loading ? (
+      {isWaitingForProducts ? (
         <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-3">
           {new Array(12).fill(null).map((_, index) => (
             <ProductCardLoader key={index} />
           ))}
         </div>
-      ) : (allProduct?.data?.data?.length ?? 0) > 0 ? (
+      ) : products.length > 0 ? (
         <>
           <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-3">
-            {allProduct?.data?.data?.map((item) => (
+            {products.map((item) => (
               <ProductCard2 key={item?.id} item={item} onToggleModal={onToggleModal} isInWishlist={isInWishlist(item?.url)} />
             ))}
           </div>
 
           <div className="flex items-center justify-center">
-            {(allProduct?.data?.data?.length ?? 0) > 0 && (
+            {products.length > 0 && (
               <Pagination
                 currentPage={productFilterData?.page || 1}
                 handlePageChange={handlePageChange}
