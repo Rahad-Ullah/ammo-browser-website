@@ -4,11 +4,9 @@ import { FaStar } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 import Button from "~/components/atoms/Button";
 import mask from "~/assets/Mask group.png";
-import bullet from "~/assets/Bullet.png";
-import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { formatReviewCount, getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -56,9 +54,10 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
     key_features,
   } = item;
 
-  const defaultBullet = isHandgunCaliber(caliber, (key_features as any)?.category?.name)
-    ? bulletHandgun
-    : bullet;
+  const defaultBullet = getPlaceholderImage(
+    caliber,
+    (key_features as { category?: { name?: string } })?.category?.name
+  );
 
   const handleWishlistClick = async () => {
     setWishlistLoading(true);

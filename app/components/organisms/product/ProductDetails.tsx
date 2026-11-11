@@ -15,14 +15,12 @@ import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 import type { PriceAlertData, ProgressBar } from "~/types";
 import { errorToast } from "~/utils/toast";
 import { getLocalStorage } from "~/utils/localStorage";
-import { extractProductIdFromSlug, caliberToSlug, formatReviewCount, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { extractProductIdFromSlug, caliberToSlug, formatReviewCount, getPlaceholderImage, getRetailerUrl } from "~/utils";
 import Button from "~/components/atoms/Button";
 import { TopPicks } from "~/components/organisms/shared";
 import Description from "./Description";
 import ProductReview from "./ProductReview";
 import PriceAlert from "./PriceAlert";
-import bullet from "~/assets/Bullet.png";
-import bulletHandgun from "~/assets/bullet2.png";
 import elips1 from "~/assets/Ellipse 12.png";
 import elips2 from "~/assets/Ellipse 13.png";
 import elips3 from "~/assets/Ellipse15.png";
@@ -312,12 +310,10 @@ const ProductDetails = () => {
                 {/* left - image */}
                 <div className="w-full max-w-[280px] h-[180px] md:w-[200px] md:max-w-none md:h-[210px] md:shrink-0 md:mt-2 lg:w-[260px] lg:h-[240px] xl:w-[300px] xl:h-[260px] 2xl:w-[567px] 2xl:h-[640px]">
                   {(() => {
-                    const defaultBullet = isHandgunCaliber(
+                    const defaultBullet = getPlaceholderImage(
                       detailsData?.caliber,
                       detailsData?.key_features?.category?.name
-                    )
-                      ? bulletHandgun
-                      : bullet;
+                    );
                     return (
                       <img
                         src={

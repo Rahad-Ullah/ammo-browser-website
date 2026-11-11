@@ -4,11 +4,9 @@ import { FaStar } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 import Button from "~/components/atoms/Button";
 import mask from "~/assets/Ellipse 11.png";
-import bullet from "~/assets/Bullet.png";
-import bulletHandgun from "~/assets/bullet2.png";
 import BadgeImage from "~/assets/badge-image.svg";
 
-import { formatReviewCount, getProductUrl, getRetailerUrl, isHandgunCaliber } from "~/utils";
+import { formatReviewCount, getPlaceholderImage, getProductUrl, getRetailerUrl } from "~/utils";
 
 interface KeyFeatures {
   image_url?: string;
@@ -65,9 +63,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
   const currentPage = searchParams.get("page") || "1";
 
   // Select the appropriate bullet silhouette based on caliber / category
-  const defaultBullet = isHandgunCaliber(caliber, key_features?.category?.name)
-    ? bulletHandgun
-    : bullet;
+  const defaultBullet = getPlaceholderImage(caliber, key_features?.category?.name);
 
   const initialImage =
     key_features?.image_url ||
