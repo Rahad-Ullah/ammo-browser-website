@@ -27,12 +27,11 @@ export interface VerifyOtpInput {
 }
 
 export interface ContactFormInput {
-  name: string;
   company_name: string;
   email: string;
-  phone?: string;
-  message: string;
-  subject?: string;
+  phone: string;
+  comment?: string;
+  message?: string;
   not_a_robot: boolean;
 }
 
