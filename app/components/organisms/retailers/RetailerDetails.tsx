@@ -195,7 +195,7 @@ export default function RetailerDetails({
                 In-Stock Ammunition from {retailer.title}
               </h2>
               <p className="text-xs sm:text-sm text-secondaryColor font-Inter mt-1">
-                Compare caliber prices, grain weight, and rounds per box.
+                Browse in-stock ammo deals, compare price per round, and explore available calibers, bullet weights, and bulk ammunition options.
               </p>
             </div>
 

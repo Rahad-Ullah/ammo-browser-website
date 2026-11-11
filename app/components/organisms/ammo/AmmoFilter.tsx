@@ -5,6 +5,7 @@ import {
   useMemo,
   type MutableRefObject,
 } from "react";
+import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { TbCategoryFilled } from "react-icons/tb";
 import { GrFormFilter } from "react-icons/gr";
@@ -50,6 +51,7 @@ const AmmoFilter = ({
   apiLoad,
   onSelectCaliber,
 }: AmmoFilterProps) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { productFilterData } = useAppSelector((state) => state.productSlice);
 
@@ -304,7 +306,7 @@ const AmmoFilter = ({
         onSelectCaliber(option);
       } else {
         const slug = caliberToSlug(option.caliber);
-        window.open(`/ammo/${slug}`, "_blank");
+        navigate(`/ammo/${slug}`);
       }
     } else {
       if (onSelectCaliber) {

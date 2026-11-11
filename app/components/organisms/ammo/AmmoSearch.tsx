@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { IoSearchOutline } from "react-icons/io5";
@@ -20,6 +21,7 @@ interface AmmoSearchProps {
 }
 
 const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { productFilterData } = useAppSelector((state) => state.productSlice);
   const { register, setValue, watch } = useForm();
@@ -55,7 +57,7 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
       onSelectCaliber(caliber);
     } else {
       const slug = caliberToSlug(caliber.caliber);
-      window.open(`/ammo/${slug}`, "_blank");
+      navigate(`/ammo/${slug}`);
     }
     setIsShow(false);
   };
@@ -83,7 +85,7 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
         </span>
       </div>
       {isShow && (
-        <div className="absolute top-[100%] left-0 px-[20px] sm:px-[30px] max-h-[500px] overflow-auto py-[20px] sm:py-[33px] xl:px-[40px] xl:py-[43px] bg-[#202020] w-full grid gap-[12px] sm:gap-[18px] z-50">
+        <div className="absolute top-[100%] left-0 px-[20px] sm:px-[30px] max-h-[500px] overflow-auto scrollbar-thin py-[20px] sm:py-[33px] xl:px-[40px] xl:py-[43px] bg-[#202020] w-full grid gap-[12px] sm:gap-[18px] z-50">
           {isLoading ? (
             <p className="font-poppins font-medium text-[12px] sm:text-[14px] md:text-[16px] 2xl:text-[20px] text-[#FFFFFF] text-center">
               Loading...

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
@@ -102,15 +103,13 @@ export default function Ammo() {
                   Calibers:
                 </span>
                 {caliberData.slice(0, 12).map((c) => (
-                  <a
+                  <Link
                     key={c.id}
-                    href={`/ammo/${caliberToSlug(c.caliber)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    to={`/ammo/${caliberToSlug(c.caliber)}`}
                     className="text-xs px-2.5 py-1 bg-[#202020] hover:bg-[#303030] text-primaryWhite hover:text-orange border border-[#3e3e3e] transition-colors rounded-sm shrink-0 font-Poppins"
                   >
                     {c.caliber}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}

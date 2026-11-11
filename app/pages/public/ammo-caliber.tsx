@@ -182,7 +182,7 @@ export default function AmmoCaliberPage() {
               </span>
             </div>
             <p className="text-xs md:text-sm text-[#9e9e9e] font-Poppins pt-1.5">
-              Find and compare in-stock {caliberTitle} ammo deals, prices per round, and retailer availability.
+              Find bulk {caliberTitle} ammo deals, compare prices per round, and browse in-stock ammunition from trusted retailers.
             </p>
           </div>
 
