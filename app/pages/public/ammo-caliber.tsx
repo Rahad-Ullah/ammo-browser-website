@@ -195,23 +195,25 @@ export default function AmmoCaliberPage() {
         </div>
 
         {/* Main Ammo Filter & Products Grid */}
-        <div className="bg-secondaryBg p-3 xl:p-[30px] grid grid-cols-12 gap-4 xl:gap-[30px]">
-          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000] bg-secondaryBg pb-3 pt-1">
+        <div className="bg-secondaryBg p-3 xl:p-4 flex flex-col gap-3 xl:gap-4">
+          <div className="sticky top-0 left-0 z-[666] sm:z-[1000] bg-secondaryBg pb-3 pt-1">
             <AmmoSearch
               handleChange={handleChange}
               isEdit={true}
               onSelectCaliber={handleSelectCaliber}
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2 relative">
-            <AmmoFilter
-              setProductQueryData={setProductQueryData}
-              apiLoad={apiLoad}
-              onSelectCaliber={handleSelectCaliber}
-            />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-9 xl:col-span-10">
-            <AmmoProducts setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+          <div className="grid grid-cols-1 sm:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)] gap-3 xl:gap-4">
+            <div className="relative min-w-0">
+              <AmmoFilter
+                setProductQueryData={setProductQueryData}
+                apiLoad={apiLoad}
+                onSelectCaliber={handleSelectCaliber}
+              />
+            </div>
+            <div className="min-w-0">
+              <AmmoProducts setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+            </div>
           </div>
         </div>
       </div>

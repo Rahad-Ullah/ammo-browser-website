@@ -80,14 +80,14 @@ const AmmoProducts = ({ setProductQueryData, apiLoad }: AmmoProductsProps) => {
   return (
     <>
       {loading ? (
-        <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-6">
+        <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-3">
           {new Array(12).fill(null).map((_, index) => (
             <ProductCardLoader key={index} />
           ))}
         </div>
       ) : (allProduct?.data?.data?.length ?? 0) > 0 ? (
         <>
-          <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-6">
+          <div className="grid grid-cols-1 xxs:grid-cols-2 sm:!grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 xl:!grid-cols-4 gap-2 sm:gap-3 xl:gap-3">
             {allProduct?.data?.data?.map((item) => (
               <ProductCard2 key={item?.id} item={item} onToggleModal={onToggleModal} isInWishlist={isInWishlist(item?.url)} />
             ))}

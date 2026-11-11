@@ -399,13 +399,13 @@ const AmmoFilter = ({
           openFilter ? "top-0 right-0" : "top-0 right-[-100%] sm:right-0"
         }`}
       >
-        <h5 className="font-semibold text-primaryWhite text-lg sm:text-xl leading-6 xl:leading-normal xl:text-3xl pb-7 xl:pb-14">
-          Filter <br /> Inventory
+        <h5 className="font-semibold text-primaryWhite text-lg sm:text-xl xl:text-2xl leading-snug pb-4 xl:pb-5">
+          Filter Inventory
         </h5>
 
         <div
           aria-label="all-filter-features"
-          className="flex flex-col gap-3 xl:gap-5"
+          className="flex flex-col gap-3 xl:gap-4"
         >
           <div aria-label="zip-code">
             <h5 className="flex items-center gap-2 text-primaryWhite font-medium text-base xl:text-xl pb-2">
@@ -428,7 +428,7 @@ const AmmoFilter = ({
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 xl:gap-5">
+          <div className="flex flex-col gap-3 xl:gap-4">
             {/* Category Filter */}
             <div>
               <h5 className="flex items-center gap-2 text-primaryWhite font-medium text-base xl:text-xl pb-2">
@@ -442,7 +442,7 @@ const AmmoFilter = ({
                   className="w-full text-primaryWhite capitalize font-normal text-sm hover:bg-[#303030] transition flex items-center justify-between px-4 py-2"
                   onClick={() => setIsOpen(!isOpen)}
                 >
-                  <span className="w-[180px] text-start text-nowrap overflow-hidden text-ellipsis">
+                  <span className="min-w-0 flex-1 text-start text-nowrap overflow-hidden text-ellipsis">
                     {categorySelect || "default"}
                   </span>
                   <LuChevronDown
@@ -494,7 +494,7 @@ const AmmoFilter = ({
                   className="w-full text-primaryWhite capitalize font-normal text-sm hover:bg-[#303030] transition flex items-center justify-between px-4 py-2"
                   onClick={() => setIsOpen2(!isOpen2)}
                 >
-                  <span className="w-[180px] text-start text-nowrap overflow-hidden text-ellipsis">
+                  <span className="min-w-0 flex-1 text-start text-nowrap overflow-hidden text-ellipsis">
                     {typeof selectedCaliber === "object"
                       ? selectedCaliber.caliber
                       : selectedCaliber}

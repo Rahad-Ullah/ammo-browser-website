@@ -81,7 +81,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
   };
 
   return (
-    <div className="w-full h-full p-3.5 sm:p-4 xl:p-5 font-Poppins bg-mainBG relative z-10 overflow-hidden flex flex-col justify-between border border-transparent hover:border-orange/30 transition-colors">
+    <div className="w-full h-full p-3.5 sm:p-4 xl:p-4 font-Poppins bg-mainBG relative z-10 overflow-hidden flex flex-col justify-between border border-transparent hover:border-orange/30 transition-colors">
       <img
         src={mask}
         alt="mask"
@@ -150,9 +150,9 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
       </div>
 
       {/* Middle Content: Stats (Left) + Bullet Artwork (Right) */}
-      <div className="pt-2 sm:pt-3 flex items-center justify-between gap-2 my-auto">
+      <div className="pt-2 sm:pt-3 flex items-center justify-between gap-2 my-auto min-w-0">
         {/* Left Stats */}
-        <div className="min-w-0 flex-1 space-y-1.5 xl:space-y-2">
+        <div className="min-w-0 flex-1 basis-0 space-y-1.5 xl:space-y-2">
           <div>
             <h5 className="text-[10px] xl:text-xs font-Inter font-normal text-secondaryColor leading-tight">
               Cost per round
@@ -162,7 +162,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
             </p>
           </div>
           <div>
-            <h5 className="text-[10px] xl:text-xs font-normal text-secondaryColor leading-tight whitespace-nowrap">
+            <h5 className="text-[10px] xl:text-xs font-normal text-secondaryColor leading-tight">
               Number of Rounds
             </h5>
             <p className="text-sm sm:text-base xl:text-xl font-semibold text-primaryWhite leading-tight">
@@ -184,7 +184,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
         </div>
 
         {/* Right Bullet Image Container */}
-        <div className="w-[100px] sm:w-[115px] xl:w-[135px] h-[95px] sm:h-[105px] xl:h-[115px] shrink-0 flex items-center justify-center p-1">
+        <div className="w-[clamp(96px,58%,136px)] max-w-[58%] h-[112px] sm:h-[120px] xl:h-[132px] shrink-0 flex items-center justify-center">
           <img
             src={initialImage}
             alt={caliber || "bullet"}
@@ -210,7 +210,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
       </div>
 
       {/* Bottom Action Buttons (in document flow to prevent bottom cut-off) */}
-      <div className="pt-3 xl:pt-4 mt-auto w-full grid grid-cols-2 gap-2 sm:gap-2.5 xl:gap-3.5">
+      <div className="pt-3 xl:pt-3 mt-auto w-full grid grid-cols-2 gap-2">
         <Link
           to={getProductUrl(item, `page=${currentPage}`)}
           className="block w-full"

@@ -94,8 +94,8 @@ export default function Ammo() {
   return (
     <div className="pt-32 md:pt-40 xl:pt-[210px]">
       <div className="container">
-        <div className="bg-secondaryBg p-3 xl:p-[30px] grid grid-cols-12 gap-4 xl:gap-[30px]">
-          <div className="col-span-12 sticky top-0 left-0 z-[666] sm:z-[1000] flex flex-col gap-2.5 bg-secondaryBg pb-3 pt-1">
+        <div className="bg-secondaryBg p-3 xl:p-4 flex flex-col gap-3 xl:gap-4">
+          <div className="sticky top-0 left-0 z-[666] sm:z-[1000] flex flex-col gap-2.5 bg-secondaryBg pb-3 pt-1">
             <AmmoSearch handleChange={handleChange} isEdit={true} />
             {caliberData && caliberData.length > 0 && (
               <div className="flex items-center gap-2 overflow-x-auto py-2 px-3 bg-[#141414] border border-[#2b2b2b] rounded-md scrollbar-thin">
@@ -114,11 +114,13 @@ export default function Ammo() {
               </div>
             )}
           </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2 relative">
-            <AmmoFilter setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-9 xl:col-span-10">
-            <AmmoProducts setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+          <div className="grid grid-cols-1 sm:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)] gap-3 xl:gap-4">
+            <div className="relative min-w-0">
+              <AmmoFilter setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+            </div>
+            <div className="min-w-0">
+              <AmmoProducts setProductQueryData={setProductQueryData} apiLoad={apiLoad} />
+            </div>
           </div>
         </div>
       </div>
