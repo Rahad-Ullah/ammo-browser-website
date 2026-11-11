@@ -12,7 +12,10 @@ const PRODUCT_ENDPOINTS = {
 const productListQueue = createRequestQueue();
 
 export const productManagementService = {
-  async getAllProducts(queryData: ProductFilterData): Promise<NestedPaginatedResponse<Product>> {
+  async getAllProducts(
+    queryData: ProductFilterData,
+    options?: { silent?: boolean }
+  ): Promise<NestedPaginatedResponse<Product>> {
     try {
       const response = await productListQueue.enqueue(() =>
         httpService.post<NestedPaginatedResponse<Product>>(PRODUCT_ENDPOINTS.ALL_PRODUCTS, queryData)
@@ -20,7 +23,9 @@ export const productManagementService = {
       const data = handleApiResponse(response);
       return data;
     } catch (error) {
-      handleApiError(error as Parameters<typeof handleApiError>[0]);
+      if (!options?.silent) {
+        handleApiError(error as Parameters<typeof handleApiError>[0]);
+      }
       throw error;
     }
   },
