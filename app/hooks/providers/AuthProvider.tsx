@@ -233,11 +233,16 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const addToWishlist = async (product_url: string, quantity?: string): Promise<ApiResponse<WishlistStoreData>> => {
-    const formData = new FormData();
-    formData.append("product_url", product_url);
-    formData.append("quantity", quantity || "1");
-    const { data } = await axiosPrivate.post<ApiResponse<WishlistStoreData>>("/wishlist/store", formData, {
-      headers: { "Content-Type": "multipart/form-data", ...axiosHeaders },
+    const payload: { product_url: string; quantity?: number } = {
+      product_url,
+    };
+    const parsedQuantity = Number(quantity);
+    if (Number.isFinite(parsedQuantity) && parsedQuantity >= 1) {
+      payload.quantity = parsedQuantity;
+    }
+
+    const { data } = await axiosPrivate.post<ApiResponse<WishlistStoreData>>("/wishlist/store", payload, {
+      headers: { ...axiosHeaders },
     });
     return data;
   };

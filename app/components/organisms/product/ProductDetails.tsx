@@ -175,9 +175,11 @@ const ProductDetails = () => {
     }
   }, [isLoading]);
 
-  if (isError) {
-    errorToast("Something went wrong");
-  }
+  useEffect(() => {
+    if (isError && !detailsData) {
+      errorToast("Something went wrong");
+    }
+  }, [isError, detailsData]);
 
   const handleProductRating = () => {
     if (!user) {
