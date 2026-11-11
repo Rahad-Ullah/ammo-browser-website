@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { RetailersList } from "~/components/organisms/retailers";
 import { retailerService } from "~/services/httpServices/retailerService";
 import { generateMeta } from "~/utils";
@@ -39,6 +39,21 @@ export async function loader({ request }: Route.LoaderArgs) {
   }
 }
 
+export function shouldRevalidate({
+  currentUrl,
+  nextUrl,
+  defaultShouldRevalidate,
+}: {
+  currentUrl: URL;
+  nextUrl: URL;
+  defaultShouldRevalidate: boolean;
+}) {
+  // The page already refetches retailers on the client. Rerunning the route
+  // loader on each keystroke navigates the document and interrupts typing.
+  if (currentUrl.pathname === nextUrl.pathname) return false;
+  return defaultShouldRevalidate;
+}
+
 export function meta({
   loaderData,
 }: Route.MetaArgs): ReturnType<Route.MetaFunction> {
@@ -71,7 +86,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
 
   const activeParams: RetailerQueryParams = {
     page: currentPage,
-    ...(searchQuery ? { search: searchQuery } : {}),
+    ...(searchQuery.trim() ? { search: searchQuery.trim() } : {}),
     ...(isFreeShipping ? { free_shipping: true } : {}),
     ...(googleRating ? { google_rating: googleRating } : {}),
   };
@@ -98,6 +113,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
     ],
     queryFn: () => retailerService.getPaginatedRetailers(activeParams),
     initialData: isInitialMatch ? loaderData.paginatedData : undefined,
+    placeholderData: keepPreviousData,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -113,7 +129,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
 
       if (updates.search !== undefined) {
         if (updates.search.trim()) {
-          next.set("search", updates.search.trim());
+          next.set("search", updates.search);
         } else {
           next.delete("search");
         }
@@ -147,7 +163,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
       }
 
       return next;
-    });
+    }, { replace: true, preventScrollReset: true });
   };
 
   const handleSearchChange = (newSearch: string) => {
@@ -165,7 +181,7 @@ export default function RetailersPage({ loaderData }: Route.ComponentProps) {
   };
 
   const handleResetFilters = () => {
-    setSearchParams(new URLSearchParams());
+    setSearchParams(new URLSearchParams(), { replace: true, preventScrollReset: true });
   };
 
   const handlePageChange = (newPage: number) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoSearchOutline, IoCloseCircleOutline } from "react-icons/io5";
 import { FaStore, FaShippingFast, FaStar } from "react-icons/fa";
 import { useDebouncedCallback } from "use-debounce";
@@ -40,11 +40,18 @@ export default function RetailersList({
   onPageChange,
 }: RetailersListProps) {
   const currentSearch = searchQuery !== undefined ? searchQuery : searchTitle;
-  const [searchValue, setSearchValue] = useState(currentSearch);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [hasText, setHasText] = useState(Boolean(currentSearch));
 
-  // Sync internal search input if search updates externally (e.g. back navigation or reset)
+  // Results and the URL update after typing. Never write those values back into
+  // the field while it is focused, or in-progress letters get replaced.
   useEffect(() => {
-    setSearchValue(currentSearch);
+    const input = inputRef.current;
+    if (!input || document.activeElement === input) return;
+    if (input.value !== currentSearch) {
+      input.value = currentSearch;
+      setHasText(Boolean(currentSearch));
+    }
   }, [currentSearch]);
 
   const debouncedSearch = useDebouncedCallback((val: string) => {
@@ -52,13 +59,13 @@ export default function RetailersList({
   }, 400);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setSearchValue(val);
-    debouncedSearch(val);
+    setHasText(Boolean(e.target.value));
+    debouncedSearch(e.target.value);
   };
 
   const handleClearSearch = () => {
-    setSearchValue("");
+    if (inputRef.current) inputRef.current.value = "";
+    setHasText(false);
     debouncedSearch.cancel();
     onSearchChange?.("");
   };
@@ -74,13 +81,17 @@ export default function RetailersList({
         <div className="relative flex-1 max-w-lg">
           <IoSearchOutline className="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondaryColor text-lg pointer-events-none" />
           <input
+            ref={inputRef}
             type="text"
-            value={searchValue}
+            defaultValue={currentSearch}
             onChange={handleInputChange}
+            onBlur={() => {
+              debouncedSearch.flush();
+            }}
             placeholder="Search retailers by name..."
             className="w-full bg-[#1A181C] border border-[#332F36] focus:border-orange text-primaryWhite placeholder-secondaryColor pl-10 pr-10 py-2.5 text-sm font-Inter outline-none transition-colors"
           />
-          {searchValue && (
+          {hasText && (
             <button
               type="button"
               onClick={handleClearSearch}
