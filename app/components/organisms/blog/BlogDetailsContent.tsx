@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import type { ApiBlogDetail } from "~/types";
 import LatestBlogSlider from "./LatestBlogSlider";
-import { formatBlogImageUrl, blogHero } from "~/utils";
+import { formatBlogImageUrl, blogHero, cleanBlogHtml } from "~/utils";
 
 interface BlogDetailsContentProps {
   blog: ApiBlogDetail | null;
@@ -184,7 +184,7 @@ const BlogDetailsContent = ({ blog, isLoading }: BlogDetailsContentProps) => {
           {/* Article Content (HTML from API) */}
           <article
             className="mt-8 md:mt-10 blog-content w-full"
-            dangerouslySetInnerHTML={{ __html: blog.content }}
+            dangerouslySetInnerHTML={{ __html: cleanBlogHtml(blog.content) }}
           />
         </div>
 

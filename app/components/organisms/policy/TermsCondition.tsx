@@ -24,44 +24,41 @@ export default function TermsCondition() {
 
           {/* all policy content */}
 
-          <div className="font-Poppins pb-28 max-w-5xl mx-auto">
+          <div className="font-Poppins pb-28 max-w-5xl mx-auto flex flex-col gap-10 lg:gap-12">
             {/*================================== TERMS AND CONDITIONS ==============================*/}
             <div>
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
-                TERMS AND CONDITIONS
-              </h4>
-              <p className="text-3xl font-medium text-primaryWhite py-5">
+              <p className="text-xl lg:text-3xl font-medium text-primaryWhite pb-5">
                 Welcome to AmmoBrowser!
               </p>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal leading-6">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal leading-8">
                 AmmoBrowser is a registered trademark and is the exclusive
                 property of Sol Legacies LLC. These are the terms and conditions
                 for:
               </p>
 
-              <div className="pt-5 pb-16">
+              <div className="pt-5">
                 <div className="flex items-center gap-2 lg:gap-4">
                   <ListSvg />{" "}
                   <a
                     href="https://sites.google.com/view/ammobrowser-com?usp=sharing"
                     target="_blank"
-                    className="font-medium text-base lg:text-2xl text-[var(--gravelFint)] hover:text-orange transition-colors duration-200 pt-1"
+                    className="font-medium text-base lg:text-xl text-[var(--gravelFint)] hover:text-orange transition-colors duration-200 pt-1"
                   >
                     Ammobrowser.com
                   </a>
                 </div>
-                <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal leading-6 pt-6">
+                <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal leading-8 pt-6">
                   The following terms and conditions apply to the AmmoBrowser
                   website. By using the website you agree to be bound by these
                   terms and conditions and our privacy policy.
                 </p>
-                <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal leading-6 pt-6">
+                <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal leading-8 pt-6">
                   In these terms and conditions, the words "website" and
                   "platform", refer to the AmmoBrowser website, "we", "us",
                   "our", and "AmmoBrowser", refers to AmmoBrowser, and "user",
                   refers to you, the AmmoBrowser user.
                 </p>
-                <p className="text-base lg:text-2xl text-primaryWhite font-semibold uppercase leading-6 pt-6">
+                <p className="text-base lg:text-xl text-primaryWhite font-semibold uppercase leading-8 pt-6">
                   PLEASE READ THESE TERMS AND CONDITIONS CAREFULLY BEFORE USING
                   OR OBTAINING ANY INFORMATION OR SERVICES FROM AMMOBROWSER.
                 </p>
@@ -69,11 +66,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= ACCEPTANCE OF TERMS ==============================*/}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Acceptance of terms
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 This agreement sets forth the legally binding terms for your use
                 of the website and services offered by AmmoBrowser. By accessing
                 and using the website and its services, you agree to abide by
@@ -103,11 +100,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Notifications and newsletter ==============================*/}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Notifications and newsletter
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 By providing AmmoBrowser with your e-mail address, you agree
                 that we may use your e-mail address to send you important
                 notifications and communications about our services, news and
@@ -122,10 +119,10 @@ export default function TermsCondition() {
 
             {/*================================= Website Description ==============================*/}
             <div>
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Website Description
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 AmmoBrowser is an online platform that operates as a directory
                 and search engine specializing in ammunition, allowing users to
                 find and compare prices of different products offered by
@@ -151,7 +148,7 @@ export default function TermsCondition() {
                 {/* {consentData?.map((item, index) => (
                 <div key={index} className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                  <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                     <span className="text-primaryWhite">{item.action}</span>{" "}
                     {item.description}
                   </p>
@@ -161,11 +158,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Sponsored Listings ==============================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Sponsored Listings
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 Some of the ammunition listings available on AmmoBrowser may be
                 sponsored by third-party providers or retailers who have
                 contracted advertising services on the platform. These listings
@@ -199,11 +196,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Caliber Overview ==============================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 “Caliber Overview” Section
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 The information included in the “Caliber Overview” section of
                 ammunition listings, which may contain data such as bullet type,
                 velocity, energy, applications, and compatibility, is provided
@@ -225,11 +222,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Shipping Time and Cost Estimates ==============================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Shipping Time and Cost Estimates
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 The information displayed on AmmoBrowser regarding estimated
                 shipping times is provided for informational purposes only and
                 is based on our own calculations derived from general
@@ -251,11 +248,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Blog and Editorial Content ==============================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Blog and Editorial Content
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 All articles, guides, comparisons, reviews, and other content
                 published on the AmmoBrowser blog are provided for general
                 informational and educational purposes only. While AmmoBrowser
@@ -288,11 +285,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Limitation of liability ==============================*/}
-            <div className="lg:pb-10 pb-6">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Limitation of liability
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 AmmoBrowser provides an online platform that acts solely as an
                 ammunition directory and search engine, making it easy for users
                 to search and compare prices between multiple retailers.
@@ -350,11 +347,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Copyright and trademark ==============================*/}
-            <div className="lg:pb-10 pb-6">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Copyright and trademark
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 AmmoBrowser is a registered trademark and is the exclusive
                 property of Sol Legacies LLC. All rights to the name, logo,
                 design, content and any other distinctive element of the
@@ -366,11 +363,11 @@ export default function TermsCondition() {
             </div>
 
             {/*================================= Copyright Infringement ==============================*/}
-            <div className="pt-5 pb-7 lg:pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Copyright Infringement
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 AmmoBrowser will respond to all inquiries, complaints and claims
                 regarding alleged infringement for failure to comply with or
                 violation of the provisions contained in the Digital Millennium
@@ -387,7 +384,7 @@ export default function TermsCondition() {
                 {CopyrightInfringement?.map((item, index) => (
                   <div key={index} className="flex items-start gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                    <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                    <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                       {item.description}
                     </p>
                   </div>
@@ -396,11 +393,11 @@ export default function TermsCondition() {
             </div>
 
             {/*====================== Personal data ====================== */}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Personal data
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 Any personal information you submit in connection with your use
                 of the website and our services will be used in accordance with
                 our privacy policy. By using the website and our services, you
@@ -410,18 +407,18 @@ export default function TermsCondition() {
             </div>
 
             {/* =================== Prohibited activities  =============== */}
-            <div className="pt-5 pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Prohibited activities
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 The following activities are prohibited:
               </p>
               <div className="flex flex-col gap-3 lg:gap-5 pt-10">
                 {Prohibitedactivities?.map((item, index) => (
                   <div key={index} className="flex items-start gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                    <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                    <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                       {item.description}
                     </p>
                   </div>
@@ -429,11 +426,11 @@ export default function TermsCondition() {
               </div>
             </div>
             {/* ==================== Disclaimer of warranties ======================  */}
-            <div className="pt-5 pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Disclaimer of warranties
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 Due to the nature of the Internet, AmmoBrowser provides and
                 maintains the website on an "as is", "as available" basis and
                 does not promise that use of the website will be uninterrupted
@@ -474,7 +471,7 @@ export default function TermsCondition() {
                 {Disclaimerwarranties?.map((item, index) => (
                   <div key={index} className="flex items-start gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                    <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                    <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                       {item.description}
                     </p>
                   </div>
@@ -482,11 +479,11 @@ export default function TermsCondition() {
               </div>
             </div>
             {/* ==================== Indemnification ============ */}
-            <div className="pt-5 pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Indemnification
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 You agree to defend and indemnify AmmoBrowser from and against
                 any claims, causes of action, demands, recoveries, losses,
                 damages, fines, penalties or other costs or expenses of any kind
@@ -497,7 +494,7 @@ export default function TermsCondition() {
                 {Indemnification?.map((item, index) => (
                   <div key={index} className="flex items-start gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                    <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                    <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                       {item.description}
                     </p>
                   </div>
@@ -506,11 +503,11 @@ export default function TermsCondition() {
             </div>
 
             {/* ================= Changes and termination =============== */}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Changes and termination
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 We may modify the website and these terms at any time, at our
                 sole discretion and without notice. You are responsible for
                 keeping yourself informed of these terms. Your continued use of
@@ -524,11 +521,11 @@ export default function TermsCondition() {
               </p>
             </div>
             {/* ================= Integration clause =============== */}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Integration clause
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 This agreement together with the privacy policy and any other
                 legal notices published by AmmoBrowser, shall constitute the
                 entire agreement between you and AmmoBrowser concerning and
@@ -536,11 +533,11 @@ export default function TermsCondition() {
               </p>
             </div>
             {/* ================= force majeure =============== */}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl capitalize text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl capitalize text-primaryWhite font-semibold">
                 Force majeure
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 AmmoBrowser shall not be liable for any failure or
                 non-performance of services due to causes beyond its reasonable
                 control, including but not limited to acts of civil authorities,
@@ -551,11 +548,11 @@ export default function TermsCondition() {
               </p>
             </div>
             {/* ================= Dispute resolution =============== */}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl capitalize text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl capitalize text-primaryWhite font-semibold">
                 Dispute resolution
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 Any dispute, claim or controversy arising between a user and
                 AmmoBrowser in connection with these terms and conditions, the
                 use of the website or the services provided, shall be resolved
@@ -612,11 +609,11 @@ export default function TermsCondition() {
               </p>
             </div>
             {/* ================= Applicable law and jurisdiction =============== */}
-            <div className="pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl capitalize text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl capitalize text-primaryWhite font-semibold">
                 Applicable law and jurisdiction
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 Your use of our website and services is conditioned upon your
                 acceptance of and compliance with all of the terms and
                 conditions set forth. This authorization to use our services
@@ -644,17 +641,17 @@ export default function TermsCondition() {
 
             {/* ================== Contact INFORMATION ================== */}
             <div>
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Contact information
               </h4>
-              <p className="text-base lg:text-2xl text-[var(--gravelFint)] font-normal">
+              <p className="text-base lg:text-xl text-[var(--gravelFint)] font-normal">
                 If you have questions or concerns about these terms, please
                 contact us using the contact information below:
               </p>
               <div className="flex flex-col gap-3 lg:gap-5 pt-10">
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                  <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                     <span className="text-primaryWhite">
                       Sol Legacies LLC - AmmoBrowser.
                     </span>{" "}
@@ -663,13 +660,13 @@ export default function TermsCondition() {
 
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                  <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                     2108 N St, Ste N, Sacramento, Ca 95816
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-[var(--gravelFint)]">
+                  <p className="font-medium text-base lg:text-xl text-[var(--gravelFint)]">
                     <a
                       href="mailto:support@ammobrowser.com"
                       className="text-primaryWhite underline hover:text-orange transition-colors duration-200"

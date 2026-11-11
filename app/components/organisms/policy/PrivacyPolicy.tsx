@@ -25,13 +25,13 @@ export default function PrivacyPolicy() {
 
         {/* all policy content */}
 
-        <div className="font-Poppins pb-28 max-w-5xl mx-auto">
+        <div className="font-Poppins pb-28 max-w-5xl mx-auto flex flex-col gap-10 lg:gap-12">
           {/*================================== Welcome to AmmoBrowser! ==============================*/}
           <div>
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
               Welcome to AmmoBrowser!
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal leading-6">
+            <p className="text-base lg:text-xl text-gravelFint font-normal leading-8">
               AmmoBrowser is a registered trademark and is the exclusive
               property of Sol Legacies LLC. <br /> AmmoBrowser deeply values
               your privacy and the protection of your personal data. This
@@ -57,11 +57,11 @@ export default function PrivacyPolicy() {
               Consumer Privacy Act (CCPA).
             </p>
             {/* general Information */}
-            <div className="pt-10 pb-24">
+            <div className="pt-8">
               <h5 className="text-xl lg:text-3xl font-semibold text-primaryWhite">
                 General Information
               </h5>
-              <p className="text-lg lg:text-2xl font-normal text-primaryWhite py-5">
+              <p className="text-base lg:text-xl font-normal text-primaryWhite py-5">
                 The personal data of users that are collected and processed
                 through:
               </p>
@@ -70,26 +70,26 @@ export default function PrivacyPolicy() {
                 <a
                   href="https://sites.google.com/view/ammobrowser-com?usp=sharing"
                   target="_blank"
-                  className="font-medium text-base lg:text-2xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1"
+                  className="font-medium text-base lg:text-xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1"
                 >
                   Ammobrowser.com
                 </a>
               </div>
               <div className="pt-7">
-                <p className="text-lg lg:text-2xl font-normal text-primaryWhite py-5">
+                <p className="text-base lg:text-xl font-normal text-primaryWhite py-5">
                   The personal data of users that are collected and processed
                   through:
                 </p>
                 <div className="flex flex-col gap-3 lg:gap-5">
                   <div className="flex items-center gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0"} />
-                    <p className="font-medium text-base lg:text-2xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1">
+                    <p className="font-medium text-base lg:text-xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1">
                       Sol Legacies LLC - AmmoBrowser
                     </p>
                   </div>
                   <div className="flex items-center gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0"} />
-                    <p className="font-medium text-base lg:text-2xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1">
+                    <p className="font-medium text-base lg:text-xl text-gravelFint hover:text-orange transition-colors duration-200 pt-1">
                       2108 N St, Ste N, Sacramento, Ca 95816
                     </p>
                   </div>
@@ -97,7 +97,7 @@ export default function PrivacyPolicy() {
                     <ListSvg />{" "}
                     <a
                       href="mailto:support@ammobrowser.com"
-                      className="font-medium text-base lg:text-2xl text-gravelFint pt-1 underline"
+                      className="font-medium text-base lg:text-xl text-gravelFint pt-1 underline"
                     >
                       Support@ammobrowser.com
                     </a>
@@ -109,10 +109,10 @@ export default function PrivacyPolicy() {
 
           {/*================================= HOW WE OBTAIN YOUR CONSENT ==============================*/}
           <div>
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
               How we obtain your constent
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               Use of our website, AmmoBrowser, implies acceptance of and consent
               to our data collection and processing practices as described in
               our Privacy Policy. By performing any of the following actions,
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
               {consentData?.map((item, index) => (
                 <div key={index} className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">{item.action}</span>{" "}
                     {item.description}
                   </p>
@@ -135,25 +135,26 @@ export default function PrivacyPolicy() {
           </div>
 
           {/*========================== TYPES OF INFORMATION COLLECTED ================================*/}
-          <div className="py-16 lg:py-24">
-            <h4 className="pb-5 text-2xl lg:ext-5xl text-primaryWhite font-semibold">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
               Types of information collected
             </h4>
             <h5 className="text-xl lg:text-3xl font-semibold text-primaryWhite pt-2">
               Types of Data Collected
             </h5>
-            <p className="text-base lg:text-2xl font-normal text-gravelFint py-5">
+            <p className="text-base lg:text-xl font-normal text-gravelFint py-5">
               AmmoBrowser collects and processes different types of information
               based on user interaction with the platform. The information
               collected is categorized as follows:
             </p>
             {/* Personal Data Provided by the User */}
+            <div className="flex flex-col gap-8 lg:gap-10 pt-8">
             {infoCollectionData?.map((item, index) => (
-              <div key={index} className="py-10">
+              <div key={index}>
                 <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                   {item.category}
                 </h4>
-                <p className="font-normal text-base lg:text-2xl text-gravelFint">
+                <p className="font-normal text-base lg:text-xl text-gravelFint">
                   {item.description}
                 </p>
                 <div className="flex flex-col gap-3 lg:gap-5 pt-10">
@@ -163,7 +164,7 @@ export default function PrivacyPolicy() {
                       className="flex items-start gap-2 lg:gap-4"
                     >
                       <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                      <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                      <p className="font-medium text-base lg:text-xl text-gravelFint">
                         <span className="text-primaryWhite">
                           {item.type + ": "}
                         </span>
@@ -174,13 +175,14 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
           {/* ============================ HOW LONG WE KEEP YOUR DATA ================================ */}
-          <div className="pb-16 lg:pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               How long we keep your data
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               The personal data provided by our users through our website will
               be kept for the time necessary to fulfill the legitimate purposes
               described in this policy in section 5 or until the user
@@ -199,11 +201,11 @@ export default function PrivacyPolicy() {
           </div>
 
           {/* =========================== HOW WE USE YOUR INFORMATION  =============================== */}
-          <div className="pb-16 lg:pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               How we use your information (legitimate purposes)
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               The personal data provided by our users through our website will
               be kept for the time necessary to fulfill the legitimate purposes
               described in this policy in section 5 or until the user
@@ -220,12 +222,13 @@ export default function PrivacyPolicy() {
               expired.
             </p>
 
+            <div className="flex flex-col gap-8 lg:gap-10 pt-8">
             {legitimateData?.map((item, index) => (
-              <div key={index} className="py-10">
+              <div key={index}>
                 <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                   {item.category}
                 </h4>
-                <p className="font-normal text-base lg:text-2xl text-gravelFint">
+                <p className="font-normal text-base lg:text-xl text-gravelFint">
                   {item.description}
                 </p>
                 <div className="flex flex-col gap-3 lg:gap-5 pt-10">
@@ -235,7 +238,7 @@ export default function PrivacyPolicy() {
                       className="flex items-start gap-2 lg:gap-4"
                     >
                       <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                      <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                      <p className="font-medium text-base lg:text-xl text-gravelFint">
                         <span className="text-primaryWhite">
                           {item.purpose}
                         </span>{" "}
@@ -246,14 +249,15 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
 
           {/* ======================== HOW WE SHARE INFORMATION =============================== */}
-          <div className="pb-4 lg:pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               How we share information
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               Information about our clients is an important part of our
               business, and we are not in the business of selling it to others.
               We share client information only as described below.
@@ -262,7 +266,7 @@ export default function PrivacyPolicy() {
               {shareInfoData?.map((item, index) => (
                 <div key={index} className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">
                       {item.category + ": "}
                     </span>{" "}
@@ -274,11 +278,11 @@ export default function PrivacyPolicy() {
           </div>
 
           {/* ====================== Data BREACH NOTIFICATIONS =========================*/}
-          <div className="py-6 lg:py-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               Data breach notification
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               In the event of a security breach that compromises the
               confidentiality of the personal data of our users, AmmoBrowser
               undertakes to notify those affected in a timely manner. This
@@ -290,11 +294,11 @@ export default function PrivacyPolicy() {
           </div>
 
           {/*================================ International DATA TRANSFER ================*/}
-          <div className="pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               International data transfer
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               AmmoBrowser may transfer users' personal data outside of their
               home country due to the use of hosting, storage and processing
               services provided by third parties operating servers located in
@@ -326,10 +330,10 @@ export default function PrivacyPolicy() {
 
           {/*====================== PROTECTION OF YOUR INFORMATION ====================== */}
           <div>
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
               Protection of your information
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               We grant access to your personal information only to those outside
               persons or services that have a legitimate need to know it and in
               accordance with our privacy policy. We adhere to industry
@@ -348,7 +352,7 @@ export default function PrivacyPolicy() {
               {protectionInfo?.map((item, index) => (
                 <div key={index} className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">{item.title}:</span>{" "}
                     {item.description}
                   </p>
@@ -358,11 +362,11 @@ export default function PrivacyPolicy() {
           </div>
 
           {/* =================== PROTECTION OF CHILDREN'S ONLINE PRIVACY  =============== */}
-          <div className="py-4 lg:py-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               Protection of children's online privacy
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               We comply with the requirements of national and international data
               protection regulations regarding the protection of personal data
               of minors. We do not collect any information from children under
@@ -374,11 +378,11 @@ export default function PrivacyPolicy() {
             </p>
           </div>
           {/* ==================== Third PARTIES ======================  */}
-          <div className="pb-4 lg:pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               Third parties
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               Except as expressly included in this privacy policy, this document
               only addresses the use and disclosure of information that
               AmmoBrowser collects from you. If you disclose your information to
@@ -393,11 +397,11 @@ export default function PrivacyPolicy() {
             </p>
           </div>
           {/* ==================== Changes TO PRIVACY POLICY ============ */}
-          <div className="pb-4 lg:pb-24">
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-medium">
+          <div>
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-medium">
               Changes to privacy policy
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               We reserve the right to change our privacy policy at any time.
               Changes will be promptly notified to our users and posted on the
               website. Your continued use of our website following such changes
@@ -407,10 +411,10 @@ export default function PrivacyPolicy() {
 
           {/* ================== Contact INFORMATION ================== */}
           <div>
-            <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
               Contact information
             </h4>
-            <p className="text-base lg:text-2xl text-gravelFint font-normal">
+            <p className="text-base lg:text-xl text-gravelFint font-normal">
               If you have questions or concerns about this privacy policy and
               the treatment and security of your data, please contact us using
               the contact information below:
@@ -418,7 +422,7 @@ export default function PrivacyPolicy() {
             <div className="flex flex-col gap-3 lg:gap-5 pt-10">
               <div className="flex items-start gap-2 lg:gap-4">
                 <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                <p className="font-medium text-base lg:text-xl text-gravelFint">
                   <span className="text-primaryWhite">
                     Sol Legacies LLC - AmmoBrowser.
                   </span>{" "}
@@ -427,7 +431,7 @@ export default function PrivacyPolicy() {
 
               <div className="flex items-start gap-2 lg:gap-4">
                 <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                <p className="font-medium text-base lg:text-xl text-gravelFint">
                   <span className="text-primaryWhite">
                     Rectification, restriction, limitation and deletion:
                   </span>{" "}
@@ -437,7 +441,7 @@ export default function PrivacyPolicy() {
               </div>
               <div className="flex items-start gap-4">
                 <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                <p className="font-medium text-base lg:text-xl text-gravelFint">
                   <a
                     href="mailto:support@ammobrowser.com"
                     className="text-primaryWhite underline hover:text-orange transition-colors duration-200"

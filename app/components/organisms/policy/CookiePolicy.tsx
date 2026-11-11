@@ -19,21 +19,21 @@ export default function CookiePolicy() {
 
           {/* all policy content */}
 
-          <div className="font-Poppins pb-28 max-w-5xl mx-auto">
+          <div className="font-Poppins pb-28 max-w-5xl mx-auto flex flex-col gap-10 lg:gap-12">
             {/*================================== TERMS AND CONDITIONS ==============================*/}
             <div>
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Welcome to AmmoBrowser!
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal leading-6">
+              <p className="text-base lg:text-xl text-gravelFint font-normal leading-8">
                 AmmoBrowser is a registered trademark and is the exclusive
                 property of Sol Legacies LLC.
               </p>
 
-              <div className="pt-5 lg:pb-16 pb-9">
+              <div className="pt-5">
                 <div className="flex items-center gap-2 lg:gap-4">
                   <ListSvg />{" "}
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint pt-1">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint pt-1">
                     This cookie policy explains how and why cookies and other
                     similar technologies may be stored on and accessed from your
                     device when you use or visit:
@@ -43,11 +43,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= Ammobrowser.com ==============================*/}
-            <div className="lg:pb-10 pb-6">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Ammobrowser.com
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 In this cookie policy, the words “website” refer to the
                 AmmoBrowser website, “we”, “us”, “our”, and “AmmoBrowser” refers
                 to AmmoBrowser, and “you” and “user” refers to you, the user and
@@ -64,18 +64,18 @@ export default function CookiePolicy() {
 
             {/*============================= GENERAL INFORMATION ============================*/}
 
-            <div className="py-10 lg:py-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 GENERAL INFORMATION
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 The information collected through cookies will be under
                 responsibility and in charge of:
               </p>
               <div className="flex flex-col gap-3 lg:gap-5 pt-10">
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">
                       Sol Legacies LLC - AmmoBrowser.
                     </span>{" "}
@@ -84,13 +84,13 @@ export default function CookiePolicy() {
 
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     2108 N St, Ste N, Sacramento, Ca 95816
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <a
                       href="mailto:support@ammobrowser.com"
                       className="text-primaryWhite underline hover:text-orange transition-colors duration-200"
@@ -103,11 +103,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= WHAT ARE COOKIES? ====================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 WHAT ARE COOKIES?
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 Cookies are small text files placed on your computer or mobile
                 device when you visit a website. These files enable the website
                 to recognize your device and recall whether you have visited the
@@ -122,11 +122,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= CONSENT ==============================*/}
-            <div className="py-8 lg:py-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 CONSENT
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 Along with this document, when you visit our website for the
                 first time, you will be shown a notice or banner on the home
                 page of the website, informing you about the use of cookies by
@@ -148,11 +148,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= LEGAL BASIS AND LEGITIMATE INTERESTS ==============================*/}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 LEGAL BASIS AND LEGITIMATE INTERESTS
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 On our website, we use cookies based on our legitimate interests
                 to provide the best possible user experience and to continuously
                 enhance our site. These interests include optimizing our online
@@ -173,11 +173,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= WITHDRAWAL AND OBJECTION (OPT-OUT) ==============================*/}
-            <div className="lg:pb-10 pb-6">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 WITHDRAWAL AND OBJECTION (OPT-OUT)
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 By accessing our website, you agree to the use of cookies that
                 enhance the browsing experience and allow the personalization of
                 content and advertisements. However, we understand and respect
@@ -194,11 +194,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= STORAGE DURATION OF COOKIES ==============================*/}
-            <div className="lg:pb-10 pb-6">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 STORAGE DURATION OF COOKIES
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 The cookies used on our website have different retention periods
                 depending on their purpose. Necessary cookies, which are
                 essential for the basic operation of the site, are stored only
@@ -234,11 +234,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*================================= COOKIE SETTINGS ==============================*/}
-            <div className="pt-5 pb-7 lg:pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 COOKIE SETTINGS
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 If you do not want cookies to be dropped on your device, you can
                 adjust the setting of your Internet browser to reject the
                 setting of all or some cookies and to alert you when a cookie is
@@ -259,7 +259,7 @@ export default function CookiePolicy() {
                 {cookieSetting?.map((item, index) => (
                   <div key={index} className="flex items-start gap-2 lg:gap-4">
                     <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                    <p className="font-medium text-base lg:text-2xl text-orange">
+                    <p className="font-medium text-base lg:text-xl text-orange">
                       <span className="text-primaryWhite">{item.action}</span>{" "}
                       <a
                         href={item.description}
@@ -275,11 +275,11 @@ export default function CookiePolicy() {
             </div>
 
             {/*====================== FIRST-PARTY COOKIES ====================== */}
-            <div className="pb-6 lg:pb-10">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 FIRST-PARTY COOKIES
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 We use cookies to enhance the performance of our website and
                 personalize your online experience. Cookies help us to collect
                 information on how people use our website and which pages they
@@ -292,11 +292,11 @@ export default function CookiePolicy() {
             </div>
 
             {/* =================== THIRD-PARTY COOKIES  =============== */}
-            <div className="pt-5 pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 THIRD-PARTY COOKIES
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 Third-party cookies may come from partners or third-party
                 companies that provide functional web services or tools for our
                 website and the optimal functioning and operation of our
@@ -309,18 +309,18 @@ export default function CookiePolicy() {
               </p>
             </div>
             {/* ==================== PURPOSES OF OUR COOKIES ======================  */}
-            <div className="pt-5 pb-16">
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+            <div>
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 PURPOSES OF OUR COOKIES
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 Our cookies are used for the following purposes:
               </p>
 
               <div className="flex flex-col gap-3 lg:gap-5 pt-10">
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">Necessary: </span>{" "}
                     Necessary cookies are essential files that enable basic
                     functions on the website, such as navigation and security.
@@ -329,7 +329,7 @@ export default function CookiePolicy() {
                 </div>
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">Functional: </span> We
                     use functional cookies to enhance your online experience by
                     remembering user preferences and settings and maintaining
@@ -338,7 +338,7 @@ export default function CookiePolicy() {
                 </div>
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">Analytics: </span> These
                     cookies help us understand how visitors use our website, by
                     collecting information showing which are the most visited
@@ -349,7 +349,7 @@ export default function CookiePolicy() {
                 </div>
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">Other: </span> Cookies
                     in the ‘other’ category include those that do not
                     specifically fit into the necessary, functional or
@@ -363,17 +363,17 @@ export default function CookiePolicy() {
 
             {/* ================== Contact INFORMATION ================== */}
             <div>
-              <h4 className="pb-5 text-2xl lg:text-5xl text-primaryWhite font-semibold">
+              <h4 className="pb-5 text-xl lg:text-3xl text-primaryWhite font-semibold">
                 Contact information
               </h4>
-              <p className="text-base lg:text-2xl text-gravelFint font-normal">
+              <p className="text-base lg:text-xl text-gravelFint font-normal">
                 If you have questions or concerns about these terms, please
                 contact us using the contact information below:
               </p>
               <div className="flex flex-col gap-3 lg:gap-5 pt-10">
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <span className="text-primaryWhite">
                       Sol Legacies LLC - AmmoBrowser.
                     </span>{" "}
@@ -382,13 +382,13 @@ export default function CookiePolicy() {
 
                 <div className="flex items-start gap-2 lg:gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     2108 N St, Ste N, Sacramento, Ca 95816
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
                   <ListSvg className={"shrink-0 size-6 lg:size-8"} />
-                  <p className="font-medium text-base lg:text-2xl text-gravelFint">
+                  <p className="font-medium text-base lg:text-xl text-gravelFint">
                     <a
                       href="mailto:support@ammobrowser.com"
                       className="text-primaryWhite underline hover:text-orange transition-colors duration-200"
