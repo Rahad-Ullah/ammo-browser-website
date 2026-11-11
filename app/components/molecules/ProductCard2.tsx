@@ -128,7 +128,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
         </div>
 
         <h2
-          className="font-semibold text-base xl:text-xl block heading-gradient-mini truncate"
+          className="w-full min-w-0 font-semibold text-base xl:text-xl leading-snug heading-gradient-mini line-clamp-2 break-words"
           title={item?.retailer?.title || "N/A"}
         >
           {item?.retailer?.title ? (
@@ -137,7 +137,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
                 name: item.retailer.title,
                 id: item.retailer.id,
               })}
-              className="hover:underline hover:text-orange transition-colors"
+              className="hover:underline hover:text-orange transition-colors break-words leading-snug"
             >
               {item.retailer.title}
             </Link>
@@ -160,7 +160,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
             </p>
           </div>
           <div>
-            <h5 className="text-[10px] xl:text-xs font-normal text-secondaryColor leading-tight">
+            <h5 className="text-[10px] xl:text-xs font-Inter font-normal text-secondaryColor leading-tight">
               Number of Rounds
             </h5>
             <p className="text-sm sm:text-base xl:text-xl font-semibold text-primaryWhite leading-tight">

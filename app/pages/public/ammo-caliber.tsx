@@ -10,6 +10,7 @@ import {
   setIsProductApiCall,
 } from "~/redux/features/productSlice";
 import { AmmoSearch, AmmoProducts, AmmoFilter, Ads } from "~/components/organisms/ammo";
+import NotFoundPage from "~/pages/public/error";
 import { axiosPublic } from "~/lib/axios/axios.config";
 import {
   generateMeta,
@@ -43,7 +44,7 @@ export default function AmmoCaliberPage() {
   const apiLoad = useRef(true);
 
   // Fetch all calibers to resolve the slug to its ID and formal title
-  const { data: caliberData, isLoading: isCalibersLoading } = useQuery<CaliberItem[]>({
+  const { data: caliberData, isLoading: isCalibersLoading, isError: isCalibersError } = useQuery<CaliberItem[]>({
     queryKey: ["caliberData"],
     queryFn: async () => {
       const response = await axiosPublic.get("/calibers");
@@ -67,51 +68,67 @@ export default function AmmoCaliberPage() {
     ...(caliberId ? { key_feature_id: caliberId } : {}),
   }));
 
+  const caliberNotFound = !isCalibersLoading && !isCalibersError && !!caliberData && !matchedCaliber;
+
+  useEffect(() => {
+    if (caliberNotFound) {
+      document.title = "Page Not Found | AmmoBrowser";
+    }
+  }, [caliberNotFound]);
+
   // When matched caliber or caliberParam changes, sync filter & trigger product fetch
   useEffect(() => {
-    if (caliberParam) {
-      const targetId = matchedCaliber?.id || null;
+    if (!caliberParam || !matchedCaliber) return;
+    const targetId = matchedCaliber?.id || null;
 
-      // Update Redux state with caliber selection
-      dispatch(
-        addProductFilterData({
-          ...productFilterData,
-          key_feature_id: matchedCaliber || (targetId ? { id: targetId } : null),
-        } as ProductFilterData)
-      );
+    // Update Redux state with caliber selection
+    dispatch(
+      addProductFilterData({
+        ...productFilterData,
+        key_feature_id: matchedCaliber || (targetId ? { id: targetId } : null),
+      } as ProductFilterData)
+    );
 
-      // Build product query payload
-      setProductQueryData((prev) => {
-        const next: ProductFilterData = {
-          ...prev,
-          page: 1,
-        };
-        if (targetId) {
-          next.key_feature_id = targetId;
-          if (next.search && (next.search === caliberParam || next.search === decodeURIComponent(caliberParam))) {
-            delete next.search;
-          }
-        } else {
-          next.search = decodeURIComponent(caliberParam);
+    // Build product query payload
+    setProductQueryData((prev) => {
+      const next: ProductFilterData = {
+        ...prev,
+        page: 1,
+      };
+      if (targetId) {
+        next.key_feature_id = targetId;
+        if (next.search && (next.search === caliberParam || next.search === decodeURIComponent(caliberParam))) {
+          delete next.search;
         }
-        return next;
-      });
+      } else {
+        next.search = decodeURIComponent(caliberParam);
+      }
+      return next;
+    });
 
-      dispatch(resetSuccess());
-      dispatch(setIsProductApiCall());
-      apiLoad.current = true;
-    }
+    dispatch(resetSuccess());
+    dispatch(setIsProductApiCall());
+    apiLoad.current = true;
   }, [dispatch, caliberParam, matchedCaliber]);
 
   // Execute product search thunk
   useEffect(() => {
+    if (!matchedCaliber) return;
     const hasProducts = (allProduct?.data?.data?.length ?? 0) > 0;
     if (apiLoad.current && (isProductsApiCall || !hasProducts)) {
       dispatch(resetSuccess());
       dispatch(getAllProductThunk(productQueryData));
       apiLoad.current = false;
     }
-  }, [dispatch, productQueryData, isProductsApiCall, allProduct]);
+  }, [dispatch, productQueryData, isProductsApiCall, allProduct, matchedCaliber]);
+
+  if (isCalibersLoading) {
+    return null;
+  }
+
+  if (caliberNotFound) {
+    return <NotFoundPage />;
+  }
 
   // When a user selects a caliber from the search dropdown or sidebar filter on this page, navigate to that caliber's page
   const handleSelectCaliber = (selected: CaliberItem | "default") => {

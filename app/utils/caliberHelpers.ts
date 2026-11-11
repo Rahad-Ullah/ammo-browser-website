@@ -69,14 +69,17 @@ export const findCaliberBySlug = (
   if (bySlug) return bySlug;
 
   // 3. Normalized alphanumeric exact match
+  if (!slugNormalized) return undefined;
   const byNormalized = calibers.find(
     (c) => c.caliber.toLowerCase().replace(/[^a-z0-9]/g, "") === slugNormalized
   );
   if (byNormalized) return byNormalized;
 
-  // 4. Prefix / Substring match (e.g. "9mm" matches "9mm Luger", "556" matches "5.56x45mm NATO")
+  // 4. Prefix / substring match (e.g. "9mm" matches "9mm Luger").
+  // Skip names that normalize to nothing, such as ".", or they match every slug.
   const byAlias = calibers.find((c) => {
     const cNorm = c.caliber.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (!cNorm) return false;
     return cNorm.startsWith(slugNormalized) || slugNormalized.startsWith(cNorm);
   });
   if (byAlias) return byAlias;

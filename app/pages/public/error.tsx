@@ -12,7 +12,7 @@ export function meta(): ReturnType<Route.MetaFunction> {
 
 export default function Error() {
   return (
-    <div className="container py-20 text-center">
+    <div className="container pt-28 md:pt-36 xl:pt-[190px] pb-20 text-center">
       <h1 className="text-6xl xl:text-8xl heading-gradient mb-6">404</h1>
       <h2 className="text-2xl xl:text-4xl text-primaryWhite mb-4">Page Not Found</h2>
       <p className="text-secondaryColor text-lg mb-8">
