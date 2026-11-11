@@ -1,15 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useDebouncedCallback } from "use-debounce";
 import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
 import { getAllProductThunk } from "~/services/httpServices/productService";
-import {
-  addProductFilterData,
-  resetSuccess,
-  setCancelPreviousRequest,
-  setIsProductApiCall,
-} from "~/redux/features/productSlice";
+import { resetSuccess } from "~/redux/features/productSlice";
 import { AmmoSearch, AmmoProducts, AmmoFilter, Ads } from "~/components/organisms/ammo";
 import { axiosPublic } from "~/lib/axios/axios.config";
 import { caliberToSlug, type CaliberItem } from "~/utils";
@@ -67,36 +61,12 @@ export default function Ammo() {
     }
   }, [dispatch, productQueryData, isProductsApiCall, hasProducts]);
 
-  const handleChange = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(resetSuccess());
-      dispatch(setIsProductApiCall());
-      dispatch(setCancelPreviousRequest(true));
-
-      const searchValue = e.target.value;
-      setProductQueryData((prev) => ({
-        ...prev,
-        search: searchValue,
-      }));
-      dispatch(
-        addProductFilterData({
-          ...productFilterData,
-          search: searchValue,
-        } as ProductFilterData)
-      );
-
-      dispatch(setCancelPreviousRequest(false));
-      apiLoad.current = true;
-    },
-    300
-  );
-
   return (
     <div className="pt-32 md:pt-40 xl:pt-[210px]">
       <div className="container">
         <div className="bg-secondaryBg p-3 xl:p-4 flex flex-col gap-3 xl:gap-4">
           <div className="sticky top-0 left-0 z-[666] sm:z-[1000] flex flex-col gap-2.5 bg-secondaryBg pb-3 pt-1">
-            <AmmoSearch handleChange={handleChange} isEdit={true} />
+            <AmmoSearch />
             {caliberData && caliberData.length > 0 && (
               <div className="flex items-center gap-2 overflow-x-auto py-2 px-3 bg-[#141414] border border-[#2b2b2b] rounded-md scrollbar-thin">
                 <span className="text-[11px] sm:text-xs uppercase tracking-wider text-[#817D81] font-Poppins shrink-0 font-medium">

@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { IoSearchOutline } from "react-icons/io5";
-import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
-import { setCancelPreviousRequest, resetSuccess } from "~/redux/features/productSlice";
 import { axiosPublic } from "~/lib/axios/axios.config";
 
 import { caliberMatchesSearch, caliberToSlug } from "~/utils";
@@ -15,16 +13,12 @@ interface Caliber {
 }
 
 interface AmmoSearchProps {
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isEdit?: boolean;
   onSelectCaliber?: (caliber: Caliber) => void;
 }
 
-const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) => {
+const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { productFilterData } = useAppSelector((state) => state.productSlice);
-  const { register, setValue, watch } = useForm();
+  const { register, watch } = useForm();
   const [isShow, setIsShow] = useState(false);
 
   const searchValue = watch("searchValue", "");
@@ -44,12 +38,6 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
     return caliberData.filter((item) => caliberMatchesSearch(item.caliber, searchValue));
   }, [caliberData, searchValue]);
 
-  useEffect(() => {
-    if (isEdit && productFilterData?.search) {
-      setValue("searchValue", productFilterData?.search || "");
-    }
-  }, [isEdit, productFilterData?.search, setValue]);
-
   const handleCaliberClick = (caliber: Caliber) => {
     if (onSelectCaliber) {
       onSelectCaliber(caliber);
@@ -66,13 +54,7 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
         <input
           type="text"
           placeholder="Search ammo"
-          {...register("searchValue", {
-            onChange: (e) => {
-              dispatch(setCancelPreviousRequest(false));
-              dispatch(resetSuccess());
-              handleChange(e);
-            },
-          })}
+          {...register("searchValue")}
           autoComplete="off"
           onFocus={() => setIsShow(true)}
           onBlur={() => setTimeout(() => setIsShow(false), 200)}
@@ -89,9 +71,9 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
               Loading...
             </p>
           ) : filteredCalibers.length > 0 ? (
-            filteredCalibers.map((caliber) => (
+            filteredCalibers.map((caliber, index) => (
               <div
-                key={caliber.id}
+                key={`${caliber.caliber}-${index}`}
                 onClick={() => handleCaliberClick(caliber)}
                 className="py-[8px] px-[9px] sm:py-[11px] sm:px-[13px] border-[1px] border-[#494747] flex items-center justify-start gap-[17px] cursor-pointer hover:bg-[#303030] transition"
               >

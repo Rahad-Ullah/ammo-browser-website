@@ -1,14 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useDebouncedCallback } from "use-debounce";
 import { IoChevronForwardOutline, IoArrowBackOutline } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
 import { getAllProductThunk } from "~/services/httpServices/productService";
 import {
   addProductFilterData,
   resetSuccess,
-  setCancelPreviousRequest,
   setIsProductApiCall,
 } from "~/redux/features/productSlice";
 import { AmmoSearch, AmmoProducts, AmmoFilter, Ads } from "~/components/organisms/ammo";
@@ -115,32 +113,6 @@ export default function AmmoCaliberPage() {
     }
   }, [dispatch, productQueryData, isProductsApiCall, allProduct]);
 
-  // Handle in-page text search within this caliber
-  const handleChange = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(resetSuccess());
-      dispatch(setIsProductApiCall());
-      dispatch(setCancelPreviousRequest(true));
-
-      const searchValue = e.target.value;
-      setProductQueryData((prev) => ({
-        ...prev,
-        search: searchValue,
-        page: 1,
-      }));
-      dispatch(
-        addProductFilterData({
-          ...productFilterData,
-          search: searchValue,
-        } as ProductFilterData)
-      );
-
-      dispatch(setCancelPreviousRequest(false));
-      apiLoad.current = true;
-    },
-    300
-  );
-
   // When a user selects a caliber from the search dropdown or sidebar filter on this page, navigate to that caliber's page
   const handleSelectCaliber = (selected: CaliberItem | "default") => {
     if (selected === "default") {
@@ -197,11 +169,7 @@ export default function AmmoCaliberPage() {
         {/* Main Ammo Filter & Products Grid */}
         <div className="bg-secondaryBg p-3 xl:p-4 flex flex-col gap-3 xl:gap-4">
           <div className="sticky top-0 left-0 z-[666] sm:z-[1000] bg-secondaryBg pb-3 pt-1">
-            <AmmoSearch
-              handleChange={handleChange}
-              isEdit={true}
-              onSelectCaliber={handleSelectCaliber}
-            />
+            <AmmoSearch onSelectCaliber={handleSelectCaliber} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)] gap-3 xl:gap-4">
             <div className="relative min-w-0">
