@@ -28,7 +28,7 @@ import RoundSvg from "../../svg/RoundSvg";
 import ShippingSvg from "../../svg/ShippingSvg";
 import PriceSvg from "../../svg/PriceSvg";
 
-import { caliberToSlug } from "~/utils";
+import { caliberMatchesSearch, caliberToSlug } from "~/utils";
 
 interface AmmoFilterProps {
   setProductQueryData: React.Dispatch<React.SetStateAction<ProductFilterData>>;
@@ -176,9 +176,7 @@ const AmmoFilter = ({
   const updateShotData = ["default", ...(shotSizeData || [])];
 
   const searchCaliber = useMemo(() => {
-    return caliberData?.filter((item) =>
-      item?.caliber?.toLowerCase().includes(searchInput?.toLowerCase()),
-    );
+    return caliberData?.filter((item) => caliberMatchesSearch(item?.caliber, searchInput));
   }, [caliberData, searchInput]);
 
   useEffect(() => {

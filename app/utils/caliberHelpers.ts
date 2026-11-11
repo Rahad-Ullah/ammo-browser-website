@@ -84,6 +84,65 @@ export const findCaliberBySlug = (
   return undefined;
 };
 
+const normalizeCaliberSearch = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+
+/**
+ * Typed phrases that do not appear inside the stored caliber name.
+ * "45 colt" is handled by word matching; these cover abbreviations.
+ */
+const CALIBER_QUERY_ALIASES: Record<string, string[]> = {
+  "45 lc": ["45 long colt"],
+  "45lc": ["45 long colt"],
+  "38 spl": ["38 special"],
+  "38spl": ["38 special"],
+  "9mm para": ["9mm luger"],
+  "9mm parabellum": ["9mm luger"],
+  "9x19": ["9mm luger"],
+  "9x19mm": ["9mm luger"],
+};
+
+const caliberTokensMatch = (name: string, query: string): boolean => {
+  if (!query) return true;
+  if (name.includes(query)) return true;
+
+  const tokens = query.split(" ").filter(Boolean);
+  if (tokens.length < 2) return false;
+
+  let from = 0;
+  for (const token of tokens) {
+    const at = name.indexOf(token, from);
+    if (at === -1) return false;
+    from = at + token.length;
+  }
+  return true;
+};
+
+/**
+ * Search match for the caliber dropdown. "45 colt" matches ".45 Long Colt"
+ * because both words appear, in order, inside the stored name.
+ */
+export const caliberMatchesSearch = (
+  caliber?: string | null,
+  query?: string | null
+): boolean => {
+  const rawQuery = (query || "").trim();
+  if (!rawQuery) return true;
+
+  const name = normalizeCaliberSearch(caliber || "");
+  const normalizedQuery = normalizeCaliberSearch(rawQuery);
+  if (caliberTokensMatch(name, normalizedQuery)) return true;
+
+  const compactQuery = normalizedQuery.replace(/ /g, "");
+  const aliases = CALIBER_QUERY_ALIASES[normalizedQuery] || CALIBER_QUERY_ALIASES[compactQuery] || [];
+  return aliases.some((alias) => caliberTokensMatch(name, normalizeCaliberSearch(alias)));
+};
+
 /**
  * Creates a clean, SEO-optimized slug for a product with its ID appended.
  * Format: {product-name}-{id}

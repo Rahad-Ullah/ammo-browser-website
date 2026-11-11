@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "~/redux/store/hooks";
 import { setCancelPreviousRequest, resetSuccess } from "~/redux/features/productSlice";
 import { axiosPublic } from "~/lib/axios/axios.config";
 
-import { caliberToSlug } from "~/utils";
+import { caliberMatchesSearch, caliberToSlug } from "~/utils";
 
 interface Caliber {
   id: string;
@@ -41,9 +41,7 @@ const AmmoSearch = ({ handleChange, isEdit, onSelectCaliber }: AmmoSearchProps) 
   const filteredCalibers = useMemo(() => {
     if (!caliberData) return [];
     if (!searchValue) return caliberData;
-    return caliberData.filter((item) =>
-      item.caliber.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    return caliberData.filter((item) => caliberMatchesSearch(item.caliber, searchValue));
   }, [caliberData, searchValue]);
 
   useEffect(() => {
