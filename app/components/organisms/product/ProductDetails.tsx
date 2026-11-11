@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { MdOutlineStarPurple500 } from "react-icons/md";
+import { MdOutlineStar, MdOutlineStarPurple500 } from "react-icons/md";
 import { AnimatePresence } from "motion/react";
 import CustomCheckbox from "~/components/atoms/CustomCheckbox";
 import { TbProgressAlert } from "react-icons/tb";
@@ -133,6 +133,9 @@ const ProductDetails = () => {
     gcTime: 0,
     enabled: !!id,
   });
+
+  const ratingValue = Number(detailsData?.retailer_avg_rating);
+  const ratingScore = Number.isFinite(ratingValue) ? Math.min(5, Math.max(0, ratingValue)) : 0;
 
   const tableData = [
     {
@@ -380,12 +383,26 @@ const ProductDetails = () => {
 
                   {/* rating star */}
                   <div className="pt-4 lg:pt-5 2xl:pt-12 flex items-center gap-2">
-                    <div className="text-starColor flex items-center gap-[2px] text-lg 2xl:text-2xl">
-                      <MdOutlineStarPurple500 />
-                      <MdOutlineStarPurple500 />
-                      <MdOutlineStarPurple500 />
-                      <MdOutlineStarPurple500 />
-                      <MdOutlineStarPurple500 />
+                    <div
+                      className="flex items-center gap-[2px] text-lg 2xl:text-2xl"
+                      aria-label={`${ratingScore.toFixed(1)} out of 5 stars`}
+                    >
+                      {Array.from({ length: 5 }, (_, index) => {
+                        const fill = Math.min(1, Math.max(0, ratingScore - index));
+                        return (
+                          <span key={index} className="relative inline-flex">
+                            <MdOutlineStar className="text-[#5a5a5a]" />
+                            {fill > 0 && (
+                              <span
+                                className="absolute left-0 top-0 h-full overflow-hidden"
+                                style={{ width: `${fill * 100}%` }}
+                              >
+                                <MdOutlineStarPurple500 className="text-starColor" />
+                              </span>
+                            )}
+                          </span>
+                        );
+                      })}
                     </div>
                     <div className="font-normal text-sm 2xl:text-lg text-starColor">
                       <span>

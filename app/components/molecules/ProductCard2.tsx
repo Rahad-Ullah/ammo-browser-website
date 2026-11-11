@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link } from "react-router";
 import { FaStar } from "react-icons/fa";
 import { MdStars } from "react-icons/md";
 import Button from "~/components/atoms/Button";
@@ -59,9 +59,6 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
     sponsored,
   } = item;
   const ratingLabel = formatRatingScore(retailer_avg_rating);
-
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get("page") || "1";
 
   // Select the appropriate bullet silhouette based on caliber / category
   const defaultBullet = getPlaceholderImage(caliber, key_features?.category?.name);
@@ -213,7 +210,7 @@ const ProductCard2 = ({ item, onToggleModal, isInWishlist }: ProductCard2Props) 
       {/* Bottom Action Buttons (in document flow to prevent bottom cut-off) */}
       <div className="pt-3 xl:pt-3 mt-auto w-full grid grid-cols-2 gap-2">
         <Link
-          to={getProductUrl(item, `page=${currentPage}`)}
+          to={getProductUrl(item)}
           className="block w-full"
         >
           <Button

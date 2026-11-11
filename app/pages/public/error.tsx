@@ -1,4 +1,14 @@
 import { Link } from "react-router";
+import { generateMeta } from "~/utils";
+import type { Route } from "./+types/error";
+
+export function meta(): ReturnType<Route.MetaFunction> {
+  return generateMeta({
+    title: "Page Not Found | AmmoBrowser",
+    description: "The page you're looking for doesn't exist or has been moved.",
+    robots: "noindex, nofollow",
+  });
+}
 
 export default function Error() {
   return (

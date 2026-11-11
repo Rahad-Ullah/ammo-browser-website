@@ -9,10 +9,20 @@ import Input from "~/components/atoms/Input";
 import LoadingSpinner from "~/components/atoms/LoadingSpinner";
 import { successToast, errorToast } from "~/utils/toast";
 import { getLocalStorage, setLocalStorage } from "~/utils/localStorage";
+import { generateMeta } from "~/utils";
+import type { Route } from "./+types/login";
 import bg from "~/assets/Login-Resource/bg.png";
 
 interface LoginFormData {
   email: string;
+}
+
+export function meta(): ReturnType<Route.MetaFunction> {
+  return generateMeta({
+    title: "Log In | AmmoBrowser",
+    description: "Log in to AmmoBrowser to save ammo to your list and track prices.",
+    robots: "noindex, nofollow",
+  });
 }
 
 export default function Login() {

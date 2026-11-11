@@ -65,6 +65,11 @@ const Footer = () => {
     },
   });
 
+  const currentYear = new Date().getFullYear();
+  const copyrightText = (
+    data?.copy_right_text || `© ${currentYear} AmmoBrowser. All Rights Reserved`
+  ).replace(/\b(?:19|20)\d{2}\b/, String(currentYear));
+
   const socialLinks = [
     { link: data?.facebook, icon: <FaFacebookF /> },
     { link: data?.instagram, icon: <FaInstagram /> },
@@ -177,8 +182,8 @@ const Footer = () => {
             </li>
           ))}
         </ul>
-        <p className="text-center w-full text-sm lg:text-base text-primaryWhite mt-10 pt-4 border-t-[1.5px] border-t-borderColor">
-          {data?.copy_right_text || "All rights reserved"}
+        <p className="text-center w-full font-Poppins text-sm lg:text-base text-primaryWhite mt-10 pt-4 border-t-[1.5px] border-t-borderColor">
+          {copyrightText}
         </p>
       </div>
 

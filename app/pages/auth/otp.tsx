@@ -5,7 +5,17 @@ import { useAuth } from "~/hooks/providers/AuthProvider";
 import Button from "~/components/atoms/Button";
 import { successToast, errorToast } from "~/utils/toast";
 import { getLocalStorage, setLocalStorage } from "~/utils/localStorage";
+import { generateMeta } from "~/utils";
+import type { Route } from "./+types/otp";
 import bg from "~/assets/Login-Resource/bg.png";
+
+export function meta(): ReturnType<Route.MetaFunction> {
+  return generateMeta({
+    title: "OTP Verification | AmmoBrowser",
+    description: "Enter the verification code sent to your email to finish logging in.",
+    robots: "noindex, nofollow",
+  });
+}
 
 export default function OtpVerification() {
   const navigate = useNavigate();
