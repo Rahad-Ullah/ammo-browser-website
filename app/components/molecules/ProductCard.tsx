@@ -75,14 +75,14 @@ const ProductCard = ({ imgClass, item, onToggleModal, isInWishlist }: ProductCar
         style={{ background: `url(${mask})` }}
         className="w-full bg-cover bg-center bg-no-repeat p-5 xl:p-10 font-Poppins"
       >
-        <div className="flex items-start justify-between">
-          <h5 className="text-primaryWhite text-base lg:text-lg xl:text-2xl font-normal w-[250px] sm:w-[350px] text-nowrap overflow-hidden text-ellipsis">
+        <div className="flex items-start justify-between gap-2">
+          <h5 className="text-primaryWhite text-base lg:text-lg xl:text-2xl font-normal min-w-0 flex-1 truncate">
             {caliber ? caliber : "N/A"}
           </h5>
           {ratingLabel && (
-            <span className="font-normal text-sm lg:text-base xl:text-xl text-primaryWhite flex items-center gap-[6px]">
+            <span className="font-normal text-sm lg:text-base xl:text-xl text-primaryWhite flex items-center gap-[6px] shrink-0 whitespace-nowrap">
               <FaStar className="text-starColor text-sm lg:text-base xl:text-[22px]" />
-              <span className="mt-1">
+              <span className="mt-1 whitespace-nowrap">
                 {ratingLabel}
                 {formatReviewCount(
                   item.total_ratings_count ?? item.retailer?.google_reviews_count

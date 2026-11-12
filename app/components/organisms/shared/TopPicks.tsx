@@ -9,7 +9,7 @@ import { AnimatePresence } from "motion/react";
 import { axiosPublic } from "~/lib/axios/axios.config";
 import { useAuth } from "~/hooks/providers/AuthProvider";
 import { useWishlistUrls, WISHLIST_URLS_QUERY_KEY } from "~/hooks/useWishlistUrls";
-import ProductCard from "~/components/molecules/ProductCard";
+import ProductCard2 from "~/components/molecules/ProductCard2";
 import ProductCardLoader from "~/components/molecules/ProductCardLoader";
 import WishlistSuccessModal from "~/components/molecules/WishlistSuccessModal";
 
@@ -81,6 +81,7 @@ const TopPicks = ({ className }: TopPicksProps) => {
         <div className="xl:pt-12 pt-8">
           <Swiper
             slidesPerView={1}
+            spaceBetween={16}
             loop={true}
             autoplay={{
               delay: 5000,
@@ -92,36 +93,48 @@ const TopPicks = ({ className }: TopPicksProps) => {
             }}
             modules={[Navigation, Autoplay]}
             breakpoints={{
-              500: {
+              480: {
+                slidesPerView: 1.5,
+                spaceBetween: 16,
+              },
+              640: {
                 slidesPerView: 2,
                 spaceBetween: 20,
               },
               768: {
-                slidesPerView: 2,
+                slidesPerView: 2.5,
                 spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 3,
-                spaceBetween: 20,
+                spaceBetween: 24,
+              },
+              1280: {
+                slidesPerView: 4,
+                spaceBetween: 24,
+              },
+              1536: {
+                slidesPerView: 4,
+                spaceBetween: 28,
               },
             }}
-            className="mySwiper"
+            className="mySwiper !pb-2"
           >
             {isLoading &&
               new Array(8).fill(null).map((_, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCardLoader className={"border-[1px]"} />
+                <SwiperSlide key={index} className="!h-auto flex">
+                  <ProductCardLoader className={"border-[1px] border-transparent h-full"} />
                 </SwiperSlide>
               ))}
             {((data?.length ?? 0) < 1 || isError) &&
               new Array(8).fill(null).map((_, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCardLoader className={"border-[1px]"} />
+                <SwiperSlide key={`empty-${index}`} className="!h-auto flex">
+                  <ProductCardLoader className={"border-[1px] border-transparent h-full"} />
                 </SwiperSlide>
               ))}
             {data?.slice(0, 10).map((item, index) => (
-              <SwiperSlide key={index}>
-                <ProductCard item={item} onToggleModal={onToggleModal} isInWishlist={isInWishlist(item?.url)} />
+              <SwiperSlide key={item.id ?? index} className="!h-auto flex">
+                <ProductCard2 item={item} onToggleModal={onToggleModal} isInWishlist={isInWishlist(item?.url)} />
               </SwiperSlide>
             ))}
           </Swiper>
