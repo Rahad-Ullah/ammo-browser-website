@@ -8,14 +8,14 @@ const Hero = () => {
   return (
     <div
       id="hero-section"
-      className="xl:h-[850px] lg:h-[680px] md:h-[540px] sm:h-[430px] h-[520px] bg-center mt-10 md:mt-0 bg-cover md:bg-contain bg-no-repeat relative flex flex-col justify-center"
+      className="xl:h-[850px] lg:h-[680px] md:h-[540px] sm:h-[430px] sm:min-h-0 h-auto min-h-[520px] bg-center mt-10 md:mt-0 bg-cover md:bg-contain bg-no-repeat relative flex flex-col justify-center"
     >
       <img
         src={elips}
         alt=""
         className="absolute top-0 right-0 hidden md:block pointer-events-none"
       />
-      <div className="container h-full flex flex-col justify-center pt-14 sm:pt-20 md:pt-24">
+      <div className="container sm:h-full flex flex-col justify-center pt-14 sm:pt-20 md:pt-24">
         <div className="pt-[310px] sm:pt-0 flex items-center text-center sm:text-start gap-8 sm:gap-0 flex-col sm:flex-row justify-center sm:justify-between w-full my-auto">
           {/* Left Text Block */}
           <div className="flex flex-col z-20 max-w-full my-auto sm:-translate-y-10 md:sm:-translate-y-14 lg:sm:-translate-y-20 xl:sm:-translate-y-24">
@@ -77,7 +77,7 @@ const Hero = () => {
               ease: "easeOut",
               delay: 0.2,
             }}
-            className="sm:hidden relative z-50"
+            className="sm:hidden relative z-50 mb-6"
           >
             <Link to={"/ammo"}>
               <Button btnTitle={"View All"} />
