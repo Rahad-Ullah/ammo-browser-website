@@ -64,18 +64,16 @@ const AmmoProducts = ({ setProductQueryData, apiLoad }: AmmoProductsProps) => {
       const response = await addToWishlist(product?.url || "");
       setWishlistModal({ open: true, mode: "success", discountMessage: response.data?.discount_message || "" });
       queryClient.invalidateQueries({ queryKey: WISHLIST_URLS_QUERY_KEY });
-      // Refresh the grid with the same filters. key_feature_id is stored as a
-      // caliber object in Redux; the filter API only accepts the id.
       if (productFilterData) {
-        const keyFeatureId = productFilterData.key_feature_id;
-        const keyFeatureIdValue =
-          typeof keyFeatureId === "object" && keyFeatureId !== null
-            ? keyFeatureId.id
-            : keyFeatureId;
+        const keyFeature = productFilterData.key_feature_id;
+        const caliberName =
+          keyFeature && typeof keyFeature === "object" && "caliber" in keyFeature
+            ? String((keyFeature as { caliber?: string }).caliber || "").trim()
+            : "";
+        const search = productFilterData.search || caliberName;
         const query: ProductFilterData = {
           page: productFilterData.page || 1,
-          ...(productFilterData.search ? { search: productFilterData.search } : {}),
-          ...(keyFeatureIdValue ? { key_feature_id: keyFeatureIdValue } : {}),
+          ...(search ? { search } : {}),
           ...(productFilterData.brand && productFilterData.brand !== "default"
             ? { brand: productFilterData.brand }
             : {}),

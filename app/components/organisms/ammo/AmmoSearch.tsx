@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
@@ -13,15 +13,59 @@ interface Caliber {
 }
 
 interface AmmoSearchProps {
+  value?: string;
   onSelectCaliber?: (caliber: Caliber) => void;
+  onSearchChange?: (query: string) => void;
 }
 
-const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
+const AmmoSearch = ({ value = "", onSelectCaliber, onSearchChange }: AmmoSearchProps) => {
   const navigate = useNavigate();
-  const { register, watch } = useForm();
+  const { register, watch, setValue } = useForm({
+    defaultValues: { searchValue: value },
+  });
   const [isShow, setIsShow] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const onSearchChangeRef = useRef(onSearchChange);
+  onSearchChangeRef.current = onSearchChange;
+
+  const { onChange: onSearchFieldChange, onBlur: onSearchFieldBlur, ...searchField } = register("searchValue");
 
   const searchValue = watch("searchValue", "");
+
+  const openDropdown = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    setIsShow(true);
+  };
+
+  const closeDropdown = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      if (containerRef.current?.contains(document.activeElement)) return;
+      setIsShow(false);
+    }, 200);
+  };
+
+  useEffect(() => {
+    setValue("searchValue", value);
+  }, [value, setValue]);
+
+  useEffect(() => {
+    return () => {
+      if (searchTimer.current) clearTimeout(searchTimer.current);
+    };
+  }, []);
+
+  const scheduleProductSearch = (query: string) => {
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    searchTimer.current = setTimeout(() => {
+      onSearchChangeRef.current?.(query.trim());
+    }, 400);
+  };
 
   const { data: caliberData, isLoading } = useQuery<Caliber[]>({
     queryKey: ["caliberData"],
@@ -39,6 +83,7 @@ const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
   }, [caliberData, searchValue]);
 
   const handleCaliberClick = (caliber: Caliber) => {
+    setValue("searchValue", caliber.caliber);
     if (onSelectCaliber) {
       onSelectCaliber(caliber);
     } else {
@@ -49,15 +94,24 @@ const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
   };
 
   return (
-    <div className="relative group">
+    <div ref={containerRef} className="relative group">
       <div className="relative">
         <input
           type="text"
           placeholder="Search ammo"
-          {...register("searchValue")}
+          {...searchField}
           autoComplete="off"
-          onFocus={() => setIsShow(true)}
-          onBlur={() => setTimeout(() => setIsShow(false), 200)}
+          onChange={(event) => {
+            onSearchFieldChange(event);
+            scheduleProductSearch(event.target.value);
+          }}
+          onPointerDown={openDropdown}
+          onFocus={openDropdown}
+          onClick={openDropdown}
+          onBlur={(event) => {
+            onSearchFieldBlur(event);
+            closeDropdown();
+          }}
           className="py-3 xl:py-4 pl-10 xl:pl-14 border-b-[3px] border-secondaryBg bg-mainBG hover:bg-[#313131] focus:border-orange transition-colors duration-300 w-full font-Poppins text-primaryWhite placeholder:font-Poppins placeholder:text-primaryWhite placeholder:font-light placeholder:text-sm placeholder:xl:text-xl"
         />
         <span className="absolute top-[48%] -translate-y-[50%] left-3 xl:left-6 text-primaryWhite text-lg xl:text-2xl">
@@ -74,6 +128,7 @@ const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
             filteredCalibers.map((caliber, index) => (
               <div
                 key={`${caliber.caliber}-${index}`}
+                onMouseDown={(event) => event.preventDefault()}
                 onClick={() => handleCaliberClick(caliber)}
                 className="py-[8px] px-[9px] sm:py-[11px] sm:px-[13px] border-[1px] border-[#494747] flex items-center justify-start gap-[17px] cursor-pointer hover:bg-[#303030] transition"
               >
@@ -84,7 +139,7 @@ const AmmoSearch = ({ onSelectCaliber }: AmmoSearchProps) => {
             ))
           ) : (
             <p className="font-poppins font-medium text-[12px] sm:text-[14px] md:text-[16px] 2xl:text-[20px] text-[#FFFFFF] text-center">
-              No results found
+              No caliber found
             </p>
           )}
         </div>

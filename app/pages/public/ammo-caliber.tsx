@@ -42,6 +42,8 @@ export default function AmmoCaliberPage() {
   );
 
   const apiLoad = useRef(true);
+  const filtersBeforeSearch = useRef<ProductFilterData | null>(null);
+  const userTypedSearch = useRef(false);
 
   // Fetch all calibers to resolve the slug to its ID and formal title
   const { data: caliberData, isLoading: isCalibersLoading, isError: isCalibersError } = useQuery<CaliberItem[]>({
@@ -60,12 +62,9 @@ export default function AmmoCaliberPage() {
 
   const caliberTitle = matchedCaliber?.caliber || slugToDisplayCaliber(caliberParam || "");
 
-  // Key feature id to query (either matched caliber ID or fallback to route param)
-  const caliberId = matchedCaliber?.id;
-
   const [productQueryData, setProductQueryData] = useState<ProductFilterData>(() => ({
     page: 1,
-    ...(caliberId ? { key_feature_id: caliberId } : {}),
+    ...(caliberTitle ? { search: caliberTitle } : {}),
   }));
 
   const caliberNotFound = !isCalibersLoading && !isCalibersError && !!caliberData && !matchedCaliber;
@@ -76,39 +75,22 @@ export default function AmmoCaliberPage() {
     }
   }, [caliberNotFound]);
 
-  // When matched caliber or caliberParam changes, sync filter & trigger product fetch
+  // Caliber pages filter products by the caliber name in `search`, never by key_feature_id.
   useEffect(() => {
-    if (!caliberParam || !matchedCaliber) return;
-    const targetId = matchedCaliber?.id || null;
+    if (!caliberParam || !matchedCaliber || userTypedSearch.current) return;
 
-    // Update Redux state with caliber selection
+    const payload: ProductFilterData = { page: 1, search: matchedCaliber.caliber };
+    setProductQueryData(payload);
     dispatch(
       addProductFilterData({
-        ...productFilterData,
-        key_feature_id: matchedCaliber || (targetId ? { id: targetId } : null),
+        page: 1,
+        key_feature_id: matchedCaliber,
       } as ProductFilterData)
     );
-
-    // Build product query payload
-    setProductQueryData((prev) => {
-      const next: ProductFilterData = {
-        ...prev,
-        page: 1,
-      };
-      if (targetId) {
-        next.key_feature_id = targetId;
-        if (next.search && (next.search === caliberParam || next.search === decodeURIComponent(caliberParam))) {
-          delete next.search;
-        }
-      } else {
-        next.search = decodeURIComponent(caliberParam);
-      }
-      return next;
-    });
-
     dispatch(resetSuccess());
     dispatch(setIsProductApiCall());
-    apiLoad.current = true;
+    dispatch(getAllProductThunk(payload));
+    apiLoad.current = false;
   }, [dispatch, caliberParam, matchedCaliber]);
 
   // Execute product search thunk
@@ -129,6 +111,28 @@ export default function AmmoCaliberPage() {
   if (caliberNotFound) {
     return <NotFoundPage />;
   }
+
+  const handleProductSearch = (query: string) => {
+    const nextSearch = query.trim();
+    dispatch(setIsProductApiCall());
+
+    if (nextSearch) {
+      userTypedSearch.current = true;
+      setProductQueryData((prev) => {
+        if (!prev.search) filtersBeforeSearch.current = prev;
+        return { page: 1, search: nextSearch };
+      });
+      dispatch(addProductFilterData({ page: 1, search: nextSearch, key_feature_id: matchedCaliber } as ProductFilterData));
+    } else {
+      userTypedSearch.current = false;
+      const restored: ProductFilterData = { page: 1, search: caliberTitle };
+      filtersBeforeSearch.current = null;
+      setProductQueryData(restored);
+      dispatch(addProductFilterData({ ...restored, key_feature_id: matchedCaliber } as ProductFilterData));
+    }
+
+    apiLoad.current = true;
+  };
 
   // When a user selects a caliber from the search dropdown or sidebar filter on this page, navigate to that caliber's page
   const handleSelectCaliber = (selected: CaliberItem | "default") => {
@@ -186,7 +190,7 @@ export default function AmmoCaliberPage() {
         {/* Main Ammo Filter & Products Grid */}
         <div className="bg-secondaryBg p-3 xl:p-4 flex flex-col gap-3 xl:gap-4">
           <div className="sticky top-0 left-0 z-[666] sm:z-[1000] bg-secondaryBg pb-3 pt-1">
-            <AmmoSearch onSelectCaliber={handleSelectCaliber} />
+            <AmmoSearch value={caliberTitle} onSelectCaliber={handleSelectCaliber} onSearchChange={handleProductSearch} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-[200px_minmax(0,1fr)] lg:grid-cols-[230px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)] gap-3 xl:gap-4">
             <div className="relative min-w-0">

@@ -11,6 +11,20 @@ const PRODUCT_ENDPOINTS = {
 // Dedicated FIFO queue for product list requests
 const productListQueue = createRequestQueue();
 
+function productFilterPayload(queryData: ProductFilterData): ProductFilterData {
+  const payload: ProductFilterData = { ...queryData };
+  const keyFeature = payload.key_feature_id;
+  delete payload.key_feature_id;
+
+  const caliberName =
+    keyFeature && typeof keyFeature === "object" && "caliber" in keyFeature
+      ? String((keyFeature as { caliber?: string }).caliber || "").trim()
+      : "";
+  if (!payload.search && caliberName) payload.search = caliberName;
+
+  return payload;
+}
+
 export const productManagementService = {
   async getAllProducts(
     queryData: ProductFilterData,
@@ -18,7 +32,10 @@ export const productManagementService = {
   ): Promise<NestedPaginatedResponse<Product>> {
     try {
       const response = await productListQueue.enqueue(() =>
-        httpService.post<NestedPaginatedResponse<Product>>(PRODUCT_ENDPOINTS.ALL_PRODUCTS, queryData)
+        httpService.post<NestedPaginatedResponse<Product>>(
+          PRODUCT_ENDPOINTS.ALL_PRODUCTS,
+          productFilterPayload(queryData)
+        )
       );
       const data = handleApiResponse(response);
       return data;
