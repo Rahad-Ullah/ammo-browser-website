@@ -171,7 +171,7 @@ export default function AmmoCaliberPage() {
               </span>
             </div>
             <p className="text-xs md:text-sm text-[#9e9e9e] font-Poppins pt-1.5">
-              Find bulk {caliberTitle} ammo deals, compare prices per round, and browse in-stock ammunition from trusted retailers.
+              Find bulk {caliberTitle} ammo deals, compare price per round, and browse in-stock ammunition from trusted retailers.
             </p>
           </div>
 
