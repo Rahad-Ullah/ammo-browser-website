@@ -75,6 +75,10 @@ export default function AmmoCaliberPage() {
     }
   }, [caliberNotFound]);
 
+  useEffect(() => {
+    userTypedSearch.current = false;
+  }, [caliberParam]);
+
   // Caliber pages filter products by the caliber name in `search`, never by key_feature_id.
   useEffect(() => {
     if (!caliberParam || !matchedCaliber || userTypedSearch.current) return;

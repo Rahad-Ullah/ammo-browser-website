@@ -60,10 +60,18 @@ const AmmoSearch = ({ value = "", onSelectCaliber, onSearchChange }: AmmoSearchP
     };
   }, []);
 
+  const applyProductSearch = (query: string) => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = null;
+    }
+    onSearchChangeRef.current?.(query.trim());
+  };
+
   const scheduleProductSearch = (query: string) => {
     if (searchTimer.current) clearTimeout(searchTimer.current);
     searchTimer.current = setTimeout(() => {
-      onSearchChangeRef.current?.(query.trim());
+      applyProductSearch(query);
     }, 400);
   };
 
@@ -84,11 +92,18 @@ const AmmoSearch = ({ value = "", onSelectCaliber, onSearchChange }: AmmoSearchP
 
   const handleCaliberClick = (caliber: Caliber) => {
     setValue("searchValue", caliber.caliber);
-    if (onSelectCaliber) {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = null;
+    }
+
+    const nextPath = `/ammo/${caliberToSlug(caliber.caliber)}`;
+    if (window.location.pathname === nextPath) {
+      onSearchChangeRef.current?.(caliber.caliber.trim());
+    } else if (onSelectCaliber) {
       onSelectCaliber(caliber);
     } else {
-      const slug = caliberToSlug(caliber.caliber);
-      navigate(`/ammo/${slug}`);
+      navigate(nextPath);
     }
     setIsShow(false);
   };
